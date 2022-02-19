@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +10,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('/auth/social/{provider}', 'SocialAuthController@providerRedirect');
+// Route::get('/auth/{provider}/callback', 'SocialAuthController@providerRedirectCallback');
 
-Route::get('/{any}', function () {
-    return view('welcome');
-})->where('any', '.*');
+Route::get('/{vue?}', function () {
+    return view('home');
+})->where('vue', '[\/\w\.-]*')->name('home');
+
+// Route::get('/', function () {
+//     return view('login');
+// });
