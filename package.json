@@ -12,7 +12,7 @@
     },
     "devDependencies": {
         "axios": "^0.19",
-        "browser-sync": "^2.26.7",
+        "browser-sync": "^2.27.7",
         "browser-sync-webpack-plugin": "^2.2.2",
         "cross-env": "^7.0",
         "laravel-mix": "^6.0.43",
@@ -39,6 +39,7 @@
     },
     "dependencies": {
         "babel-loader": "^8.2.3",
+        "bootstrap-vue": "^2.21.2",
         "click-confirm": "^2.1.1",
         "js-cookie": "^2.2.0",
         "laravel-vue-pagination": "^3.0.0",

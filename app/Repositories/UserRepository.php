@@ -23,18 +23,26 @@ class UserRepository extends BaseRepository
 
     public function getAllUsers($request)
     {
-        $users = User::userProfile();
+        $users = User::whereNotNull('id');
+
+        // if ($request->has('first_name')) {
+        //     $query->whereHas('profile', function ($q) use ($request) {
+        //         $q->where('first_name', 'like', '%'.request('first_name').'%');
+        //     });
+        // }
+
+        // if ($request->has('last_name')) {
+        //     $query->whereHas('profile', function ($q) use ($request) {
+        //         $q->where('last_name', 'like', '%'.request('last_name').'%');
+        //     });
+        // }
 
         if ($request->has('first_name')) {
-            $query->whereHas('profile', function ($q) use ($request) {
-                $q->where('first_name', 'like', '%'.request('first_name').'%');
-            });
+            $users->where('first_name', 'like', '%'.request('first_name').'%');
         }
 
         if ($request->has('last_name')) {
-            $query->whereHas('profile', function ($q) use ($request) {
-                $q->where('last_name', 'like', '%'.request('last_name').'%');
-            });
+            $users->where('last_name', 'like', '%'.request('last_name').'%');
         }
 
         if ($request->has('email')) {

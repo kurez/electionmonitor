@@ -2,11 +2,11 @@
 	<div>
         <div class="row page-titles">
             <div class="col-md-12 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">Edit Task</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">Edit Aspirant</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><router-link to="/home">Home</router-link></li>
-                    <li class="breadcrumb-item"><router-link to="/task">Task</router-link></li>
-                    <li class="breadcrumb-item active">Edit Task</li>
+                    <li class="breadcrumb-item"><router-link to="/aspirant">Aspirant</router-link></li>
+                    <li class="breadcrumb-item active">Edit Aspirant</li>
                 </ol>
             </div>
         </div>
@@ -15,8 +15,8 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Edit Task</h4>
-                        <task-form :id="id"></task-form>
+                        <h4 class="card-title">Edit Aspirant</h4>
+                        <aspirant-form :id="id"></aspirant-form>
                     </div>
                 </div>
             </div>
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-    import TaskForm from './form';
+    import AspirantForm from './form';
     import helper from '../../services/helper'
 
     export default {
-        components : { TaskForm },
+        components : { AspirantForm },
         data() {
             return {
                 id:this.$route.params.id

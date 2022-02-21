@@ -1,15 +1,15 @@
 <?php
 
 
-use App\Models\User\User;
+use App\Models\Aspirant\Aspirant;
 use Database\DisableForeignKeys;
 use Database\TruncateTable;
 use Illuminate\Database\Seeder;
 
 /**
- * Class UsersTableSeeder.
+ * Class AspirantsTableSeeder.
  */
-class UsersTableSeeder extends Seeder
+class AspirantsTableSeeder extends Seeder
 {
     use DisableForeignKeys, TruncateTable;
 
@@ -21,9 +21,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $this->disableForeignKeys();
-        $this->truncate('users');
+        // $this->truncate('aspirants');
 
-        factory(User::class, 100)->create();
+        factory(Aspirant::class, 200)->create();
 
         $this->enableForeignKeys();
     }

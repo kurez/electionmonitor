@@ -28,12 +28,12 @@ let routes = [
                 component: require('./views/user/profile.vue').default
             },
             {
-                path: '/task',
-                component: require('./views/task/index.vue').default
+                path: '/aspirant',
+                component: require('./views/aspirant/index.vue').default
             },
             {
-                path: '/task/:id/edit',
-                component: require('./views/task/edit.vue').default
+                path: '/aspirant/:id/edit',
+                component: require('./views/aspirant/edit.vue').default
             },
             {
                 path: '/user',

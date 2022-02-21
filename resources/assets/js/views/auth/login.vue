@@ -29,15 +29,15 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="form-group m-b-0">
+                    <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
                             <p>Forgot your password? <router-link to="/password" class="text-info m-l-5"><b>Reset here!</b></router-link></p>
                             <p>Don't have an account? <router-link to="/register" class="text-info m-l-5"><b>Sign Up</b></router-link></p>
                         </div>
-                    </div> -->
+                    </div>
                 </form>
             </div>
-            <guest-footer></guest-footer>
+            <!-- <guest-footer></guest-footer> -->
           </div>
         </div>
 

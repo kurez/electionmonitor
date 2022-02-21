@@ -24,10 +24,10 @@
                                 <label for="">Last Name</label>
                                 <input class="form-control" type="text" value="" v-model="profileForm.last_name">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="">Date of Birth</label>
                                 <datepicker v-model="profileForm.date_of_birth" :bootstrapStyling="true"></datepicker>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="">Gender</label>
                                 <div class="radio radio-info">
@@ -40,8 +40,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="">Facebook Profile</label>
-                                <input class="form-control" type="text" value="" v-model="profileForm.facebook_profile">
+                                <label for="">Allocated Area</label>
+                                <input class="form-control" type="text" value="" v-model="profileForm.allocated_area">
                             </div>
                             <div class="form-group">
                                 <label for="">Twitter Profile</label>
@@ -123,9 +123,9 @@
                 profileForm: new Form({
                     first_name : '',
                     last_name : '',
-                    date_of_birth : '',
+                    // date_of_birth : '',
                     gender : '',
-                    facebook_profile : '',
+                    allocated_area : '',
                     twitter_profile : '',
                     google_plus_profile : ''
                 }, false),
@@ -137,12 +137,12 @@
             axios.get('/api/v1/auth/user').then(response => response.data).then(response => {
                 this.profileForm.first_name = response.profile.first_name;
                 this.profileForm.last_name = response.profile.last_name;
-                this.profileForm.date_of_birth = response.profile.date_of_birth;
+                // this.profileForm.date_of_birth = response.profile.date_of_birth;
                 this.profileForm.gender = response.profile.gender;
-                this.profileForm.facebook_profile = response.profile.facebook_profile;
-                this.profileForm.twitter_profile = response.profile.twitter_profile;
-                this.profileForm.google_plus_profile = response.profile.google_plus_profile;
-                this.social_auth = response.social_auth;
+                this.profileForm.allocated_area = response.profile.allocated_area;
+                // this.profileForm.twitter_profile = response.profile.twitter_profile;
+                // this.profileForm.google_plus_profile = response.profile.google_plus_profile;
+                // this.social_auth = response.social_auth;
             });
         },
         methods: {
@@ -154,7 +154,7 @@
                 });
             },
             updateProfile() {
-                this.profileForm.date_of_birth = moment(this.profileForm.date_of_birth).format('YYYY-MM-DD');
+                // this.profileForm.date_of_birth = moment(this.profileForm.date_of_birth).format('YYYY-MM-DD');
                 this.profileForm.post('/api/v1/user/update-profile').then(response => {
                     toastr['success'](response.message);
                     this.$store.dispatch('setAuthUserDetail',{

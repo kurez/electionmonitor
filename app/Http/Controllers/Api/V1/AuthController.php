@@ -10,9 +10,11 @@ use App\Notifications\Activation;
 use App\Notifications\PasswordReset;
 use App\Notifications\PasswordResetted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
+use Faker\Generator as Faker;
 
 /**
  * AuthController.
@@ -21,13 +23,13 @@ class AuthController extends APIController
 {
     public function authenticate(Request $request)
     {
-        // $credentials = $request->only('email', 'password');
-        $credentials = request(['email', 'password']);
+        $credentials = $request->only('email', 'password');
+        // $credentials = request(['email', 'password']);
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                // return response()->json(['message' => 'Invalid Credentials! Please try again.'], 422);
-                return $credentials;
+                return response()->json(['message' => 'Invalid Credentials! Please try again.'], 422);
+                // return $credentials;
             }
         } catch (JWTException $e) {
             return response()->json(['message' => 'This is something wrong. Please try again!'], 500);
@@ -88,11 +90,11 @@ class AuthController extends APIController
             return response()->json($e->getMessage(), 500);
         }
 
-        return view('auth/game');
-        // return response()->json(['message' => 'You are successfully logged out!']);
+        // return view('auth/game');
+        return response()->json(['message' => 'You are successfully logged out!']);
     }
 
-    public function register(Request $request)
+    public function register(Request $request, Faker $faker)
     {
         $validation = Validator::make($request->all(), [
             'first_name'            => 'required',
@@ -112,7 +114,10 @@ class AuthController extends APIController
             'password' => bcrypt(request('password')),
         ]);
 
-        $user->activation_token = generateUuid();
+        $user->activation_token = Str::uuid()->toString();
+        $user->phone = $faker->e164PhoneNumber;
+        $user->first_name = request('first_name');
+        $user->last_name = request('last_name');
         $user->save();
         $profile = new Profile();
         $profile->first_name = request('first_name');

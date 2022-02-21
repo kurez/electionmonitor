@@ -27,12 +27,12 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
 
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('/auth/user', 'AuthController@getAuthUser');
-        Route::post('/task', 'TaskController@store');
-        Route::get('/task', 'TaskController@index');
-        Route::delete('/task/{id}', 'TaskController@destroy');
-        Route::get('/task/{id}', 'TaskController@show');
-        Route::patch('/task/{id}', 'TaskController@update');
-        Route::post('/task/status', 'TaskController@toggleStatus');
+        Route::post('/aspirant', 'AspirantController@store');
+        Route::get('/aspirant', 'AspirantController@index');
+        Route::delete('/aspirant/{id}', 'AspirantController@destroy');
+        Route::get('/aspirant/{id}', 'AspirantController@show');
+        Route::patch('/aspirant/{id}', 'AspirantController@update');
+        Route::post('/aspirant/status', 'AspirantController@toggleStatus');
 
         Route::get('/configuration/fetch', 'ConfigurationController@index');
         Route::post('/configuration', 'ConfigurationController@store');
@@ -45,9 +45,10 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::delete('/user/{id}', 'UserController@destroy');
         Route::get('/user/dashboard', 'UserController@dashboard');
 
-        Route::post('todo', 'TodoController@store');
-        Route::get('/todo', 'TodoController@index');
-        Route::delete('/todo/{id}', 'TodoController@destroy');
-        Route::post('/todo/status', 'TodoController@toggleStatus');
+      
+        Route::get('/county', 'LocationsController@fetchCounty');
+        Route::get('/constituency', 'LocationsController@fetchConstituency');
+        Route::get('/ward', 'LocationsController@fetchWard');
+    
     });
 });

@@ -20,13 +20,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">First Name</label>
-                                    <input class="form-control" v-model="filterUserForm.first_name" @blur="getUsers">
+                                    <input class="form-control" v-model="filterUserForm.first_name" @change="getUsers">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Last Name</label>
-                                    <input class="form-control" v-model="filterUserForm.last_name" @blur="getUsers">
+                                    <input class="form-control" v-model="filterUserForm.last_name" @change="getUsers">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -69,28 +69,29 @@
                         </div>
 
                         <h4 class="card-title">User List</h4>
-                        <h6 class="card-subtitle" v-if="users.total">Total {{users.total}} result found!</h6>
+                        <h6 class="card-subtitle" v-if="users.length">Total {{ users.length }} result found!</h6>
                         <h6 class="card-subtitle" v-else>No result found!</h6>
                         <div class="table-responsive">
-                            <table class="table" v-if="users.total">
+                            <table class="table" v-if="users.length">
                                 <thead>
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>Date of Birth</th>
-                                        <th>Gender</th>
+                                        <th>Phone</th>
                                         <th>Email</th>
+                                        <th>Gender</th>
                                         <th>Status</th>
                                         <th style="width:150px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="user in users.data">
-                                        <td v-text="user.profile.first_name"></td>
-                                        <td v-text="user.profile.last_name"></td>
-                                        <td>{{ user.profile.date_of_birth | moment }}</td>
+                                    <tr v-for="user in users" :key=user.id>
+                                        <td v-text="user.first_name"></td>
+                                        <td v-text="user.last_name"></td>
+                                        <td v-text="user.phone"></td>
+                                        <td>{{ user.email }}</td>
                                         <td>{{ user.profile.gender | ucword }}</td>
-                                        <td v-text="user.email"></td>
+                                        
                                         <td v-html="getUserStatus(user)"></td>
                                         <td>
                                             <!-- <click-confirm yes-class="btn btn-success" no-class="btn btn-danger">
@@ -138,8 +139,10 @@
                     sortBy : 'first_name',
                     order: 'desc',
                     status: '',
-                    title: '',
-                    pageLength: 5
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    pageLength: 200
                 }
             } 
         },
@@ -153,7 +156,10 @@
                 }
                 let url = helper.getFilterURL(this.filterUserForm);
                 axios.get('/api/v1/user?page=' + page + url)
-                    .then(response => this.users = response.data );
+                    .then(response => {
+                        this.users = response.data.data
+                        console.log(this.users)
+                    });
             },
             deleteUser(user){
                 axios.delete('/api/v1/user/' +user.id).then(response => {

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\Task;
+namespace App\Models\Aspirant;
 
 use Eloquent;
 
-class Task extends Eloquent
+class Aspirant extends Eloquent
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'tasks';
+    protected $table = 'aspirants';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class Task extends Eloquent
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'start_date', 'due_date',
+        'full_name', 'political_party','user_id', 'electoral_area', 'electoral_position','results',
     ];
 
     /**

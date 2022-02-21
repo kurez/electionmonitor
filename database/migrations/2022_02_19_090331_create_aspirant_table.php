@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateAspirantTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('aspirants', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('email')->unique();
-            $table->string('phone', 20)->nullable();
-            $table->string('password')->nullable();
-            $table->string('provider')->nullable();
-            $table->string('provider_unique_id')->nullable();
-            $table->string('activation_token', 64)->nullable();
-            $table->string('status', 25)->nullable();
-            $table->rememberToken();
+            $table->string('full_name')->nullable();
+            $table->string('political_party')->nullable();
+            $table->string('electoral_position')->nullable();
+            $table->string('electoral_area')->nullable();
+            $table->string('results')->nullable();
             $table->timestamps();
         });
     }
@@ -36,7 +33,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('aspirants');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

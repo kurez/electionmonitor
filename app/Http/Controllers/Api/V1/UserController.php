@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Task\Task;
+use App\Models\Aspirant\Aspirant;
 use App\Models\User\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -47,8 +47,10 @@ class UserController extends APIController
     {
         try {
             return $this->repositery->getAllUsers($request);
+            // return  $user = User;
+            
         } catch (\Exception $ex) {
-            Log::error($ex->getMessage());
+            // Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
@@ -262,10 +264,10 @@ class UserController extends APIController
     {
         try {
             $users_count = User::count();
-            $tasks_count = Task::count();
-            $recent_incomplete_tasks = Task::whereStatus(0)->orderBy('due_date', 'desc')->limit(5)->get();
+            $aspirants_count = Aspirant::count();
+            // $recent_incomplete_aspirants = Aspirant::whereStatus(0)->orderBy('due_date', 'desc')->limit(5)->get();
 
-            return response()->json(compact('users_count', 'tasks_count', 'recent_incomplete_tasks'));
+            return response()->json(compact('users_count', 'aspirants_count'));
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
 

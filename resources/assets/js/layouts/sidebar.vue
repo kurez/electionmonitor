@@ -23,7 +23,7 @@
                         <router-link to="/user" exact><i class="fa fa-users"></i> <span class="hide-menu">User</span></router-link>
                     </li>
                     <li>
-                        <router-link to="/task" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Task</span></router-link>
+                        <router-link to="/aspirant" exact><i class="fa fa-tasks"></i> <span class="hide-menu">Aspirant</span></router-link>
                     </li>
                     <li>
                         <router-link to="/anything" exact><i class="fa fa-exclamation-triangle"></i> <span class="hide-menu">Error Page</span></router-link>
