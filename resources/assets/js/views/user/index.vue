@@ -10,9 +10,22 @@
             </div>
         </div>
 
-        <div class="row">
+         <div class="row">
             <div class="col-lg-12">
-                <div class="card">
+                <v-card elevation="2">
+                    <div class="card-body">
+                        <h4 class="card-title">Add
+                             User</h4>
+                        <user-form @completed="getUsers"></user-form>
+                    </div>
+                </v-card>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            <div class="col-lg-12">
+                <v-card elevation="2">
                     <div class="card-body">
                         <h4 class="card-title">Filter User</h4>
 
@@ -53,6 +66,7 @@
                                         <option value="first_name">First Name</option>
                                         <option value="last_name">Last Name</option>
                                         <option value="email">Email</option>
+                                        <option value="phone">Phone</option>
                                         <option value="status">Status</option>
                                     </select>
                                 </div>
@@ -79,6 +93,8 @@
                                         <th>Last Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Allocated Area</th>
                                         <th>Gender</th>
                                         <th>Status</th>
                                         <th style="width:150px;">Action</th>
@@ -90,13 +106,15 @@
                                         <td v-text="user.last_name"></td>
                                         <td v-text="user.phone"></td>
                                         <td>{{ user.email }}</td>
-                                        <td>{{ user.profile.gender | ucword }}</td>
+                                        <td v-html="getUserRole(user)"></td>
+                                        <td>{{ user.profile.allocated_area }}</td>
+                                        <td class="hidden-xs hidden-md hidden-sm">{{ user.profile.gender | ucword }}</td>
                                         
                                         <td v-html="getUserStatus(user)"></td>
                                         <td>
-                                            <!-- <click-confirm yes-class="btn btn-success" no-class="btn btn-danger">
+                                            <!-- <click-confirm yes-class="btn btn-success" no-class="btn btn-danger"> -->
                                                 <button class="btn btn-danger btn-sm" @click.prevent="deleteUser(user)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i></button>
-                                            </click-confirm> -->
+                                            <!-- </click-confirm> -->
                                         </td>
                                     </tr>
                                 </tbody>
@@ -119,30 +137,32 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </v-card>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import UserForm from './form'
     // import pagination from 'laravel-vue-pagination'
     import helper from '../../services/helper'
     // import ClickConfirm from 'click-confirm'
 
     export default {
-        // components : { pagination },
+        components : { UserForm },
         data() {
             return {
                 users: {},
                 filterUserForm: {
                     sortBy : 'first_name',
                     order: 'desc',
+                    phone: '',
                     status: '',
                     first_name: '',
                     last_name: '',
                     email: '',
-                    pageLength: 200
+                    pageLength: 50
                 }
             } 
         },
@@ -176,6 +196,14 @@
                     return '<span class="label label-success">Activated</span>';
                 else if(user.status == 'banned')
                     return '<span class="label label-danger">Banned</span>';
+                else
+                    return;
+            },
+            getUserRole(user){
+                if(user.profile.role == 'agent')
+                    return '<span class="label label-warning">Agent</span>';
+                else if(user.profile.role == 'admin')
+                    return '<span class="label label-danger">Admin</span>';
                 else
                     return;
             }

@@ -10,6 +10,11 @@ require('./bootstrap');
 import store from './store'
 import router from './routes'
 
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify)
+
 // Register Vue Components
 // Vue.component('login-component', require('./components/LoginComponent.vue').default);
 /**
@@ -20,6 +25,7 @@ import router from './routes'
 
 const app = new Vue({
     el: '#root',
+    vuetify : new Vuetify(),
     store,
     router
 });

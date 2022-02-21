@@ -90,7 +90,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="aspirant in aspirants.data">
+                                    <tr v-for="aspirant in aspirants.data" :key="aspirant.id">
                                         <td v-text="aspirant.full_name"></td>
                                         <td>{{ aspirant.political_party }}</td>
                                         <td>{{ aspirant.electoral_position }}</td>

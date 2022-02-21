@@ -49,6 +49,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('/county', 'LocationsController@fetchCounty');
         Route::get('/constituency', 'LocationsController@fetchConstituency');
         Route::get('/ward', 'LocationsController@fetchWard');
+        Route::get('/polling', 'LocationsController@fetchPolling');
     
     });
 });

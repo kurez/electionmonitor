@@ -124,9 +124,9 @@ class AuthController extends APIController
         $profile->last_name = request('last_name');
         $user->profile()->save($profile);
 
-        $user->notify(new Activation($user));
+        // $user->notify(new Activation($user));
 
-        return response()->json(['message' => 'You have registered successfully. Please check your email for activation!']);
+        return response()->json(['message' => 'You have registered a user successfully!']);
     }
 
     public function activate($activation_token)

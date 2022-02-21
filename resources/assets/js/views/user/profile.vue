@@ -40,17 +40,30 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="">Allocated Area</label>
-                                <input class="form-control" type="text" value="" v-model="profileForm.allocated_area">
+                                <label for="">Role</label>
+                                <div class="radio radio-info">
+                                    <input type="radio" value="agent" id="role_agent" v-model="profileForm.role" :checked="profileForm.role === 'agent'">
+                                    <label for="role_agent"> Agent </label>
+                                </div>
+                                <div class="radio radio-success">
+                                    <input type="radio" value="admin" id="role_admin" v-model="profileForm.role" :checked="profileForm.role === 'admin'">
+                                    <label for="role_admin"> Admin </label>
+                                </div>
                             </div>
                             <div class="form-group">
+                                <label for="">Allocated Area</label>
+                                <select name="allocated_area" class="form-control" v-model="profileForm.allocated_area">
+                                    <option v-for="allocated_area in allocated_areas" :key="allocated_area['id']" :value="allocated_area['polling_name']">{{ allocated_area['polling_name'] }},{{ allocated_area['ward_name'] }} ward, {{ allocated_area['constituency_name'] }} constituency, {{ allocated_area['county_name'] }} county</option>
+                                </select>
+                            </div>
+                            <!-- <div class="form-group">
                                 <label for="">Twitter Profile</label>
                                 <input class="form-control" type="text" value="" v-model="profileForm.twitter_profile">
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            <!-- <div class="form-group">
                                 <label for="">Google Plus Profile</label>
                                 <input class="form-control" type="text" value="" v-model="profileForm.google_plus_profile">
-                            </div>
+                            </div> -->
                             <button type="submit" class="btn btn-info waves-effect waves-light m-t-10">Update</button>
                         </form>
                     </div>
@@ -126,24 +139,26 @@
                     // date_of_birth : '',
                     gender : '',
                     allocated_area : '',
-                    twitter_profile : '',
-                    google_plus_profile : ''
+                    role : '',
+                    // google_plus_profile : ''
                 }, false),
                 avatar: '',
-                social_auth: 0
+                social_auth: 0,
+                allocated_areas: []
             };
         },
         mounted(){
             axios.get('/api/v1/auth/user').then(response => response.data).then(response => {
                 this.profileForm.first_name = response.profile.first_name;
                 this.profileForm.last_name = response.profile.last_name;
-                // this.profileForm.date_of_birth = response.profile.date_of_birth;
                 this.profileForm.gender = response.profile.gender;
                 this.profileForm.allocated_area = response.profile.allocated_area;
-                // this.profileForm.twitter_profile = response.profile.twitter_profile;
-                // this.profileForm.google_plus_profile = response.profile.google_plus_profile;
-                // this.social_auth = response.social_auth;
+                this.profileForm.role = response.profile.role;
             });
+             axios.get('/api/v1/polling')
+                .then(response => {
+                    console.log(this.allocated_areas = response.data)
+                })
         },
         methods: {
             changePassword() {
@@ -154,7 +169,6 @@
                 });
             },
             updateProfile() {
-                // this.profileForm.date_of_birth = moment(this.profileForm.date_of_birth).format('YYYY-MM-DD');
                 this.profileForm.post('/api/v1/user/update-profile').then(response => {
                     toastr['success'](response.message);
                     this.$store.dispatch('setAuthUserDetail',{

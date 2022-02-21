@@ -69,7 +69,7 @@ class UserController extends APIController
             $validation = Validator::make($request->all(), [
                 'first_name'    => 'required|min:2',
                 'last_name'     => 'required|min:2',
-                'date_of_birth' => 'required|date_format:Y-m-d',
+                // 'date_of_birth' => 'required|date_format:Y-m-d',
                 'gender'        => 'required|in:male,female',
             ]);
 
@@ -82,11 +82,15 @@ class UserController extends APIController
 
             $profile->first_name = request('first_name');
             $profile->last_name = request('last_name');
-            $profile->date_of_birth = request('date_of_birth');
+
+            $user->first_name = request('first_name');
+            $user->last_name = request('last_name');
+            $user->save();
+            // $profile->date_of_?birth = request('date_of_birth');
             $profile->gender = request('gender');
-            $profile->twitter_profile = request('twitter_profile');
-            $profile->facebook_profile = request('facebook_profile');
-            $profile->google_plus_profile = request('google_plus_profile');
+            $profile->role = request('role');
+            $profile->allocated_area = request('allocated_area');
+            // $profile->google_plus_profile = request('google_plus_profile');
 
             if ($profile->save()) {
                 DB::commit();
@@ -237,6 +241,7 @@ class UserController extends APIController
             }
 
             if ($user->delete()) {
+                if ($user->role === '')
                 DB::commit();
                 $responseArr = [
                     'message' => 'User has been deleted successfully!',
