@@ -32,12 +32,24 @@ let routes = [
                 component: require('./views/aspirant/index.vue').default
             },
             {
+                path: '/add/aspirant',
+                component: require('./views/aspirant/add.vue').default
+            },
+            {
                 path: '/aspirant/:id/edit',
                 component: require('./views/aspirant/edit.vue').default
             },
             {
                 path: '/user',
                 component: require('./views/user/index.vue').default
+            },
+            {
+                path: '/add/user',
+                component: require('./views/user/register.vue').default
+            },
+            {
+                path: '/user/:id/edit',
+                component: require('./views/user/edit.vue').default
             },
         ]
     },

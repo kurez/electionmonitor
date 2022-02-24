@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
+use Illuminate\Support\Facades\Log;
 use Faker\Generator as Faker;
 
 /**
@@ -99,13 +100,18 @@ class AuthController extends APIController
         $validation = Validator::make($request->all(), [
             'first_name'            => 'required',
             'last_name'             => 'required',
+            'phone'                 => 'required',
+            'gender'                => 'required',
+            'allocated_area'        => 'required',
+            // 'role  '                => 'required',
             'email'                 => 'required|email|unique:users',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required|same:password',
         ]);
 
         if ($validation->fails()) {
-            return response()->json(['message' => $validation->messages()->first()], 422);
+            // return response()->json(['message' => $validation->messages()->first()], 422);
+            // Log::error($ex->getMessage());
         }
 
         $user = User::create([
@@ -118,11 +124,14 @@ class AuthController extends APIController
         $user->phone = $faker->e164PhoneNumber;
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
+        $user->role = request('role');
+        $user->gender = request('gender');
+        $user->allocated_area = request('allocated_area');
         $user->save();
-        $profile = new Profile();
-        $profile->first_name = request('first_name');
-        $profile->last_name = request('last_name');
-        $user->profile()->save($profile);
+        // $profile = new Profile();
+        // $profile->first_name = request('first_name');
+        // $profile->last_name = request('last_name');
+        // $user->profile()->save($profile);
 
         // $user->notify(new Activation($user));
 

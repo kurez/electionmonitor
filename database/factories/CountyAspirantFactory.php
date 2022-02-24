@@ -111,6 +111,7 @@ $factory->define(Aspirant::class, function (Faker $faker) {
     ];
     return [
         'full_name'            => $faker->name,
+        'uuid'                 => Str::uuid()->toString(),
         'political_party'       => $political_parties[rand(0, count($political_parties) - 1)],
         'electoral_position'   => 'County Woman Member of National Assembly',
         'electoral_area'       => $electoral_area[rand(0, count($electoral_area) - 1)],

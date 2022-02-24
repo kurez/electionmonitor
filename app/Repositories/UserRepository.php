@@ -49,11 +49,22 @@ class UserRepository extends BaseRepository
             $users->where('email', 'like', '%'.request('email').'%');
         }
 
+        if ($request->has('phone')) {
+            $users->where('phone', 'like', '%'.request('phone').'%');
+        }
+        if ($request->has('role')) {
+            $users->where('role', 'like', '%'.request('role').'%');
+        }
+
+        if ($request->has('gender')) {
+            $users->where('gender', 'like', '%'.request('gender').'%');
+        }
+
         if ($request->has('status')) {
             $users->whereStatus(request('status'));
         }
 
-        if (request('sortBy') == 'first_name' || request('sortBy') == 'last_name') {
+        if (request('sortBy') == 'first_name' || request('sortBy') == 'last_name' || request('sortBy') == 'email') {
             $users->with(['profile' => function ($q) {
                 $q->orderBy(request('sortBy'), request('order'));
             }]);

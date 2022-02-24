@@ -11,6 +11,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@mdi/font": "^6.5.95",
         "axios": "^0.19",
         "browser-sync": "^2.27.7",
         "browser-sync-webpack-plugin": "^2.2.2",
@@ -48,6 +49,7 @@
         "vee-validate": "^2.2.13",
         "vue": "^2.6.11",
         "vue-loader": "^17.0.0",
+        "vue-material": "^1.0.0-beta-15",
         "vue-range-slider": "^0.6.0",
         "vue-router": "^3.4.3",
         "vuejs-datepicker": "^1.6.2",

@@ -37,6 +37,10 @@ class AspirantController extends APIController
                 $aspirants->where('electoral_position', 'like', '%'.request('electoral_position').'%');
             }
 
+            if (request()->has('results')) {
+                $aspirants->where('results', 'like', '%'.request('results').'%');
+            }
+
             // if (request()->has('status')) {
             //     $tasks->whereStatus(request('status'));
             // }
@@ -74,7 +78,7 @@ class AspirantController extends APIController
             $aspirant = new Aspirant();
             $aspirant->fill(request()->all());
             $aspirant->uuid = Str::uuid()->toString();
-            $aspirant->user_id = $user->id;
+            // $aspirant->user_id = $user->id;
             $aspirant->save();
 
             return response()->json(['message' => 'Aspirant added!', 'data' => $aspirant]);

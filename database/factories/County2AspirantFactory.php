@@ -2,6 +2,7 @@
 
 use App\Models\Aspirant\Aspirant;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -268,6 +269,7 @@ $factory->define(Aspirant::class, function (Faker $faker) {
     ];
     return [
         'full_name'            => $faker->name,
+        'uuid'                 => Str::uuid()->toString(),
         'political_party'       => $political_parties[rand(0, count($political_parties) - 1)],
         'electoral_position'   => 'Member of County Assembly', 
         'electoral_area'       => $electoral_area[rand(0, count($electoral_area) - 1)],

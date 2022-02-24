@@ -40,9 +40,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('/user', 'UserController@index');
         Route::post('/user/change-password', 'AuthController@changePassword');
         Route::post('/user/update-profile', 'UserController@updateProfile');
-        Route::post('/user/update-avatar', 'UserController@updateAvatar');
+        Route::post('/user/update-avatar/{id}', 'UserController@updateAvatar');
         Route::post('/user/remove-avatar', 'UserController@removeAvatar');
         Route::delete('/user/{id}', 'UserController@destroy');
+        Route::get('/user/edit/{id}', 'UserController@show');
+        Route::patch('/user/{id}', 'UserController@updateProfile');
         Route::get('/user/dashboard', 'UserController@dashboard');
 
       

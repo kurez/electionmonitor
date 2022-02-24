@@ -2,7 +2,7 @@
 <div>
     <section id="wrapper">
         <div class="login-register" style="background-image:url(/images/background/background.jpg);">
-            <div class="login-box card">
+            <v-card elevation="2" class="login-card">
             <div class="card-body">
                 <form class="form-horizontal form-material" id="loginform" @submit.prevent="submit">
                     <h3 class="box-title m-b-20">Sign In</h3>
@@ -29,16 +29,16 @@
                         </div>
                     </div> -->
 
-                    <div class="form-group m-b-0">
+                    <!-- <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
                             <p>Forgot your password? <router-link to="/password" class="text-info m-l-5"><b>Reset here!</b></router-link></p>
                             <p>Don't have an account? <router-link to="/register" class="text-info m-l-5"><b>Sign Up</b></router-link></p>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
             <!-- <guest-footer></guest-footer> -->
-          </div>
+          </v-card>
         </div>
 
     </section>

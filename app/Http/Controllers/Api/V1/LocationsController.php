@@ -60,7 +60,7 @@ class LocationsController extends APIController
     {
         
         try {
-            return $results = DB::select('select p.polling_name,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id ORDER BY county_name;');
+            return $results = DB::select('select p.polling_name,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id ORDER BY county_name LIMIT 500;');
             // return $results = DB::select('select p.polling_name, w.ward_name FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN consituency AS c ON p.constituency_id=c.id ORDER BY polling_name;');
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());

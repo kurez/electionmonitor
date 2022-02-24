@@ -52,16 +52,39 @@ class UserController extends APIController
         } catch (\Exception $ex) {
             // Log::error($ex->getMessage());
 
+            return response()->json($ex->getMessage());
+        }
+    }
+
+        /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        try {
+            $user = User::whereId($id)->first();
+
+            if (!$user) {
+                return response()->json(['message' => 'Could not find user!'], 422);
+            }
+
+            return $user;
+        } catch (\Exception $ex) {
+            // Log::error($ex->getMessage());
+
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
     }
+
 
     /**
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request, $id)
     {
         DB::beginTransaction();
 
@@ -70,29 +93,35 @@ class UserController extends APIController
                 'first_name'    => 'required|min:2',
                 'last_name'     => 'required|min:2',
                 // 'date_of_birth' => 'required|date_format:Y-m-d',
-                'gender'        => 'required|in:male,female',
+                // 'gender'        => 'required|in:male,female',
+                
             ]);
 
             if ($validation->fails()) {
                 return response()->json(['message' => $validation->messages()->first()], 422);
             }
 
-            $user = JWTAuth::parseToken()->authenticate();
-            $profile = $user->Profile;
+            // $user = JWTAuth::parseToken()->authenticate();
+            $user = User::whereId($id)->first();
+            // $profile = $user->Profile;
 
-            $profile->first_name = request('first_name');
-            $profile->last_name = request('last_name');
+            // $profile->first_name = request('first_name');
+            // $profile->last_name = request('last_name');
 
             $user->first_name = request('first_name');
             $user->last_name = request('last_name');
+            $user->gender = request('gender');
+            $user->phone = request('phone');
+            $user->role = request('role');
+            $user->allocated_area = request('allocated_area');
             $user->save();
             // $profile->date_of_?birth = request('date_of_birth');
-            $profile->gender = request('gender');
-            $profile->role = request('role');
-            $profile->allocated_area = request('allocated_area');
+            // $profile->gender = request('gender');
+            // $profile->role = request('role');
+            // $profile->allocated_area = request('allocated_area');
             // $profile->google_plus_profile = request('google_plus_profile');
 
-            if ($profile->save()) {
+            if ($user->save()) {
                 DB::commit();
                 $responseArr = [
                     'message' => 'Your profile has been updated!',
@@ -119,7 +148,7 @@ class UserController extends APIController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateAvatar(Request $request)
+    public function updateAvatar(Request $request, $id)
     {
         DB::beginTransaction();
 
@@ -132,28 +161,27 @@ class UserController extends APIController
                 return response()->json(['message' => $validation->messages()->first()], 422);
             }
 
-            $user = JWTAuth::parseToken()->authenticate();
-            $profile = $user->Profile;
+            $user = User::whereId($id)->first();
 
-            if ($profile->avatar && \File::exists($this->avatar_path.$profile->avatar)) {
-                \File::delete($this->avatar_path.$profile->avatar);
+            if ($user->avatar && \File::exists($this->avatar_path.$user->avatar)) {
+                \File::delete($this->avatar_path.$user->avatar);
             }
 
             $extension = $request->file('avatar')->getClientOriginalExtension();
-            $filename = uniqid();
+            $filename = $user->activation_token;
             $file = $request->file('avatar')->move($this->avatar_path, $filename.'.'.$extension);
             $img = \Image::make($this->avatar_path.$filename.'.'.$extension);
             $img->resize(200, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $img->save($this->avatar_path.$filename.'.'.$extension);
-            $profile->avatar = $filename.'.'.$extension;
+            $user->avatar = '/images/users/'.$filename.'.'.$extension;
 
-            if ($profile->save()) {
+            if ($user->save()) {
                 DB::commit();
                 $responseArr = [
-                    'message' => 'Your avatar has been updated!',
-                    'profile' => $profile,
+                    'message' => 'Users avatar has been updated!',
+                    'user' => $user,
                 ];
             } else {
                 DB::rollback();
