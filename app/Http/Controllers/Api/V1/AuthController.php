@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\UserCode;
 use App\Models\Profile\Profile;
 use App\Models\User\User;
 use App\Notifications\Activated;
@@ -16,16 +17,60 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator;
 use Illuminate\Support\Facades\Log;
 use Faker\Generator as Faker;
+use DB;
 
 /**
  * AuthController.
  */
 class AuthController extends APIController
 {
+    public function checkIfUserExists(Request $request) {
+        $phone = $request->only('phone');
+        $phone = substr($phone['phone'], 1);
+        $phone = '+254'.$phone;
+        $phone = str_replace(' ', '', $phone);
+
+        $user = DB::table('users')->where('phone',$phone)->first();
+        
+        try {
+        if ($user) {
+            $code = rand(100000, 999999);
+  
+            UserCode::updateOrCreate([
+                'user_id' => $user->id,
+                'code' => $code
+            ]);
+      
+            $receiverNumber = $phone;
+            $message = "Your Login OTP code is ". $code;
+            $sender = "Kura";
+        
+            
+                // $basic  = new \Nexmo\Client\Credentials\Basic('cee6d9f9', 'K8BrzbcnJ0g5MGRf');
+                // $client = new \Nexmo\Client($basic);
+    
+                // $message = $client->message()->send([
+                //     'to' => $receiverNumber,
+                //     'from' => $sender,
+                //     'text' => $message
+                // ]);
+
+                $foundUser = DB::select('select * from users where phone ='.$phone);
+                // return $foundUser;
+                return response()->json(['message' => 'Success','data' => $foundUser]);
+        } else {
+            return response()->json(['message' => 'Error']);
+        }
+    } catch (JWTException $e) {
+        // ..
+    }
+    
+    }
+  
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        // $credentials = request(['email', 'password']);
+        // $credentials = $request->only('email', 'password');
+        $credentials = request(['email', 'password']);
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -36,22 +81,64 @@ class AuthController extends APIController
             return response()->json(['message' => 'This is something wrong. Please try again!'], 500);
         }
 
-        $user = User::whereEmail(request('email'))->first();
+        $user = DB::select('select * from users where id = '.auth()->user()->id);
+        DB::table('users')
+                ->where('id', auth()->user()->id)
+                ->update(['status' => 'online']);
 
-        if ($user->status == 'pending_activation') {
-            return response()->json(['message' => 'Your account hasn\'t been activated. Please check your email & activate account.'], 422);
-        }
-
-        if ($user->status == 'banned') {
-            return response()->json(['message' => 'Your account is banned. Please contact system administrator.'], 422);
-        }
-
-        if ($user->status != 'activated') {
-            return response()->json(['message' => 'There is something wrong with your account. Please contact system administrator.'], 422);
-        }
-
-        return response()->json(['message' => 'You are successfully logged in!', 'token' => $token]);
+        return response()->json(['message' => 'Success','data' => $user,'token' => $token]);
     }
+        /**
+     * validate sms
+     *
+     * @return response()
+     */
+    public function storeOTP(Request $request)
+        {
+            // return $request->only('otp');
+            $validated = $request->validate([
+                'otp' => 'required',
+                'phone' => 'required'
+            ]);
+
+            $phone = $validated['phone'];
+            // $phone = substr($validated['phone'], 1);
+            // $phone = '+254'.$phone;
+            // $phone = str_replace(' ', '', $phone);
+    
+            $user = DB::table('users')->where('phone', $phone)->first();
+
+            // return $user->id;
+        
+            $exists = UserCode::where('user_id', $user->id)
+                    ->where('code', $validated['otp'])
+                    ->where('updated_at', '>=', now()->subMinutes(5))
+                    ->latest('updated_at')
+                    ->exists();
+            
+            if ($exists) {
+                // DB::table('users')
+                // ->where('id', $user->id)
+                // ->update(['status' => 'activated']);
+                
+                return response()->json(['message' => 'Success' ,'data' => 1]);
+            }
+            
+            return response()->json(['message' => 'Error' ,'data' => 0]);
+        }
+        /**
+         * resend otp code
+         *
+         * @return response()
+         */
+        public function resend()
+        {
+            auth()->user()->generateCode();
+    
+            return back()
+                ->with('success', 'We have resent OTP on your mobile number.');
+        }
+    
 
     public function getAuthUser()
     {
@@ -91,6 +178,10 @@ class AuthController extends APIController
             return response()->json($e->getMessage(), 500);
         }
 
+        DB::table('users')
+               ->where('id', auth()->user()->id)
+               ->update(['status' => 'offline']);
+
         // return view('auth/game');
         return response()->json(['message' => 'You are successfully logged out!']);
     }
@@ -110,8 +201,8 @@ class AuthController extends APIController
         ]);
 
         if ($validation->fails()) {
-            // return response()->json(['message' => $validation->messages()->first()], 422);
-            // Log::error($ex->getMessage());
+            return response()->json(['message' => $validation->messages()->first()], 422);
+            Log::error($ex->getMessage());
         }
 
         $user = User::create([
@@ -121,7 +212,7 @@ class AuthController extends APIController
         ]);
 
         $user->activation_token = Str::uuid()->toString();
-        $user->phone = $faker->e164PhoneNumber;
+        $user->phone = request('phone');
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
         $user->role = request('role');

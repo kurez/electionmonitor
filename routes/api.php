@@ -17,12 +17,14 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('/login', 'AuthController@authenticate');
         Route::post('/logout', 'AuthController@logout');
         Route::post('/check', 'AuthController@check');
+        Route::post('/check/if/user/exists', 'AuthController@checkIfUserExists');
         Route::post('/register', 'AuthController@register');
         Route::get('/activate/{token}', 'AuthController@activate');
         Route::post('/password', 'AuthController@password');
         Route::post('/validate-password-reset', 'AuthController@validatePasswordReset');
         Route::post('/reset', 'AuthController@reset');
         Route::post('/social/token', 'SocialAuthController@getToken');
+        Route::post('/two-factor-auth', 'AuthController@storeOTP');
     });
 
     Route::group(['middleware' => ['jwt.auth']], function () {
@@ -32,19 +34,19 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::delete('/aspirant/{id}', 'AspirantController@destroy');
         Route::get('/aspirant/{id}', 'AspirantController@show');
         Route::patch('/aspirant/{id}', 'AspirantController@update');
-        Route::post('/aspirant/status', 'AspirantController@toggleStatus');
+        // Route::post('/aspirant/status', 'AspirantController@toggleStatus');
 
         Route::get('/configuration/fetch', 'ConfigurationController@index');
         Route::post('/configuration', 'ConfigurationController@store');
 
         Route::get('/user', 'UserController@index');
-        Route::post('/user/change-password', 'AuthController@changePassword');
-        Route::post('/user/update-profile', 'UserController@updateProfile');
+        // Route::post('/user/change-password', 'AuthController@changePassword');
+        // Route::post('/user/update-profile', 'UserController@updateProfile');
         Route::post('/user/update-avatar/{id}', 'UserController@updateAvatar');
         Route::post('/user/remove-avatar', 'UserController@removeAvatar');
         Route::delete('/user/{id}', 'UserController@destroy');
-        Route::get('/user/edit/{id}', 'UserController@show');
-        Route::patch('/user/{id}', 'UserController@updateProfile');
+        Route::get('/user/{id}', 'UserController@show');
+        Route::put('/user/{id}', 'UserController@updateProfile');
         Route::get('/user/dashboard', 'UserController@dashboard');
 
       
@@ -52,6 +54,12 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('/constituency', 'LocationsController@fetchConstituency');
         Route::get('/ward', 'LocationsController@fetchWard');
         Route::get('/polling', 'LocationsController@fetchPolling');
+        Route::get('/polling/{name}', 'LocationsController@fetchPollingByName');
     
+        // Route::get('two-factor-auth', [TwoFactorAuthController::class, 'index'])->name('2fa.index');
+        // Route::post('/two-factor-auth', [TwoFactorAuthController::class, 'store'])->name('2fa.store');
+        // Route::get('/two-factor-auth/resent', [TwoFactorAuthController::class, 'resend'])->name('2fa.resend');
+        
+
     });
 });

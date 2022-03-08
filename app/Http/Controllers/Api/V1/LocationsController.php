@@ -17,12 +17,13 @@ class LocationsController extends APIController
     public function fetchCounty()
     {
         try {
-            return $results = DB::select('select county_name from county');
+            return $results = DB::select('select county_name, county_code, longitude,latitude FROM county');
+            // return $results = DB::select('select p.polling_name, w.ward_name FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN consituency AS c ON p.constituency_id=c.id ORDER BY polling_name;');
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
-        }
+        } return response()->json(['message' => 'Sorry, something went wrong!'], 422);
     }
 
     /**
@@ -31,21 +32,22 @@ class LocationsController extends APIController
     public function fetchConstituency()
     {
         try {
-            return $results = DB::select('select constituency_name from constituency');
+            return $results = DB::select('select p.constituency_name, p.const_code, p.longitude, p.latitude,b.county_name   FROM constituency AS p INNER JOIN county AS b ON p.county_id=b.id ORDER BY constituency_name;');
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
-        }
+        } return response()->json(['message' => 'Sorry, something went wrong!'], 422);
     }
-
+    
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function fetchWard()
     {
         try {
-            return $results = DB::select('select ward_name from ward');
+            return $results = DB::select('select p.ward_name,p.registered,p.percentage,p.estimated, p.population, c.constituency_name, b.county_name  FROM ward AS p INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id ORDER BY ward_name;');
+            // return $results = DB::select('select p.polling_name, w.ward_name FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN consituency AS c ON p.constituency_id=c.id ORDER BY polling_name;');
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
 
@@ -60,7 +62,7 @@ class LocationsController extends APIController
     {
         
         try {
-            return $results = DB::select('select p.polling_name,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id ORDER BY county_name LIMIT 500;');
+            return $results = DB::select('select p.polling_name,p.longitude,p.latitude,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id ORDER BY polling_name LIMIT 1500;');
             // return $results = DB::select('select p.polling_name, w.ward_name FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN consituency AS c ON p.constituency_id=c.id ORDER BY polling_name;');
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
@@ -68,5 +70,23 @@ class LocationsController extends APIController
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
     }
+
+     /**
+    * @return \Illuminate\Http\JsonResponse
+    */
+   public function fetchPollingByName($name)
+   {
+       
+       try {
+        //    return $request['allocated_area'];
+        return $name;
+        //    return $results = DB::select('select p.polling_name,p.longitude,p.latitude,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id WHERE p.polling_name ='.$request['allocated_area']);
+           // return $results = DB::select('select p.polling_name, w.ward_name FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN consituency AS c ON p.constituency_id=c.id ORDER BY polling_name;');
+       } catch (\Exception $ex) {
+           Log::error($ex->getMessage());
+
+           return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+       }
+   }
 
 }

@@ -1,68 +1,85 @@
 <template>
 	<div>
+        <br>
+        <div class="row page-titles">
+            <div class="col-md-12 col-8 align-self-center">
+                <!-- <h3 class="text-themecolor m-b-0 m-t-0">User</h3> -->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
+                    <li class="breadcrumb-item active">Users</li>
+                </ol>
+            </div>
+        </div>
+
         <div class="row">
+            
             <div class="col-lg-12">
-                <v-card elevation="2">
+                <div class="mb-4 card">
                     <div class="card-body">
-                        <div class="section-title ma-4">
-                            <h2>users</h2>
-                            <p>display</p>
-                        </div>
-                            <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-                                <md-table-toolbar>
-                                    <!-- <div class="md-toolbar-section-start">
-                                    <h1 class="md-title">Users</h1>
+                        <!-- <h4 class="card-title">Filter User</h4> -->
+                        <!-- <button class="btn btn-danger btn-sm" to="/" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button> -->
+                        <md-button class="md-primary md-raised btn btn-secondary btn-sm" to="/user/add">Create</md-button>
+                        <br><br><br>
+                        <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                            <md-table-toolbar>
+                                <md-field md-clearable class="md-toolbar-section-end">
+                                 <v-text-field
+                                 dense
+                                outlined
+                                placeholder="Filter..." 
+                                v-model="search" 
+                                @input="searchOnTable"
+                                clearable
+                                prepend-icon="mdi-filter-variant"
+                            ></v-text-field>
+                                </md-field>
+                              
+                            </md-table-toolbar>
+
+                            <md-table-empty-state
+                                md-label="No users found"
+                                :md-description="`No user found for this '${search}' query. Try a different search term or create a new user.`">
+                                <md-button class="md-primary md-raised">Create New User</md-button>
+                            </md-table-empty-state>
+
+                            <md-table-row slot="md-table-row" slot-scope="{ item }">
+                                <!-- <md-table-cell md-label="I" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
+                                <md-table-cell md-label="Name" md-sort-by="first_name">
+                                    <div class="d-flex px-3 py-2">
+                                    <!-- <div>
+                                        <v-avatar color="indigo" v-if="item.avatar === null">
+                                            <v-icon dark>
+                                                mdi-account-circle
+                                            </v-icon>
+                                            </v-avatar>
+                                        <vsud-avatar :img="item.avatar" size="sm" border-radius="lg" class="me-3" alt="user3" v-else/>
                                     </div> -->
-     
-                                    <md-field md-clearable class="md-toolbar-section-end" md-layout="box">
-                                    <md-input md-layout="box" placeholder="Filter users..." v-model="search" @input="searchOnTable" />
-                                    </md-field>
-                                </md-table-toolbar>
-
-                                <md-table-empty-state
-                                    md-label="No users found"
-                                    :md-description="`No user found for this '${search}' search. Try a different search term or add user to database.`">
-                                    <md-button class="md-primary md-raised" to="/add/user">Create New User</md-button>
-                                </md-table-empty-state>
-
-                                <md-table-row slot="md-table-row" slot-scope="{ item }">
-                                    <md-table-cell md-label="Avatar" v-if="item.avatar"><md-avatar><img :src="item.avatar" :alt="item.email"></md-avatar></md-table-cell>
-                                    <md-table-cell md-label="Avatar" v-else><md-avatar class="md-primary">{{ item.first_name.charAt(0) }}</md-avatar></md-table-cell>
-                                    <md-table-cell md-label="First Name" md-sort-by="first_name">{{ item.first_name }}</md-table-cell>
-                                    <md-table-cell md-label="Last Name" md-sort-by="last_name">{{ item.last_name }}</md-table-cell>
-                                    <md-table-cell md-label="Phone" md-sort-by="phone">{{ item.phone }}</md-table-cell>
-                                    <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-                                    <md-table-cell md-label="Gender" md-sort-by="gender" style="text-transform: capitalize;">{{ item.gender }}</md-table-cell>
-                                    <md-table-cell md-label="Role" md-sort-by="role" style="text-transform: capitalize;">{{ item.role }}</md-table-cell>
-                                    <md-table-cell md-label="Allocated Polling" md-sort-by="allocated_area">{{ item.allocated_area }}</md-table-cell>
-                                    <md-table-cell md-label="Actions">
-                                        <v-btn
-                                        icon
-                                        color="#385F73"
-                                        @click.prevent="editUser(item)"
-                                        >
-                                        <v-icon>mdi-pencil</v-icon>
-                                    </v-btn>
-                                        
-                                    <v-btn
-                                        icon
-                                        color="#E53935"
-                                        @click.prevent="deleteUser(item)"
-                                        >
-                                        <v-icon>mdi-trash-can</v-icon>
-                                    </v-btn>
-                                    </md-table-cell>
-                                </md-table-row>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">{{item.first_name}} {{item.last_name}}</h6>
+                                        <p class="text-xs text-secondary mb-0">{{ item.phone}}</p>
+                                    </div>
+                                    </div>
+                                </md-table-cell>
+                                <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
+                                <!-- <md-table-cell md-label="Gender" md-sort-by="gender" class="text-center">{{ item.gender }}</md-table-cell> -->
+                                <md-table-cell md-label="Role" md-sort-by="role"><vsud-badge color="success" variant="gradient" size="sm" v-if="item.role === 'agent'" >{{item.role}}</vsud-badge> <vsud-badge color="secondary" variant="gradient" size="sm" v-if="item.role === 'admin'">{{item.role}}</vsud-badge></md-table-cell>
+                                <md-table-cell md-label="Allocated polling" md-sort-by="allocated_area">{{ item.allocated_area }}</md-table-cell>
+                                <md-table-cell md-label="Actions" class="align-middle">
+                                    <button class="btn btn-secondary btn-sm" @click.prevent="editUser(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
+                                    <button class="btn btn-danger btn-sm" @click.prevent="deleteUser(item)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button>
+                                     
+                               
+                                </md-table-cell>
+                            </md-table-row>
                             </md-table>
-                      
-                            <v-dialog
-                            v-model="loading_table"
+                        <v-dialog
+                            v-model="loading"
                             hide-overlay
                             persistent
                             width="300"
                             >
                             <v-card
-                                color="primary"
+                                color="secondary"
                                 dark
                             >
                                 <v-card-text>
@@ -74,49 +91,46 @@
                                 ></v-progress-linear>
                                 </v-card-text>
                             </v-card>
-                            </v-dialog>
+                        </v-dialog>
+                           
                     </div>
-                </v-card>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-
-    const toLower = text => {
-    return text.toString().toLowerCase()
+    import UserForm from './form'
+    import helper from '../../services/helper'
+    import VsudAvatar from "../../components/VsudAvatar.vue";
+    import VsudBadge from "../../components/VsudBadge.vue";
+      const toLower = text => {
+        return text.toString().toLowerCase()
     }
 
-    const searchByName = (items, term) => {
+    const searchByFilter = (items, term) => {
         if (term) {
-            return items.filter(item => 
-            toLower(item.first_name).includes(toLower(term)) ||
-            toLower(item.last_name).includes(toLower(term)) ||
-            toLower(item.phone).includes(toLower(term)) ||
-            toLower(item.email).includes(toLower(term)) 
-            // toLower(item.role).includes(toLower(term)) ||
-            // toLower(item.allocated_area).includes(toLower(term)) 
+        return items.filter(
 
-        )
+            item => toLower(item.first_name).includes(toLower(term)) || toLower(item.last_name).includes(toLower(term)) ||  toLower(item.email).includes(toLower(term))
+            || toLower(item.phone).includes(toLower(term)) 
+            || toLower(item.role).includes(toLower(term)) || toLower(item.allocated_area).includes(toLower(term))
+            )
         }
+
         return items
     }
-    import UserForm from './form'
-    // import pagination from 'laravel-vue-pagination'
-    import helper from '../../services/helper'
-    // import ClickConfirm from 'click-confirm'
+
 
     export default {
-        components : { UserForm },
+        components : { UserForm, VsudAvatar,VsudBadge },
         data() {
             return {
-                avatar: '',
-                allocated_areas: [],
                 users: [],
                 search: null,
                 searched: [],
-                loading_table: false,
+                loading: false,
                 filterUserForm: {
                     sortBy : 'first_name',
                     order: 'desc',
@@ -125,81 +139,64 @@
                     first_name: '',
                     last_name: '',
                     email: '',
-                    pageLength: 500
+                    pageLength: 1000,
                 }
             } 
         },
+        created () {
+         axios.get('/api/v1/user')
+                    .then(response => {
+                        
+                        for(let i = 0;i < response.data.length;i++) {
+                            console.log(this.users.push(response.data[i]))
+                        }
+                        this.searched = this.users
+                        console.log(this.searched)
+                    });
+            
+        },
         mounted() {
-            axios.get('/api/v1/polling')
-                .then(response => {
-                    console.log(this.allocated_areas = response.data)
-                })
-            this.getUsers();
-            this.searched = this.users
+            
         },
         methods: {
-            searchOnTable () {
-                this.searched = searchByName(this.users, this.search)
-            },
             getUsers(page) {
-                this.loading_table = true
+                this.loading =true
                 if (typeof page === 'undefined') {
                     page = 1;
                 }
-                let url = helper.getFilterURL(this.filterUserForm);
-                axios.get('/api/v1/user?page=' + page + url)
+                // let url = helper.getFilterURL(this.filterUserForm);
+                axios.get('/api/v1/user')
                     .then(response => {
-                        // this.users = response.data.data
-                        for(let i = 0; i < response.data.data.length; i++) {
-                        this.users.push(response.data.data[i]) 
-                        
-                    }   
-                        this.loading_table = false
-                        console.log(this.users)
+                        // console.log(response.data)
+                        for(let i = 0;i < response.data.length;i++) {
+                            this.users.push(response.data[i])
+                        }
+                         
+                        // console.log(this.users)
+                        this.loading = false
                     });
-            
             },
-            deleteUser(item){
-                axios.delete('/api/v1/user/' + item.id).then(response => {
-                    toastr['success'](response.data.message);
+            deleteUser(user){
+                this.loading =true
+                axios.delete('/api/v1/user/' + user.id).then(response => {
+                    // toastr['success'](response.data.message);
+                    this.loading = false
+                    console.log(response)
                     this.getUsers();
+                    this.searched = this.users
+                    // this.deleteDialog = false
                 }).catch(error => {
+                    // this.deleteDialog = false
+                    this.loading = false
                     toastr['error'](error.response.data.message);
                 });
             },
+            searchOnTable () {
+                this.searched = searchByFilter(this.users, this.search)
+            },
             editUser(item){
-                this.$router.push('/user/' + item.id + '/edit');
-            //    this.editUserDialog = true
-            //    axios.post('/api/v1/user/edit/' + user.id).then(response => response.data).then(response => {
-            //     this.profileForm.first_name = response.first_name;
-            //     this.profileForm.last_name = response.last_name;
-            //     this.profileForm.gender = response.gender;
-            //     this.profileForm.allocated_area = response.allocated_area;
-            //     this.profileForm.role = response.role;
-
-            //     console.log(response)
-            //    });
-         
+                this.$router.push('/user/'+item.id+'/edit');
             },
-            
-            getUserStatus(item){
-                if(item.status == 'pending_activation')
-                    return '<span class="label label-warning">Pending Activation</span>';
-                else if(item.status == 'activated')
-                    return '<span class="label label-success">Activated</span>';
-                else if(item.status == 'banned')
-                    return '<span class="label label-danger">Banned</span>';
-                else
-                    return;
-            },
-            getUserRole(item){
-                if(item.role == 'agent')
-                    return '<span class="label label-warning">Agent</span>';
-                else if(item.role == 'admin')
-                    return '<span class="label label-danger">Admin</span>';
-                else
-                    return;
-            }
         },
         filters: {
             moment(date) {

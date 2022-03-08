@@ -1,79 +1,280 @@
 <template>
 <div>
-    <section id="wrapper">
-        <div class="login-register" style="background-image:url(/images/background/background.jpg);">
-            <v-card elevation="2" class="login-card">
-            <div class="card-body">
-                <form class="form-horizontal form-material" id="loginform" @submit.prevent="submit">
-                    <h3 class="box-title m-b-20">Sign In</h3>
-                    <div class="form-group ">
-                        <div class="col-xs-12">
-                            <input type="text" name="email" class="form-control" placeholder="Email" v-model="loginForm.email"> </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input type="password" name="password" class="form-control" placeholder="Password" v-model="loginForm.password"> </div>
-                    </div>
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-xs-12">
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+  <main class="mt-0 main-content main-content-bg">
+    <section>
+        <v-app :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }" dark id="inspire">
+            <v-container>
+            <v-layout wrap>
+                <v-flex sm12 md6 offset-md3>
+                <v-card elevation="4" light tag="section" style="margin-top: 100px">
+                    <v-card-title>
+                    <v-layout align-center justify-space-between>
+                        <h3 class="headline">
+                        Welcome back
+                        </h3>
+                        <!-- <v-flex>
+                        <v-img  class="ml-3" contain height="48px" position="center right" src="https://www.mobygames.com/images/i/12/25/1435075.png"></v-img>
+                        </v-flex> -->
+                    </v-layout>
+                    </v-card-title>
+                    <v-divider></v-divider>
+                    <Transition name="slide-fade">
+                    <v-card-text v-if="showOTP">
+                        <p>Code sent to phone number <strong>{{ otpForm.phone }} </strong>.</p>
+                        <div class="card-body">
+                            <v-otp-input
+                                v-model="otpForm.otp"
+                                :disabled="loadingOverlay"
+                                @finish="verifyOtp"
+                            ></v-otp-input>
+                            <v-overlay absolute :value="loadingOverlay">
+                                <v-progress-circular
+                                indeterminate
+                                color="primary"
+                                ></v-progress-circular>
+                            </v-overlay>
                         </div>
-                    </div>
-                    <!-- <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                            <div class="social">
-                                <a href="/auth/social/github" class="btn  btn-github" data-toggle="tooltip" title="Login with Github"> <i aria-hidden="true" class="fa fa-github"></i> </a>
-                                <a href="/auth/social/twitter" class="btn  btn-twitter" data-toggle="tooltip" title="Login with Twitter"> <i aria-hidden="true" class="fa fa-twitter"></i> </a>
-                                <a href="/auth/social/facebook" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
+                    </v-card-text>
+                    <!-- </Transition>
+                    <Transition name="slide-fade"> -->
+                    <v-card-text v-else>
+                        <p>Sign in with your phone number</p>
+                        <div class="card-body">
+                        <form role="form" class="text-start" @submit.prevent ="submit">
+                            <!-- <label>Phone number</label> -->
+                            <!-- <vsud-input type="text" placeholder="Phone number" name="phone" v-model="signinForm.phone"/> -->
+                            <!-- <label></label> -->
+                             <v-text-field
+                                v-model="otpForm.phone"
+                                label="Example: 0712 xxx xx8"
+                                outlined
+                                dense
+                                return-masked-value
+                                mask="####.###.###"
+                                maxlength="10"
+                                :rules="[rules.required, rules.counter]"
+                                clearable
+                            ></v-text-field>
+                            <div class="text-center">
+                            <vsud-button
+                                class="my-4 mb-2"
+                                variant="gradient"
+                                color="info"
+                                fullWidth
+                                v-if="otpForm.phone.length == 10"
+                                type="submit"
+                                >Sign in
+                            </vsud-button>
+                            <vsud-button
+                                class="my-4 mb-2"
+                                variant="gradient"
+                                color="info"
+                                fullWidth
+                                disabled
+                                v-else
+                                type="submit"
+                                >Sign in
+                            </vsud-button>
                             </div>
+                        </form>
                         </div>
-                    </div> -->
-
-                    <!-- <div class="form-group m-b-0">
-                        <div class="col-sm-12 text-center">
-                            <p>Forgot your password? <router-link to="/password" class="text-info m-l-5"><b>Reset here!</b></router-link></p>
-                            <p>Don't have an account? <router-link to="/register" class="text-info m-l-5"><b>Sign Up</b></router-link></p>
-                        </div>
-                    </div> -->
-                </form>
-            </div>
-            <!-- <guest-footer></guest-footer> -->
-          </v-card>
-        </div>
-
+                    </v-card-text>
+                    </Transition>
+                </v-card>
+                </v-flex>
+                <v-flex sm12 md6 offset-md3>
+                <v-layout align-center justify-space-between>
+                    <p class="caption my-3">
+                    <a href="#">Privacy Policy</a>
+                    |
+                    <a href="#">Terms of Service</a>
+                    </p>
+                    <p class="caption my-3">Powered by <a href="#">ElectionMonitor</a></p>
+                </v-layout>
+                </v-flex>
+            </v-layout>
+            <v-dialog
+                v-model="loading"
+                hide-overlay
+                persistent
+                width="300"
+                >
+                <v-card
+                    color="secondary"
+                    dark
+                >
+                    <v-card-text>
+                    Please stand by
+                    <v-progress-linear
+                        indeterminate
+                        color="white"
+                        class="mb-0"
+                    ></v-progress-linear>
+                    </v-card-text>
+                </v-card>
+                </v-dialog>
+            </v-container>
+        </v-app>
     </section>
-</div>
+  </main>
+  </div>
 </template>
 
 <script>
-    import helper from '../../services/helper'
-    // import GuestFooter from '../../layouts/guest-footer.vue'
+import VsudInput from "../../components/VsudInput.vue";
+import VsudSwitch from "../../components/VsudSwitch.vue";
+import VsudButton from "../../components/VsudButton.vue";
+const body = document.getElementsByTagName("body")[0];
 
-    export default {
-        data() {
-            return {
-                loginForm: {
-                    email: '',
-                    password: ''
-                }
-            }
-        },
-        // components: {
-        //     GuestFooter
-        // },
-        mounted(){
-        },
-        methods: {
-            submit(e){
-                axios.post('/api/v1/auth/login', this.loginForm).then(response =>  {
-                    localStorage.setItem('auth_token',response.data.token);
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
-                    toastr['success'](response.data.message);
-                    this.$router.push('/home')
-                }).catch(error => {
-                    toastr['error'](error.response.data.message);
-                });
-            }
+export default {
+  name: "signin",
+  components: {
+    VsudInput,
+    VsudSwitch,
+    VsudButton,
+  },
+  data() {
+        return {
+            otpForm: new Form({
+                'otp' : '',
+                'phone' : ''
+            }),
+            rules: {
+                required: value => !!value || 'Phone number required.',
+                counter: value => value.length <= 20 || 'Max 10 characters',
+            },
+            alert: false,
+            alertMessage: '',
+            showOTP: false,
+            loading: false,
+            loadingOverlay: false,
+            signinForm: new Form({
+                'email' : '',
+                'password' : 'password',
+            }),
         }
-    }
+  },
+  beforeMount() {
+    this.$store.state.hideConfigButton = true;
+    this.$store.state.showNavbar = false;
+    this.$store.state.showSidenav = false;
+    this.$store.state.showFooter = false;
+    body.classList.remove("bg-gray-100");
+  },
+  beforeUnmount() {
+    this.$store.state.hideConfigButton = false;
+    this.$store.state.showNavbar = true;
+    this.$store.state.showSidenav = true;
+    this.$store.state.showFooter = true;
+    body.classList.add("bg-gray-100");
+  },
+  methods: {
+      submit (e) {
+        this.loading = true
+        this.otpForm.post('/api/v1/auth/check/if/user/exists')
+            .then(response => {
+                this.alert = true
+                console.log(this.alertMessage = response.message)
+                this.signinForm.email = response.data[0].email
+                this.otpForm.phone = response.data[0].phone
+                // this.signinForm.phone = response.data[0].phone
+                setTimeout(() => {
+                    this.loading = false
+                    this.alert = false
+                    this.showOTP = true
+                    this.alertMessage = ''
+                }, 3500)
+            })
+            .catch(error => {
+                this.loading = false
+                this.alert = true
+                console.log(this.alertMessage = error)
+                setTimeout(() => {
+                    // this.loading = false
+                    this.alertMessage = ''
+                    this.alert = false
+                    // this.showOTP = true
+                }, 3500)
+        });
+      },
+      verifyOtp () {
+            this.loadingOverlay = true
+            // this.otpForm.phone = this.signinForm.phone
+            this.otpForm.post('/api/v1/auth/two-factor-auth')
+            .then(response => {
+                console.log(response)
+                if (response.message === 'Success') {
+                setTimeout(() => {
+                    this.signin()
+                    this.loadingOverlay = false
+                }, 3500)
+                } else {
+                     this.loadingOverlay = false
+                    //  this.otpForm.otp = ''
+                }
+            })
+            .catch(response => {
+               
+                    this.loadingOverlay = false
+                    this.otpForm.otp = ''
+               
+                console.log(response)
+            });
+      },
+      signin() {
+          this.signinForm.post('/api/v1/auth/login')
+            .then(response => {
+                console.log(response.data[0].role)
+                this.loading = true
+                if (response.message === 'Success' && response.data[0].role === 'admin') {
+                    setTimeout(() => {
+                    localStorage.setItem('auth_token',response.token);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
+
+                    this.$router.push('/dashboard')
+                    this.showOTP = false
+                    this.loading = false
+                }, 3500)
+                } else if(response.message === 'Success' && response.data[0].role === 'agent')  {
+                    setTimeout(() => {
+                    localStorage.setItem('auth_token',response.token);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
+
+                    this.$router.push('/home/'+response.data[0].id+'/agent')
+                    this.showOTP = false
+                    this.loading = false
+                }, 3500)
+                }    
+            })
+            .catch(response => {
+                setTimeout(() => {
+                    this.loadingOverlay = false
+                    this.showOTP = false
+                }, 3500)
+                console.log(response)
+            });
+
+      }
+  }
+};
 </script>
+
+<style scoped>
+/*
+  Enter and leave animations can use different
+  durations and timing functions.
+*/
+.slide-fade-enter-active {
+  transition: all 0.8s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+</style>

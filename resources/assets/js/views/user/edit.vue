@@ -1,29 +1,25 @@
 <template>
 	<div>
-        
+        <br>
         <div class="row page-titles">
             <div class="col-md-12 col-8 align-self-center">
-                
-                <!-- <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><router-link to="/home">Home</router-link></li>
+                <!-- <h3 class="text-themecolor m-b-0 m-t-0">Edit User</h3> -->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
                     <li class="breadcrumb-item"><router-link to="/user">User</router-link></li>
                     <li class="breadcrumb-item active">Edit User</li>
-                </ol> -->
+                </ol>
             </div>
         </div>
-
+        
         <div class="row">
             <div class="col-sm-12">
-                <v-card elevation="2">
+                <div class="card">
                     <div class="card-body">
-                        <div class="section-title ma-4">
-                            <h2>USERS</h2>
-                            <p>Edit</p>
-                        </div>
-                        <!-- <hr> -->
+                        <!-- <h4 class="card-title">Edit User</h4> -->
                         <user-form :id="id"></user-form>
                     </div>
-                </v-card>
+                </div>
             </div>
         </div>
     </div>

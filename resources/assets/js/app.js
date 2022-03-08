@@ -12,16 +12,22 @@ import router from './routes'
 
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
+import "./assets/css/nucleo-icons.css";
+import "./assets/css/nucleo-svg.css";
+// import SoftUIDashboard from "./soft-ui-dashboard";
+import softUiDashboard from './soft-ui-dashboard';
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
+import '@mdi/font/css/materialdesignicons.css'
 
+// import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.use(VueMaterial)
 
 Vue.use(Vuetify)
+Vue.use(softUiDashboard)
 
 // Register Vue Components
 // Vue.component('login-component', require('./components/LoginComponent.vue').default);
@@ -31,13 +37,10 @@ Vue.use(Vuetify)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
     el: '#root',
-    vuetify : new Vuetify({
-        icons: {
-          iconfont: 'mdi', // default - only for display purposes
-        },
-      }),
+    vuetify : new Vuetify(),
     store,
     router
 });

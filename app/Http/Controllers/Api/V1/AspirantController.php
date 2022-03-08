@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use JWTAuth;
 use Validator;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
 /**
  * Task Controller.
  */
@@ -16,41 +16,13 @@ class AspirantController extends APIController
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $aspirants = Aspirant::whereNotNull('id');
+            return $aspirants = DB::select('select * from aspirants');
 
-            if (request()->has('full_name')) {
-                $aspirants->where('full_name', 'like', '%'.request('full_name').'%');
-            }
-
-            if (request()->has('political_party')) {
-                $aspirants->where('political_party', 'like', '%'.request('political_party').'%');
-            }
-
-            if (request()->has('electoral_area')) {
-                $aspirants->where('electoral_area', 'like', '%'.request('electoral_area').'%');
-            }
-
-            if (request()->has('electoral_position')) {
-                $aspirants->where('electoral_position', 'like', '%'.request('electoral_position').'%');
-            }
-
-            if (request()->has('results')) {
-                $aspirants->where('results', 'like', '%'.request('results').'%');
-            }
-
-            // if (request()->has('status')) {
-            //     $tasks->whereStatus(request('status'));
-            // }
-
-            $aspirants->orderBy(request('sortBy'), request('order'));
-
-            return $aspirants->paginate(request('pageLength'));
         } catch (\Exception $ex) {
-            // Log::error($ex->getMessage());
-
+  
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
     }

@@ -21,9 +21,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $this->disableForeignKeys();
-        // $this->truncate('users');
+        $this->truncate('users');
 
-        factory(User::class, 392)->create();
+        factory(User::class, 50)->create();
 
         $this->enableForeignKeys();
     }

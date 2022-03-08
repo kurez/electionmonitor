@@ -3,78 +3,111 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input class="form-control" v-model="aspirantForm.full_name"  placeholder="Full Name">
+                    <!-- <label for="">Full Name</label> -->
+                     <v-text-field
+                        v-model="aspirantForm.full_name"
+                        label="Full name"
+                        outlined
+                        dense
+                    ></v-text-field>
+                    <!-- <input class="form-control" type="text" value="" v-model="aspirantForm.full_name"> -->
                 </div>
-                <br>
                 <div class="form-group">
-                    <select class="form-select"  v-model="aspirantForm.political_party">
-                        <!-- <option selected>Political Party</option> -->
-                        <option v-for="party in political_parties" :key="party" :value="party">{{ party }}</option>
-                    </select>
+                    <!-- <label for="">Political Party</label> -->
+                     <v-select
+                        v-model="aspirantForm.political_party"
+                        :items="political_parties"
+                        label="Political parties"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
+                    <!-- <select name="political_party" class="form-control" v-model="aspirantForm.political_party"> -->
+                        <!-- <option v-for="parties in political_parties" :key="parties" :value="parties">{{ parties }}</option> -->
+                    <!-- </select> -->
                 </div>
-            
+                
             </div>
-            
             <div class="col-md-6">
-                
                <div class="form-group">
-                    <select class="form-select"  v-model="aspirantForm.electoral_position">
-                        <!-- <option selected>Electoral Position</option> -->
-                        <option v-for="position in electoral_position" :key="position" :value="position">{{ position }}</option>
-                    </select>
+                   <v-select
+                        v-model="aspirantForm.electoral_position"
+                        :items="electoral_position"
+                        label="Electoral position"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
+                    <!-- <label for="">Electoral Position</label>
+                    <select name="electoral_position" class="form-control" v-model="aspirantForm.electoral_position">
+                        <option v-for="positions in electoral_position" :key="positions" :value="positions">{{ positions }}</option>
+                    </select> -->
                 </div>
-                <br>
                 <div class="form-group"  v-if="aspirantForm.electoral_position === 'County Governor'">
-                    <select class="form-select" aria-label="Default select example" v-model="aspirantForm.electoral_area">
-                        <!-- <option selected>Political Party</option> -->
-                        <option v-for="county in county" :key="county.id" :value="county.county_name">{{ county.county_name }}</option>
-                    </select>
+                    <!-- <label for="">Electoral County</label>
+                    <select name="electoral_area" class="form-control" v-model="aspirantForm.electoral_area">
+                        <option v-for="areas in county" :key="areas['county_name']" :value="areas['county_name']">{{ areas['county_name'] }}</option>
+                    </select> -->
+                    <v-select
+                        v-model="aspirantForm.electoral_area"
+                        :items="county"
+                        label="Electoral county"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
                 </div>
-                
                 <div class="form-group"  v-if="aspirantForm.electoral_position === 'Senator'">
-                    <select class="form-select" aria-label="Default select example" v-model="aspirantForm.electoral_area">
-                        <!-- <option selected>Political Party</option> -->
-                        <option v-for="county in county" :key="county.id" :value="county.county_name">{{ county.county_name }}</option>
-                    </select>
+                    <v-select
+                        v-model="aspirantForm.electoral_area"
+                        :items="county"
+                        label="Electoral county"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
                 </div>
                 <div class="form-group"  v-if="aspirantForm.electoral_position === 'County Woman Member of National Assembly'">
-                   <select class="form-select" aria-label="Default select example" v-model="aspirantForm.electoral_area">
-                        <!-- <option selected>Political Party</option> -->
-                        <option v-for="county in county" :key="county.id" :value="county.county_name">{{ county.county_name }}</option>
-                    </select>
+                    <v-select
+                        v-model="aspirantForm.electoral_area"
+                        :items="county"
+                        label="Electoral county"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
                 </div>
                 <div class="form-group"  v-if="aspirantForm.electoral_position === 'Member of National Assembly'">
-                   <select class="form-select" aria-label="Default select example" v-model="aspirantForm.electoral_area">
-                        <!-- <option selected>Political Party</option> -->
-                        <option v-for="constituency in constituency" :key="constituency.id" :value="constituency.constituency_name">{{ constituency.constituency_name }}</option>
-                    </select>
+                    <v-select
+                        v-model="aspirantForm.electoral_area"
+                        :items="constituency"
+                        label="Electoral constituency"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
                 </div>
                  <div class="form-group"  v-if="aspirantForm.electoral_position === 'Member of County Assembly'">
-                    <select class="form-select" aria-label="Default select example" v-model="aspirantForm.electoral_area">
-                        <!-- <option selected>Political Party</option> -->
-                        <option v-for="ward in ward" :key="ward.id" :value="ward.ward_name">{{ ward.ward_name }}</option>
-                    </select>
+                    <v-select
+                        v-model="aspirantForm.electoral_area"
+                        :items="ward"
+                        label="Electoral ward"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
                 </div>
             </div>
         </div>
-        <br>
-        <v-btn
-            :loading="loading"
-            class="ma-1"
-            style="color: #385F73"
-            type="submit"
-        >
+        <hr>
+        <button type="submit" class="btn btn-secondary waves-effect waves-light m-t-10">
             <span v-if="id">Update</span>
             <span v-else>Save</span>
-        </v-btn>
-        <v-btn
-            class="ma-1"
-            style="color: #E53935"
-            to="/aspirant"
-           
-        >
-            Cancel
-        </v-btn>
+        </button>
+        <button to="/aspirant" class="btn btn-danger waves-effect waves-light m-t-10">
+            <span>Cancel</span>
+            <!-- <span v-else>Save</span> -->
+        </button>
         <!-- <router-link to="/aspirant" class="btn btn-danger waves-effect waves-light m-t-10" v-show="id">Cancel</router-link> -->
     </form>
 </template>
@@ -89,7 +122,6 @@
     export default {
         data() {
             return {
-                loading: false,
                 aspirantForm: new Form({
                     'full_name' : '',
                     'political_party' : '',
@@ -139,17 +171,7 @@
                 electoral_position: ['The President', 'County Governor', 'Senator', 'Member of National Assembly', 'Member of County Assembly', 'County Woman Member of National Assembly'],
                 county: [],
                 constituency: [],
-                ward: [],
-                autocomplete_loading: false,
-                itemsCounty: [],
-                searchCounty: null,
-                selectCounty: null,
-                itemsConstituency: [],
-                searchConstituency: null,
-                selectConstituency: null,
-                itemsWard: [],
-                searchWard: null,
-                selectWard: null,
+                ward: []
             };
         },
         components : { datepicker,RangeSlider },
@@ -159,18 +181,6 @@
                 this.getAspirants();
                 this.getLocations();
         },
-        watch: {
-            searchCounty (val) {
-                val && val !== this.selectCounty && this.querySelections(val)
-            },
-            searchConstituency (val) {
-                val && val !== this.selectConstituency && this.querySelections(val)
-            },
-            searchWard (val) {
-                val && val !== this.selectWard && this.querySelections(val)
-            },
-        },
-
         methods: {
             proceed(){
                 if(this.id)
@@ -179,15 +189,13 @@
                     this.storeAspirant();
             },
             storeAspirant(){
-                this.loading = true;
                 this.aspirantForm.post('/api/v1/aspirant')
                 .then(response => {
-                    this.loading = false;
                     toastr['success'](response.message);
                     this.$emit('completed',response.aspirant)
+                    this.$router.push('/aspirant');
                 })
                 .catch(response => {
-                    this.loading = false;
                     toastr['error'](response.message);
                 });
             },
@@ -198,79 +206,53 @@
                     this.aspirantForm.political_party = response.data.political_party;
                     this.aspirantForm.electoral_position = response.data.electoral_position;
                     this.aspirantForm.electoral_area = response.data.electoral_area;
-                    console.log(response.data)
                 })
                 .catch(response => {
                     toastr['error'](response.message);
                 });
             },
             updateAspirant(){
-                this.loading = true
                 this.aspirantForm.patch('/api/v1/aspirant/'+this.id)
                 .then(response => {
-                    this.loading = false;
                     if(response.type == 'error')
                         toastr['error'](response.message);
                     else {
-                        this.loading = false;
                         this.$router.push('/aspirant');
                     }
                 })
                 .catch(response => {
-                    this.loading = false;
                     toastr['error'](response.message);
-                    console.log(response.message)
                 });
             },
-             querySelections (v) {
-                // this.autocomplete_loading = true
-                this.itemsCounty = this.county.filter(e => {
-                    return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-                }) 
-                this.itemsConstituency = this.constituency.filter(e => {
-                    return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-                })
-                this.itemsWard = this.ward.filter(e => {
-                    return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-                })
-            },
             getLocations (){
-                axios.get('/api/v1/county')
-                .then(response => { 
-                    this.county = response.data
-                    // for(let i = 0; i < response.data.length; i++) {
-                    //     this.county.push(response.data[i].county_name) 
-                    // }   
-                    // this.autocomplete_loading = false
+                 axios.get('/api/v1/county')
+                .then(response => {
+                    // console.log(this.county=response.data)
+                    for(let i=0;i<response.data.length;i++){
+                        this.county.push(response.data[i].county_name)
+                    }
                 })
                 .catch(response => {
-                    // this.autocomplete_loading = false
                     toastr['error'](response.message);
                 });
 
                 axios.get('/api/v1/constituency')
-                .then(response => { 
-                    this.constituency = response.data
-                    // for(let i = 0; i < response.data.length; i++) {
-                    //     this.constituency.push(response.data[i].constituency_name) 
-                    // }   
-                    // this.autocomplete_loading = false
+                .then(response => {
+                    for(let i=0;i<response.data.length;i++){
+                        this.constituency.push(response.data[i].constituency_name)
+                    }
                 })
                 .catch(response => {
-                    // this.autocomplete_loading = false
                     toastr['error'](response.message);
                 });
 
                 axios.get('/api/v1/ward')
-                .then(response => { 
-    
-                    for(let i = 0; i < response.data.length; i++) {
-                        this.ward.push(response.data[i].ward_name) 
-                    }   
-                    // this.autocomplete_loading = false
+                .then(response => {
+                    for(let i=0;i<response.data.length;i++){
+                        this.ward.push(response.data[i].ward_name)
+                    }
                 })
                 .catch(response => {
-                    // this.autocomplete_loading = false
                     toastr['error'](response.message);
                 });
             }

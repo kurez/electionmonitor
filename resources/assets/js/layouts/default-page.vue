@@ -1,190 +1,134 @@
 <template>
     <div id="main-wrapper">
-        <!-- <app-header></app-header>
-        <app-sidebar></app-sidebar>
-
-        <div class="page-wrapper">
-            <div class="container-fluid">
-                <router-view></router-view>
-                <app-right-sidebar></app-right-sidebar>
-            </div>
-        	<app-footer></app-footer>
-        </div> -->
-        <!-- App.vue -->
-
+  
         <v-app>
-             <v-navigation-drawer
-                v-model="drawer"
-                absolute
-                temporary
-                >
-                <v-list
-                    nav
-                    dense
-                    shaped
-                >
-                    <v-list-item>
-                        <v-list-item-avatar>
-                        <v-img :src="getAvatar" :alt="getAuthUserFullName()"></v-img>
-                        </v-list-item-avatar>
-
-                        <v-list-item-content>
-                        <v-list-item-title>{{getAuthUserFullName()}}</v-list-item-title>
-                         <v-subheader>{{getAuthUser('email')}}</v-subheader>
-                        </v-list-item-content>
-                    </v-list-item>
-                    
-                    <hr>
-                    <v-list-item-group
-                    v-model="group"
-                    active-class="deep-purple--text text--accent-4"
-                    >
-                    <v-list-item to="/home">
-                        <v-list-item-icon>
-                        <!-- <v-icon>mdi-home</v-icon> -->
-                        </v-list-item-icon>
-                        <v-list-item-title>Home</v-list-item-title>
-                    </v-list-item>
-
-                    <v-list-group
-                        no-action
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-icon>
-                                <!-- <v-icon>mdi-account-multiple</v-icon> -->
-                            </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Users</v-list-item-title>
-                        </v-list-item-content>
-                        </template>
-
-                        <v-list-item to="/user"
+            <v-card v-if="$route.name !== 'agentHome'">
+                <v-navigation-drawer app>
+                     <aside
+                            class="my-3 overflow-auto border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl"
+                            :class="this.$store.state.isRTL ? 'me-3 rotate-caret' : 'ms-3'"
+                            id="sidenav-main"
                         >
-                        <v-list-item-content>
-                            <v-list-item-title>Show Users</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        <v-list-item to="/add/user"
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Register User</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        
-                        
-                    </v-list-group>
+                            <div class="sidenav-header">
+                            <i
+                                class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none"
+                                aria-hidden="true"
+                                id="iconSidenav"
+                            ></i>
+                            <!-- <a class="m-0 navbar-brand disabled" href="/"> -->
+                                <!-- <img :src="logo" class="navbar-brand-img h-100" alt="main_logo" /> -->
+                                <span class="ms-1 font-weight-bold navbar-brand">Election Monitor</span>
+                            <!-- </a> -->
+                            </div>
+                            <hr class="mt-0 horizontal dark" />
+                            <div
+                                    class="w-auto h-auto collapse navbar-collapse max-height-vh-100 h-100"
+                                    id="sidenav-collapse-main"
+                                >
+                                    <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Dashboard" to="/dashboard">
+                                             <template v-slot:icon>
+                                                    <!-- <icon name="dashboard" /> -->
+                                                </template>
+                                        </sidenav-collapse>
+                                    </li>
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Users" to="/user">
+                                        
+                                        </sidenav-collapse>
+                                    </li>
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Aspirant" to="/aspirant">
+                                       
+                                        </sidenav-collapse>
+                                    </li>
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Electoral counties" to="/county">
+                                        
+                                        </sidenav-collapse>
+                                    </li>
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Electoral constituencies" to="/constituency">
+                                       
+                                        </sidenav-collapse>
+                                    </li>
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Electoral wards" to="/ward">
+                                       
+                                        </sidenav-collapse>
+                                    </li>
+                                    <li class="nav-item">
+                                        <sidenav-collapse navText="Polling stations" to="/polling">
+                                       
+                                        </sidenav-collapse>
+                                    </li>
+                                    </ul>
+                                </div>
+                                <hr>
+                                <div class="pt-3 mx-3 mt-3 sidenav-footer">
+                                    <!-- <sidenav-card
+                                    
+                                    textPrimary="Profile"
+                                    textSecondary="Name"
+                                    href="https://www.creative-tim.com/learning-lab/vue/overview/soft-ui-dashboard/"
+                                    linkText=""
+                                    iconClass="ni ni-diamond"
+                                    /> -->
+                                    <!-- <button
+                                    class="btn bg-gradient-danger mt-4 w-100"
+                                    
+                                    type="button"
+                                    >Logout</button
+                                    > -->
+                                </div>
+                        </aside>
+                </v-navigation-drawer>
+            </v-card>
 
-                    <v-list-group
-                        no-action
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-icon>
-                                <!-- <v-icon>mdi-account-multiple</v-icon> -->
-                            </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Aspirants</v-list-item-title>
-                        </v-list-item-content>
-                        </template>
-
-                        <v-list-item to="/aspirant"
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Show Aspirants</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        <v-list-item to="/add/aspirant"
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Add Aspirant</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        
-                        
-                    </v-list-group>
-
-                    <v-list-group
-                        no-action
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-icon>
-                                <!-- <v-icon>mdi-map-marker-distance</v-icon> -->
-                            </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title>Electoral Areas</v-list-item-title>
-                        </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Electoral Counties</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        <v-list-item
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Electoral Constituencies</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        <v-list-item
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Electoral Wards</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                        <v-list-item
-                        >
-                        <v-list-item-content>
-                            <v-list-item-title>Polling Stations</v-list-item-title>
-                        </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
-                    </v-list-item-group>
-                </v-list>
-            </v-navigation-drawer>
-
-        <v-app-bar app color="black">
+        <v-app-bar app color="secondary" dense>
             <!-- -->
-            <v-app-bar-nav-icon @click="drawer = true" color="#fff"></v-app-bar-nav-icon>
-            <v-toolbar-title style="color: #fff">KU<span style="color: #9575CD"><strong>RA</strong></span></v-toolbar-title>
-			<!-- Uncomment below if you prefer to use an image logo -->
-			<!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+             <!-- <v-app-bar-title>Title</v-app-bar-title>
 
-             <v-spacer></v-spacer>
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon color="#fff" @click.prevent="logout()" v-bind="attrs" v-on="on">
-                        <v-icon>mdi-export</v-icon>
-                    </v-btn>
-                </template>
-                <span>Logout</span>
-            </v-tooltip>
+                <v-spacer></v-spacer>
 
-            <!-- <v-toolbar-title>Title</v-toolbar-title> -->
+                <v-btn icon color="#fff">
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+
+                <v-btn icon>
+                    <v-icon>mdi-heart</v-icon>
+                </v-btn>
+
+                <v-btn icon @click="logout()">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+             -->
+             <v-toolbar-title v-if="$route.name === 'agentHome'" style="color: #fff">Election <strong>Monitor</strong></v-toolbar-title>
+
+            <v-spacer></v-spacer>
+            
+
+            <v-btn icon color="#fff" @click= "logout()">
+                <v-icon>mdi-export</v-icon>
+            </v-btn>
         </v-app-bar>
 
         <!-- Sizes your content based upon application components -->
         <v-main>
-            <!-- Provides the application the proper gutter -->
-            <v-container fluid>
-                <!-- <v-container fluid> -->
 
-                <!-- If using vue-router -->
-                <router-view></router-view>
-                
-            </v-container>
+            <!-- Provides the application the proper gutter -->
+            <div class="container-fluid">
+
+            <!-- If using vue-router -->
+            <router-view></router-view>
+            </div>
         </v-main>
 
-        <!-- ======= Footer ======= -->
-		<footer id="footer">
-			
-
-			<div class="container">
-			<div class="copyright">
-				&copy; Copyright <strong><span>KURA MONITORING</span></strong>. All Rights Reserved
-			</div>
-			</div>
-		</footer><!-- End Footer -->
+        <v-footer app>
+            <!-- -->
+            <!-- <app-footer></app-footer> -->
+        </v-footer>
         </v-app>
 
     </div>
@@ -192,16 +136,11 @@
 
 
 <script>
-    import AppHeader from './header.vue'
-    import AppSidebar from './sidebar.vue'
-    import AppFooter from './footer.vue'
-    import AppRightSidebar from './right-sidebar.vue'
+    // import Icon from "../components/Icon.vue";
+    import SidenavCollapse from "./Sidenav/SidenavCollapse.vue";
+    import SidenavCard from "./Sidenav/SidenavCard.vue";
     import helper from '../services/helper'
     export default {
-        data: () => ({
-            drawer: false,
-            group: null,
-        }),
         computed: {
             getAvatar(){
                 return '/images/users/'+this.getAuthUser('avatar');
@@ -235,33 +174,18 @@
             }
         },
         components: {
-            AppHeader, AppSidebar, AppFooter, AppRightSidebar
+          SidenavCollapse,SidenavCard,
         },
         mounted() {
-            $('body').addClass("fix-header fix-sidebar card-no-border");
-            $("body").trigger("resize");
-            $(".fix-header .topbar").stick_in_parent();
-            $('.scroll-sidebar').slimScroll({
-                position: 'left'
-                , size: "5px"
-                , height: '100%'
-                , color: '#dcdcdc'
-            });
-            $('.message-scroll').slimScroll({
-                position: 'right'
-                , size: "5px"
-                , height: '570'
-                , color: '#dcdcdc'
-            });
-
             if(!this.getAuthUser('email')){
                 helper.authUser().then(response => {
                     this.$store.dispatch('setAuthUserDetail',{
-                        first_name: response.user.first_name,
-                        last_name: response.user.last_name,
-                        phone: response.user.phone,
+                        first_name: response.first_name,
+                        last_name: response.last_name,
                         email: response.user.email,
-                        avatar:response.user.avatar
+                        avatar:response.avatar,
+                        phone: response.phone,
+                        allocated_area: response.allocated_Area
                     });
                 });
             }

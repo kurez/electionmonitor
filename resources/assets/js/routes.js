@@ -8,31 +8,35 @@ let routes = [
         meta: { requiresAuth: true },
         children: [
             {
-                path: '/',
-                component: require('./views/pages/home.vue').default
+                path: '/dashboard',
+                component: require('./views/pages/Dashboard.vue').default
             },
             {
-                path: '/home',
-                component: require('./views/pages/home.vue').default
+                path: '/polling',
+                component: require('./views/pages/pollings.vue').default
             },
             {
-                path: '/blank',
-                component: require('./views/pages/blank.vue').default
+                path: '/county',
+                component: require('./views/pages/counties.vue').default
+            },
+            {
+                path: '/constituency',
+                component: require('./views/pages/constituencies.vue').default
+            },
+            {
+                path: '/ward',
+                component: require('./views/pages/wards.vue').default
             },
             {
                 path: '/configuration',
                 component: require('./views/configuration/configuration.vue').default
             },
             {
-                path: '/profile',
-                component: require('./views/user/profile.vue').default
-            },
-            {
                 path: '/aspirant',
                 component: require('./views/aspirant/index.vue').default
             },
             {
-                path: '/add/aspirant',
+                path: '/aspirant/add',
                 component: require('./views/aspirant/add.vue').default
             },
             {
@@ -44,15 +48,29 @@ let routes = [
                 component: require('./views/user/index.vue').default
             },
             {
-                path: '/add/user',
-                component: require('./views/user/register.vue').default
+                path: '/user/add',
+                component: require('./views/user/add.vue').default
             },
             {
                 path: '/user/:id/edit',
                 component: require('./views/user/edit.vue').default
             },
+
+            {
+                path: '/home/:id/agent',
+                name: 'agentHome',
+                component: require('./views/pages/Home.vue').default
+            },
         ]
     },
+    // {
+    //     path: '/home/:id/agent',
+    //     component: require('./layouts/agent-page.vue').default,
+    //     meta: { requiresAuth: true },
+    //     children: [
+    //         component: require('./views/pages/Home.vue').default,
+    //     ]
+    // },
     {
         path: '/',
         component: require('./layouts/guest-page.vue').default,
@@ -62,26 +80,26 @@ let routes = [
                 path: '/login',
                 component: require('./views/auth/login.vue').default
             },
-            {
-                path: '/password',
-                component: require('./views/auth/password.vue').default
-            },
-            {
-                path: '/register',
-                component: require('./views/auth/register.vue').default
-            },
-            {
-                path: '/auth/:token/activate',
-                component: require('./views/auth/activate.vue').default
-            },
-            {
-                path: '/password/reset/:token',
-                component: require('./views/auth/reset.vue').default
-            },
-            {
-                path: '/auth/social',
-                component: require('./views/auth/social-auth.vue').default
-            },
+            // {
+            //     path: '/password',
+            //     component: require('./views/auth/password.vue').default
+            // },
+            // {
+            //     path: '/register',
+            //     component: require('./views/auth/register.vue').default
+            // },
+            // {
+            //     path: '/auth/:token/activate',
+            //     component: require('./views/auth/activate.vue').default
+            // },
+            // {
+            //     path: '/password/reset/:token',
+            //     component: require('./views/auth/reset.vue').default
+            // },
+            // {
+            //     path: '/auth/social',
+            //     component: require('./views/auth/social-auth.vue').default
+            // },
         ]
     },
     {

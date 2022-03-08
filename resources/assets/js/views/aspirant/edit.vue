@@ -1,17 +1,25 @@
 <template>
 	<div>
+        <br>
+        <div class="row page-titles">
+            <div class="col-md-12 col-8 align-self-center">
+                <!-- <h3 class="text-themecolor m-b-0 m-t-0">Edit Aspirant</h3> -->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><router-link to="/home">Home</router-link></li>
+                    <li class="breadcrumb-item"><router-link to="/aspirant">Aspirant</router-link></li>
+                    <li class="breadcrumb-item active">Edit Aspirant</li>
+                </ol>
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-sm-12">
-                <v-card elevation="2">
+                <div class="card">
                     <div class="card-body">
-                        <div class="section-title ma-4">
-                            <h2>ASPIRANTS</h2>
-                            <p>EDIT aspirant</p>
-                        </div>
+                        <!-- <h4 class="card-title">Edit Aspirant</h4> -->
                         <aspirant-form :id="id"></aspirant-form>
                     </div>
-                </v-card>
+                </div>
             </div>
         </div>
     </div>

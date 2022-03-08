@@ -1,26 +1,36 @@
 <template>
     <div>
-    	<router-view></router-view>
+        <v-app>
+        <v-app-bar app color="secondary" dense>
+            <v-app-bar-title style="color: #fff">Election Monitor</v-app-bar-title>
+
+            <v-spacer></v-spacer>
+        </v-app-bar>
+
+        <v-main>
+            <v-container>
+                <router-view></router-view>
+            </v-container>
+
+            <v-footer app>
+            <!-- -->
+            <!-- <app-footer></app-footer> -->
+            </v-footer>
+        </v-main>
+        
+        </v-app>
+
+    	
     </div>
 </template>
 
 <script>
     export default {
         methods : {
-            notification(){
-                toastr.options = {
-                    "positionClass": "toast-top-right"
-                };
-
-                $('[data-toastr]').on('click',function(){
-                    var type = $(this).data('toastr'),message = $(this).data('message'),title = $(this).data('title');
-                    toastr[type](message, title);
-                });
-            }
+            
         },
         mounted() {
-        	$('body').removeClass('fix-header fix-sidebar card-no-border');
-            this.notification();
+        
         },
         destroyed(){
         }

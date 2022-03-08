@@ -46,7 +46,8 @@ class UserController extends APIController
     public function index(Request $request)
     {
         try {
-            return $this->repositery->getAllUsers($request);
+            // return $this->repositery->getAllUsers($request);
+            return $user = DB::select('select * from users');
             // return  $user = User;
             
         } catch (\Exception $ex) {
@@ -269,7 +270,7 @@ class UserController extends APIController
             }
 
             if ($user->delete()) {
-                if ($user->role === '')
+               
                 DB::commit();
                 $responseArr = [
                     'message' => 'User has been deleted successfully!',

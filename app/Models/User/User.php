@@ -2,11 +2,15 @@
 
 namespace App\Models\User;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\UserCode;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\User\Traits\Relationship\UserRelationship;
 use App\Models\User\Traits\Scope\UserScope;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+// use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Class User.
@@ -15,6 +19,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable,
         UserScope,
+        // HasApiTokens,
+        // HasFactory,
         UserRelationship;
      
    
@@ -55,4 +61,5 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    
 }
