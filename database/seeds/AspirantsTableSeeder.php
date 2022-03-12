@@ -23,7 +23,7 @@ class AspirantsTableSeeder extends Seeder
         $this->disableForeignKeys();
         // $this->truncate('aspirants');
 
-        factory(Aspirant::class, 200)->create();
+        factory(Aspirant::class, 10)->create();
 
         $this->enableForeignKeys();
     }

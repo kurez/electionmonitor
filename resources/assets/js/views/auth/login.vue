@@ -1,16 +1,15 @@
 <template>
 <div>
-  <main class="mt-0 main-content main-content-bg">
-    <section>
-        <v-app :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }" dark id="inspire">
+  
+        <v-app :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }" dark id="inspire" style="min-height: 1px">
             <v-container>
             <v-layout wrap>
                 <v-flex sm12 md6 offset-md3>
-                <v-card elevation="4" light tag="section" style="margin-top: 100px">
+                <v-card elevation="4" light tag="section" style="margin-top: 100px"  class="card">
                     <v-card-title>
                     <v-layout align-center justify-space-between>
                         <h3 class="headline">
-                        Welcome back
+                        <strong>Welcome Back</strong>
                         </h3>
                         <!-- <v-flex>
                         <v-img  class="ml-3" contain height="48px" position="center right" src="https://www.mobygames.com/images/i/12/25/1435075.png"></v-img>
@@ -115,8 +114,7 @@
                 </v-dialog>
             </v-container>
         </v-app>
-    </section>
-  </main>
+ 
   </div>
 </template>
 
@@ -260,6 +258,8 @@ export default {
 </script>
 
 <style scoped>
+body { background-color: #040539 }
+
 /*
   Enter and leave animations can use different
   durations and timing functions.

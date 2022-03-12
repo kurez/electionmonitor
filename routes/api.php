@@ -30,6 +30,9 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
     Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('/auth/user', 'AuthController@getAuthUser');
         Route::post('/aspirant', 'AspirantController@store');
+        Route::get('/enter-results/{electoral_area}', 'AspirantController@enterResults');
+        Route::post('/enter-results', 'AspirantController@storeResults');
+        Route::get('/vote-status', 'AspirantController@voteStatus');
         Route::get('/aspirant', 'AspirantController@index');
         Route::delete('/aspirant/{id}', 'AspirantController@destroy');
         Route::get('/aspirant/{id}', 'AspirantController@show');
@@ -54,7 +57,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('/constituency', 'LocationsController@fetchConstituency');
         Route::get('/ward', 'LocationsController@fetchWard');
         Route::get('/polling', 'LocationsController@fetchPolling');
-        Route::get('/polling/{name}', 'LocationsController@fetchPollingByName');
+        Route::get('/polling-fetch/{name}', 'LocationsController@fetchPollingByName');
     
         // Route::get('two-factor-auth', [TwoFactorAuthController::class, 'index'])->name('2fa.index');
         // Route::post('/two-factor-auth', [TwoFactorAuthController::class, 'store'])->name('2fa.store');

@@ -61,6 +61,11 @@ let routes = [
                 name: 'agentHome',
                 component: require('./views/pages/Home.vue').default
             },
+            {
+                path: '/enter-results/:electoral_area',
+                name: 'agentHome',
+                component: require('./views/pages/EnterResults.vue').default
+            },
         ]
     },
     // {
@@ -78,6 +83,7 @@ let routes = [
         children: [
             {
                 path: '/login',
+                name: 'login',
                 component: require('./views/auth/login.vue').default
             },
             // {

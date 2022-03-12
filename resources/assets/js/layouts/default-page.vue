@@ -86,7 +86,7 @@
                 </v-navigation-drawer>
             </v-card>
 
-        <v-app-bar app color="secondary" dense>
+        <v-app-bar app color="#040539" dense v-if="$route.name !== 'login'">
             <!-- -->
              <!-- <v-app-bar-title>Title</v-app-bar-title>
 
@@ -104,11 +104,11 @@
                     <v-icon>mdi-dots-vertical</v-icon>
                 </v-btn>
              -->
-             <v-toolbar-title v-if="$route.name === 'agentHome'" style="color: #fff">Election <strong>Monitor</strong></v-toolbar-title>
+             <v-toolbar-title v-if="$route.name === 'agentHome' || 'enterResults'" style="color: #fff">Election <strong style="color: #00E676">Monitor</strong></v-toolbar-title>
 
             <v-spacer></v-spacer>
             
-
+            
             <v-btn icon color="#fff" @click= "logout()">
                 <v-icon>mdi-export</v-icon>
             </v-btn>
@@ -128,6 +128,7 @@
         <v-footer app>
             <!-- -->
             <!-- <app-footer></app-footer> -->
+            
         </v-footer>
         </v-app>
 

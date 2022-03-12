@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\V1;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Aspirant\Aspirant;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -9,7 +9,7 @@ use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 /**
- * Task Controller.
+ *  Aspirant Controller.
  */
 class AspirantController extends APIController
 {
@@ -153,23 +153,74 @@ class AspirantController extends APIController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function toggleStatus(Request $request)
-    // {
-    //     try {
-    //         $task = Task::find($request->input('id'));
+    public function enterResults($electoral_area)
+    {
+        try {
+            
+            return $aspirants = DB::select("select * from aspirants where electoral_area='".$electoral_area."'");
+            return response()->json(['message' => 'Result entered successfully!', 'data' => $aspirants]);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
 
-    //         if (!$task) {
-    //             return response()->json(['message' => 'Couldnot find task!'], 422);
-    //         }
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
 
-    //         $task->status = !$task->status;
-    //         $task->save();
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeResults(Request $request)
+    {
+        try {
+            $index = $request->only('index');
+            $index = $index['index'];
 
-    //         return response()->json(['message' => 'Task updated!']);
-    //     } catch (\Exception $ex) {
-    //         Log::error($ex->getMessage());
+            $aspirant_uuid = $request->only('uuid');
+            $aspirant_uuid = $aspirant_uuid ['uuid'];
 
-    //         return response()->json(['message' => 'Sorry, something went wrong!'], 422);
-    //     }
-    // }
+            $results = $request->only('results');
+            $results = $results['results'][$index];
+
+            $user = JWTAuth::parseToken()->authenticate();
+            $agent_id = $user->id;
+
+            $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'votes' => $results);
+            DB::table('results')->insert($values);
+
+
+            // return $results;
+            // return gettype($aspirant_uuid);
+            // return ;
+            // return $aspirants = DB::select("select * from aspirants where electoral_area='".$electoral_area."'");
+            return response()->json(['message' => 'Result entered successfully!']);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
+       /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function voteStatus(Request $request)
+    {
+        try {
+            
+            $user = JWTAuth::parseToken()->authenticate();
+            $agent_id = $user->id;
+
+            // return $agent_id;
+            return $votes = DB::select("select aspirant_uuid, votes from results where agent_id='".$agent_id."'");
+            
+            // return response()->json(['message' => 'Result entered successfully!', 'data' => $votes]);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
 }

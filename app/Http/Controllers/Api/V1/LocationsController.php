@@ -79,9 +79,16 @@ class LocationsController extends APIController
        
        try {
         //    return $request['allocated_area'];
-        return $name;
-        //    return $results = DB::select('select p.polling_name,p.longitude,p.latitude,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id WHERE p.polling_name ='.$request['allocated_area']);
-           // return $results = DB::select('select p.polling_name, w.ward_name FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN consituency AS c ON p.constituency_id=c.id ORDER BY polling_name;');
+       
+        $allocated_area = 'ABAQDERA PRIMARY SCHOOL';
+        $allocated_area = $name;
+
+        // return $allocated_area;
+        
+
+           return $results = DB::select("select p.polling_name,p.longitude,p.latitude,p.id, w.ward_name, c.constituency_name, b.county_name  FROM polling AS p INNER JOIN ward AS w ON p.ward_id=w.id INNER JOIN constituency AS c ON p.constituency_id=c.id INNER JOIN county AS b ON c.county_id=b.id WHERE polling_name='".$name."'");
+        //    $results = DB::select("select id FROM polling WHERE polling_name='".$name."'");
+           return response()->json(['message' => 'Success','data' => $results]);
        } catch (\Exception $ex) {
            Log::error($ex->getMessage());
 

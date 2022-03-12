@@ -1,24 +1,18 @@
 <template>
     <div>
-        <v-app>
-        <v-app-bar app color="secondary" dense>
+     
+        <!-- <v-app-bar app color="secondary" dense>
             <v-app-bar-title style="color: #fff">Election Monitor</v-app-bar-title>
 
             <v-spacer></v-spacer>
-        </v-app-bar>
+        </v-app-bar> -->
 
         <v-main>
-            <v-container>
+          
                 <router-view></router-view>
-            </v-container>
-
-            <v-footer app>
-            <!-- -->
-            <!-- <app-footer></app-footer> -->
-            </v-footer>
+         
         </v-main>
-        
-        </v-app>
+    
 
     	
     </div>
@@ -36,3 +30,16 @@
         }
     }
 </script>
+
+<style scoped>
+.v-application--wrap {
+    flex: 1 1 auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0vh;
+    max-width: 100%;
+    position: relative;
+}
+</style>
