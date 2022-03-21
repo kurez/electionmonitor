@@ -18,7 +18,7 @@
 		    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body class="fix-header fix-sidebar card-no-border">
+	<body class="fix-header fix-sidebar card-no-border"  style="overflow: hidden">
         <div class="preloader">
             <svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>

@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('/reset', 'AuthController@reset');
         Route::post('/social/token', 'SocialAuthController@getToken');
         Route::post('/two-factor-auth', 'AuthController@storeOTP');
+        Route::post('/two-factor-auth/resend/{number}', 'AuthController@resendOTP');
     });
 
     Route::group(['middleware' => ['jwt.auth']], function () {
@@ -50,7 +51,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::delete('/user/{id}', 'UserController@destroy');
         Route::get('/user/{id}', 'UserController@show');
         Route::put('/user/{id}', 'UserController@updateProfile');
-        Route::get('/user/dashboard', 'UserController@dashboard');
+        Route::get('/user-dashboard', 'UserController@dashboard');
+        Route::get('/fetch-results', 'UserController@results');
 
       
         Route::get('/county', 'LocationsController@fetchCounty');

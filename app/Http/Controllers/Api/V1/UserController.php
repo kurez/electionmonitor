@@ -299,9 +299,31 @@ class UserController extends APIController
         try {
             $users_count = User::count();
             $aspirants_count = Aspirant::count();
-            // $recent_incomplete_aspirants = Aspirant::whereStatus(0)->orderBy('due_date', 'desc')->limit(5)->get();
 
-            return response()->json(compact('users_count', 'aspirants_count'));
+            $total_results = DB::table("results")->get()->sum("votes");
+            $pollings = DB::table('polling')->count();
+            
+            // $recent_incomplete_aspirants = Aspirant::whereStatus(0)->orderBy('due_date', 'desc')->limit(5)->get();
+            // return $user = 'Kenya';
+            return response()->json(compact('users_count', 'aspirants_count', 'total_results', 'pollings'));
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
+     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function results()
+    {
+        try {
+         
+            $results = DB::table("results")->get();
+            
+            // $recent_incomplete_aspirants = Aspirant::whereStatus(0)->orderBy('due_date', 'desc')->limit(5)->get();
+            // return $user = 'Kenya';
+            return response()->json(compact('results'));
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
 

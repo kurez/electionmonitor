@@ -88,19 +88,27 @@
                     cols="12"
                     sm="6"
                     >
-                  <v-autocomplete
+                    <v-select
+                    v-model="userForm.allocated_area"
+                    :items="pollings"
+                    label="Polling"
+                    required
+                    outlined
+                    dense
+                    ></v-select>
+                  <!-- <v-autocomplete
                     v-model="userForm.allocated_area"
                     :items="pollings"
                     chips
                     clearable
-                    hide-details
                     hide-selected
                     item-text="name"
                     item-value="symbol"
                     label="Search for a polling..."
                     outlined
                     dense
-                    :value = userForm.allocated_area
+                    value = "userForm.allocated_area"
+                    
                     >
                        <template v-slot:no-data>
                             <v-list-item>
@@ -114,18 +122,13 @@
                            <v-list-item-subtitle v-text="item.polling_name"></v-list-item-subtitle>
                         </template>
                         <template v-slot:item="{ item }">
-                            <!-- <v-list-item-avatar
-                            color="indigo"
-                            class="text-h5 font-weight-light white--text"
-                            >
-                            {{ item.polling_name.charAt(0) }}
-                            </v-list-item-avatar> -->
+                           
                             <v-list-item-content>
                             <v-list-item-title v-text="item.polling_name"></v-list-item-title>
                             <v-list-item-subtitle v-text="item.county_name"></v-list-item-subtitle>
                             </v-list-item-content>
                         </template>
-                    </v-autocomplete>
+                    </v-autocomplete> -->
                     </v-col>
                 </v-row>
                 <v-dialog
@@ -151,7 +154,7 @@
             </div>
         </div>
         <hr>
-        <button type="submit" class="btn btn-secondary waves-effect waves-light m-t-10">
+        <button type="submit" class="btn btn-primary waves-effect waves-light m-t-10">
             <span v-if="id">Update</span>
             <span v-else>Save</span>
         </button>
@@ -229,7 +232,7 @@
             },
             updateUser(){
                 this.loading = true
-                this.userForm.allocated_area = this.userForm.allocated_area.polling_name
+                this.userForm.allocated_area = this.userForm.allocated_area
                 this.userForm.put('/api/v1/user/'+this.id)
                 .then(response => {
                     this.loading = false
@@ -252,7 +255,7 @@
                 .then(response => {
                     this.loading = false
                     for(let i=0;i<response.data.length;i++){
-                        this.pollings.push(response.data[i])
+                        this.pollings.push(response.data[i].polling_name)
                     }
                     console.log(this.pollings)
                 })

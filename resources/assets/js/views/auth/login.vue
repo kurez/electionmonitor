@@ -1,98 +1,103 @@
 <template>
 <div>
   
-        <v-app :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }" dark id="inspire" style="min-height: 1px">
-            <v-container>
-            <v-layout wrap>
-                <v-flex sm12 md6 offset-md3>
-                <v-card elevation="4" light tag="section" style="margin-top: 100px"  class="card">
-                    <v-card-title>
-                    <v-layout align-center justify-space-between>
-                        <h3 class="headline">
-                        <strong>Welcome Back</strong>
-                        </h3>
-                        <!-- <v-flex>
-                        <v-img  class="ml-3" contain height="48px" position="center right" src="https://www.mobygames.com/images/i/12/25/1435075.png"></v-img>
-                        </v-flex> -->
-                    </v-layout>
-                    </v-card-title>
-                    <v-divider></v-divider>
-                    <Transition name="slide-fade">
-                    <v-card-text v-if="showOTP">
-                        <p>Code sent to phone number <strong>{{ otpForm.phone }} </strong>.</p>
-                        <div class="card-body">
-                            <v-otp-input
-                                v-model="otpForm.otp"
-                                :disabled="loadingOverlay"
-                                @finish="verifyOtp"
-                            ></v-otp-input>
-                            <v-overlay absolute :value="loadingOverlay">
-                                <v-progress-circular
-                                indeterminate
-                                color="primary"
-                                ></v-progress-circular>
-                            </v-overlay>
-                        </div>
-                    </v-card-text>
-                    <!-- </Transition>
-                    <Transition name="slide-fade"> -->
-                    <v-card-text v-else>
-                        <p>Sign in with your phone number</p>
-                        <div class="card-body">
-                        <form role="form" class="text-start" @submit.prevent ="submit">
-                            <!-- <label>Phone number</label> -->
-                            <!-- <vsud-input type="text" placeholder="Phone number" name="phone" v-model="signinForm.phone"/> -->
-                            <!-- <label></label> -->
-                             <v-text-field
-                                v-model="otpForm.phone"
-                                label="Example: 0712 xxx xx8"
-                                outlined
-                                dense
-                                return-masked-value
-                                mask="####.###.###"
-                                maxlength="10"
-                                :rules="[rules.required, rules.counter]"
-                                clearable
-                            ></v-text-field>
-                            <div class="text-center">
-                            <vsud-button
-                                class="my-4 mb-2"
-                                variant="gradient"
-                                color="info"
-                                fullWidth
-                                v-if="otpForm.phone.length == 10"
-                                type="submit"
-                                >Sign in
-                            </vsud-button>
-                            <vsud-button
-                                class="my-4 mb-2"
-                                variant="gradient"
-                                color="info"
-                                fullWidth
-                                disabled
-                                v-else
-                                type="submit"
-                                >Sign in
-                            </vsud-button>
+        <!-- Section -->
+        <section class="vh-lg-100 mt-0 mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container" style="margin-top: -150px">
+                <!-- <a href="" class="d-flex align-items-center justify-content-center mb-4">
+                    <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+                    Back to homepage
+                </a> -->
+              
+                <div class="row justify-content-center form-bg-image" data-background-lg="">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <div class="avatar avatar-lg mx-auto mb-3">
+                                    <svg width="84" height="47" viewBox="0 0 64 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="black"/>
+                                    </svg>
+                                </div>
+                                <h1 class="h3" v-if="!showOTP">Welcome Back</h1>
+                                <h1 class="h3" v-else>OTP Verification</h1>
+                                <p class="text-gray" v-if="!showOTP">Sign in using your phone number</p>
+                                <p class="text-gray" v-else>Enter OTP code sent to <strong>{{ otpForm.phone }} </strong></p>
                             </div>
-                        </form>
+                            <form class="mt-0" role="form" @submit.prevent ="submit" v-if="!showOTP">
+                                <!-- Form -->
+                                <div class="form-group mb-4">
+                                    <!-- <label for="phone">Your Number</label> -->
+                                    <div class="input-group">
+                                       
+
+                                         <vue-tel-input 
+                                            v-model="otpForm.phone" 
+                                            class="form-control" 
+                                            defaultCountry="KE"
+                                            invalidMsg="Invalid phone number!"
+                                            autofocus
+                                            mode="international"
+                                         ></vue-tel-input>
+                                        <!-- <input
+                                            v-model="otpForm.phone"
+                                        
+                                            type="number" 
+                                            placeholder="Phone number" 
+                                            class="form-control" 
+                                            id="phone" required> -->
+                                    </div>  
+                                </div>
+                                <!-- End of Form -->
+                                <div class="d-grid mt-3">
+                                    <button type="submit" class="btn btn-gray-800">Get OTP</button>
+                                </div>
+                            </form>
+                            <div class="card-body" v-else>
+                            <!-- <p>Enter OTP code sent to <strong>{{ otpForm.phone }} </strong></p> -->
+                                <v-otp-input
+                                    v-model="otpForm.otp"
+                                    :disabled="loadingOverlay"
+                                    @finish="verifyOtp"
+                                ></v-otp-input>
+                                <v-overlay absolute :value="loadingOverlay">
+                                    <!-- <v-progress-circular
+                                    indeterminate
+                                    color="secondary"
+                                    ></v-progress-circular>
+                                     -->
+                                      <v-card
+                                        color="secondary"
+                                        dark
+                                    >
+                                        <v-card-text>
+                                        Please stand by
+                                        <v-progress-linear
+                                            indeterminate
+                                            color="white"
+                                            class="mb-0"
+                                        ></v-progress-linear>
+                                        </v-card-text>
+                                    </v-card>
+                                    
+                                </v-overlay>
+                                <br>
+                                <p class="text-center">Din't receive code yet?  
+                                    <!-- <v-btn
+                                    class="ma-1"
+                                    color="#F8BD7A"
+                                    plain
+                                    @click="resendOTP(otpForm.phone)"
+                                >
+                                    Request again
+                                </v-btn> -->
+                                <br>
+                                <button type="submit" class="btn btn-gray-800" @click="resendOTP(otpForm.phone)">Request again</button>
+                                </p>
+                            </div>
                         </div>
-                    </v-card-text>
-                    </Transition>
-                </v-card>
-                </v-flex>
-                <v-flex sm12 md6 offset-md3>
-                <v-layout align-center justify-space-between>
-                    <p class="caption my-3">
-                    <a href="#">Privacy Policy</a>
-                    |
-                    <a href="#">Terms of Service</a>
-                    </p>
-                    <p class="caption my-3">Powered by <a href="#">ElectionMonitor</a></p>
-                </v-layout>
-                </v-flex>
-            </v-layout>
-            <v-dialog
+                    </div>
+                </div>
+                <v-dialog
                 v-model="loading"
                 hide-overlay
                 persistent
@@ -112,9 +117,9 @@
                     </v-card-text>
                 </v-card>
                 </v-dialog>
-            </v-container>
-        </v-app>
- 
+            </div>
+        </section>
+  <notifications></notifications>
   </div>
 </template>
 
@@ -122,6 +127,7 @@
 import VsudInput from "../../components/VsudInput.vue";
 import VsudSwitch from "../../components/VsudSwitch.vue";
 import VsudButton from "../../components/VsudButton.vue";
+
 const body = document.getElementsByTagName("body")[0];
 
 export default {
@@ -137,10 +143,31 @@ export default {
                 'otp' : '',
                 'phone' : ''
             }),
-            rules: {
-                required: value => !!value || 'Phone number required.',
-                counter: value => value.length <= 20 || 'Max 10 characters',
-            },
+                bindProps: {
+                    mode: "international",
+                    defaultCountry: "KE",
+                    disabledFetchingCountry: true,
+                    disabled: false,
+                    disabledFormatting: false,
+                    placeholder: "Enter a phone number",
+                    required: true,
+                    enabledCountryCode: true,
+                    enabledFlags: true,
+                    preferredCountries: ["KE"],
+                    onlyCountries: [],
+                    ignoredCountries: [],
+                    autocomplete: "on",
+                    name: "telephone",
+                    maxLen: 25,
+                    wrapperClasses: "",
+                    inputClasses: "",
+                    dropdownOptions: {
+                    disabledDialCode: false
+                    },
+                    inputOptions: {
+                        showDialCode: true
+                    }
+                },
             alert: false,
             alertMessage: '',
             showOTP: false,
@@ -172,9 +199,10 @@ export default {
         this.otpForm.post('/api/v1/auth/check/if/user/exists')
             .then(response => {
                 this.alert = true
-                console.log(this.alertMessage = response.message)
-                this.signinForm.email = response.data[0].email
-                this.otpForm.phone = response.data[0].phone
+                // console.log(this.alertMessage = response.message)
+                this.signinForm.email = response.data.email
+                this.otpForm.phone = response.data.phone
+                console.log(response)
                 // this.signinForm.phone = response.data[0].phone
                 setTimeout(() => {
                     this.loading = false
@@ -217,6 +245,33 @@ export default {
                     this.otpForm.otp = ''
                
                 console.log(response)
+            });
+      },
+      resendOTP (number){
+          this.loadingOverlay = true
+          axios.post('/api/v1/auth/two-factor-auth/resend/' + number)
+            .then(response => {
+                
+                setTimeout(() => {
+                    // this.signin()
+                    // console.log(response.data.message)
+                    notify({
+                        text: response.data.message,
+                        theme: 'green',
+                        position: 'top-right'
+                    });
+                    this.loadingOverlay = false
+                }, 3500)
+                
+            })
+            .catch(response => {
+                    this.loadingOverlay = false
+                    notify({
+                        text: 'Error encountered!',
+                        theme: 'red',
+                        position: 'top-right'
+                    });
+                    console.log(response)
             });
       },
       signin() {

@@ -12,14 +12,49 @@
         </div>
 
         <div class="row">
-            
+            <div class="py-4">              
+                <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" to="/aspirant/add">New aspirant</md-button>  
+            </div>
             <div class="col-lg-12">
                 <div class="mb-4 card">
                     <div class="card-body">
-                        <!-- <h4 class="card-title">Filter User</h4> -->
-                        <!-- <button class="btn btn-secondary btn-sm" to="/aspirant/add" data-toggle="tooltip" title="New aspirant"><i class="fa fa-pencil"></i>Create</button> -->
-                        <md-button class="md-primary md-raised btn btn-secondary btn-sm" to="/aspirant/add">Create</md-button>
-                        <br><br><br>
+                      <!-- Tab Nav -->
+                        <div class="nav-wrapper position-relative mb-2">
+                            <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 active d-flex align-items-center justify-content-center" id="tabs-icons-text-1-tab" @click="tabs('The president')"  aria-controls="tabs-icons-text-1" aria-selected="true">
+                                        <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"></path></svg> -->
+                                        The President
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 d-flex align-items-center justify-content-center" id="tabs-icons-text-2-tab" @click="tabs('County governor')"  aria-controls="tabs-icons-text-2" aria-selected="false">
+                                        <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg> -->
+                                        County Governor
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 d-flex align-items-center justify-content-center" id="tabs-icons-text-3-tab" @click="tabs('Senator')"  aria-controls="tabs-icons-text-3" aria-selected="false">
+                                        <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path></svg> -->
+                                        Senator
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 d-flex align-items-center justify-content-center" id="tabs-icons-text-3-tab" @click="tabs('County Woman Member of National Assembly')"  aria-controls="tabs-icons-text-3" aria-selected="false">
+                                        <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path></svg> -->
+                                        Women Rep.
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 d-flex align-items-center justify-content-center" id="tabs-icons-text-3-tab" @click="tabs('Member of county assembly')"  aria-controls="tabs-icons-text-3" aria-selected="false">
+                                        <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path></svg> -->
+                                        MCA
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End of Tab Nav -->
+                      
                         <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
                             <md-table-toolbar>
                                 <md-field md-clearable class="md-toolbar-section-end">
@@ -65,7 +100,7 @@
                                 <md-table-cell md-label="Political party" md-sort-by="political_party">{{ item.political_party }}</md-table-cell>
                                <md-table-cell md-label="Results" md-sort-by="results">{{ item.results }}</md-table-cell>                                
                                <md-table-cell md-label="Actions" class="align-middle">
-                                    <button class="btn btn-secondary btn-sm" @click.prevent="editAspirant(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
+                                    <button class="btn btn-primary btn-sm" @click.prevent="editAspirant(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
                                     <button class="btn btn-danger btn-sm" @click.prevent="deleteAspirant(item)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button>
 
                                 </md-table-cell>
@@ -153,6 +188,11 @@
         },
 
         methods: {
+            tabs (position) {
+                console.log(position)
+                this.search = position
+                this.searched = searchByFilter(this.aspirants, this.search)
+            },
             getAspirants(page) {
                 this.loading =true
                 if (typeof page === 'undefined') {

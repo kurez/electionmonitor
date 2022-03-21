@@ -1,86 +1,102 @@
 <template>
-  <div class="card mb-4">
+<div class="container-fluid">
+    <div class="py-4">              
+       <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" @click="$router.go(-1)">Back</md-button>  
+    </div>
+
+  <div class="card mb-4 mt-4">
     <div class="card-header pb-0">
       <h6>{{$route.params.electoral_area}}</h6>
-      <p class="text-xs text-secondary mb-0">County</p>
+      <!-- <p class="text-xs text-secondary mb-0">County</p><br> -->
     </div>
     <div class="card-body px-3 pt-3 pb-2">
          <md-table v-model="aspirants" md-sort="full_name" md-sort-order="asc" md-card md-fixed-header>
 
-                            <md-table-row slot="md-table-row" v-for="(item, index) in aspirants" :key="index">
+          <md-table-row slot="md-table-row" v-for="(item, index) in aspirants" :key="index">
 
-                                <md-table-cell md-label="Full name" md-sort-by="full_name">
-                                    <div class="d-flex px-3 py-2">
+              <md-table-cell md-label="Full name" md-sort-by="full_name">
+                  <div class="d-flex px-3 py-2">
                                    
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">{{item.full_name}}</h6>
-                                        <p class="text-xs text-secondary mb-0">{{ item.political_party }}</p>
-                                    </div>
-                                    </div>
-                                </md-table-cell>
-                                <md-table-cell md-label="Electoral position" md-sort-by="electoral_position">{{ item.electoral_position }}</md-table-cell>
-                                <md-table-cell md-label="Electoral area" md-sort-by="electoral_area">{{ item.electoral_area }}</md-table-cell>
-                                <md-table-cell md-label="Results" md-sort-by="results">
-                                   <form @submit.prevent = "feedResult(item.uuid, index)" :id="item.uuid" v-if="!uuids.includes(item.uuid)">
-                                          <input
-                                                type="number"
-                                                step="1"
-                                                min="1"
-                                                :key="index"
-                                                :id="index"
-                                                :name="index"
-                                                required
-                                                v-model="resultsDetails.results[index]"
-                                        />
-                                       
-                                        <v-btn
-                                        type="submit"
-                                        color="primary"
-                                        >
-                                        Enter
-                                        </v-btn>
-                                   </form>
-                                   <template v-else>
-                                        <p v-for="vote in voted" :key="vote.aspirant_uuid">
-                                           <span v-if="item.uuid === vote.aspirant_uuid">{{vote.votes}}</span> 
-                                        </p>
-                                   </template>
+                  <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm">{{item.full_name}}</h6>
+                      <p class="text-xs sub-header text-secondary  mb-0">{{ item.political_party }}</p>
+                  </div>
+                  </div>
+              </md-table-cell>
+              <md-table-cell md-label="Electoral position" md-sort-by="electoral_position">
+                <vsud-badge color="success" variant="gradient" size="sm" v-if="item.electoral_position === 'Senator'" >{{item.electoral_position}}</vsud-badge>
+                <vsud-badge color="secondary" variant="gradient" size="sm" v-if="item.electoral_position === 'County Governor'" >{{item.electoral_position}}</vsud-badge>
+                <vsud-badge color="primary" variant="gradient" size="sm" v-if="item.electoral_position === 'County Woman Member of National Assembly'" >{{item.electoral_position}}</vsud-badge>
+                <!-- <vsud-badge color="success" variant="gradient" size="sm" v-if="item.electoral_position === 'Senator'" >{{item.electoral_position}}</vsud-badge>
+                <vsud-badge color="success" variant="gradient" size="sm" v-if="item.electoral_position === 'Senator'" >{{item.electoral_position}}</vsud-badge>
+                <vsud-badge color="success" variant="gradient" size="sm" v-if="item.electoral_position === 'Senator'" >{{item.electoral_position}}</vsud-badge> -->
+              </md-table-cell>
+              <md-table-cell md-label="Electoral area" md-sort-by="electoral_area">{{ item.electoral_area }}</md-table-cell>
+              <md-table-cell md-label="Results" md-sort-by="results">
+                 <form @submit.prevent = "feedResult(item.uuid, index)" :id="item.uuid" v-if="!uuids.includes(item.uuid)">
+                   <div class="row">
+                     <div class="col-6">
+                            <input
+                              class="form-control"
+                              type="number"
+                              step="1"
+                              min="1"
+                              :key="index"
+                              :id="index"
+                              :name="index"
+                              required
+                              v-model="resultsDetails.results[index]"
+                            />
+                     </div>
+                     <div class="col-6">
+                        <button type="submit" class="btn btn-gray-800">Enter</button>
+                     </div>
+                   </div>
+                 </form>
+                 <template v-else>
+                      <p v-for="vote in voted" :key="vote.aspirant_uuid">
+                         <span v-if="item.uuid === vote.aspirant_uuid"><code>{{vote.votes}}</code></span> 
+                      </p>
+                 </template>
                                     
-                                </md-table-cell>
-                               <md-table-cell md-label="" md-sort-by="">
-                                   
-                                </md-table-cell>
-                               <!-- <md-table-cell md-label="Latitude" md-sort-by="longitude">{{ item.latitude }}</md-table-cell>    -->
-                             
-                            </md-table-row>
-                            </md-table>
-                        <v-dialog
-                            v-model="loading"
-                            hide-overlay
-                            persistent
-                            width="300"
-                            >
-                            <v-card
-                                color="secondary"
-                                dark
-                            >
-                                <v-card-text>
-                                Please stand by
-                                <v-progress-linear
-                                    indeterminate
-                                    color="white"
-                                    class="mb-0"
-                                ></v-progress-linear>
-                                </v-card-text>
-                            </v-card>
-                        </v-dialog>
+              </md-table-cell>
+             <md-table-cell md-label="" md-sort-by="">
+
+              </md-table-cell>
+             <!-- <md-table-cell md-label="Latitude" md-sort-by="longitude">{{ item.latitude }}</md-table-cell>    -->
+
+          </md-table-row>
+          </md-table>
+          <v-dialog
+              v-model="loading"
+              hide-overlay
+              persistent
+              width="300"
+              >
+              <v-card
+                  color="secondary"
+                  dark
+              >
+                  <v-card-text>
+                  Please stand by
+                  <v-progress-linear
+                      indeterminate
+                      color="white"
+                      class="mb-0"
+                  ></v-progress-linear>
+                  </v-card-text>
+              </v-card>
+          </v-dialog>
     </div>
 
+  </div>
   </div>
 </template>
 
 <script>
+import VsudBadge from "../../components/VsudBadge.vue";
     export default {
+      components : { VsudBadge },
         data() {
         return {
         loading: false,

@@ -13,6 +13,10 @@ import router from './routes'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+import Notifications from '@voerro/vue-notifications'
+
+Vue.component('notifications', Notifications);
+
 import "./assets/css/nucleo-icons.css";
 import "./assets/css/nucleo-svg.css";
 // import SoftUIDashboard from "./soft-ui-dashboard";
@@ -22,6 +26,17 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
 import '@mdi/font/css/materialdesignicons.css'
+
+
+// Object.assign( global, { JP_SMS: require('jambopay-sms')});
+// window.x = require('jambopay-sms') 
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
+
+import VueNumber from "vue-number-animation";
+
+Vue.use(VueTelInput);
+Vue.use(VueNumber);
 
 // import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.use(VueMaterial)

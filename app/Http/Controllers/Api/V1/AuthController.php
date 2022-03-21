@@ -26,8 +26,9 @@ class AuthController extends APIController
 {
     public function checkIfUserExists(Request $request) {
         $phone = $request->only('phone');
-        $phone = substr($phone['phone'], 1);
-        $phone = '+254'.$phone;
+        
+        // $phone = substr($phone['phone'], 1);
+        // $phone = '+254'.$phone;
         $phone = str_replace(' ', '', $phone);
 
         $user = DB::table('users')->where('phone',$phone)->first();
@@ -44,20 +45,39 @@ class AuthController extends APIController
             $receiverNumber = $phone;
             $message = "Your Login OTP code is ". $code;
             $sender = "Kura";
-        
-            
-                // $basic  = new \Nexmo\Client\Credentials\Basic('cee6d9f9', 'K8BrzbcnJ0g5MGRf');
-                // $client = new \Nexmo\Client($basic);
-    
-                // $message = $client->message()->send([
-                //     'to' => $receiverNumber,
-                //     'from' => $sender,
-                //     'text' => $message
-                // ]);
 
-                $foundUser = DB::select('select * from users where phone ='.$phone);
-                // return $foundUser;
-                return response()->json(['message' => 'Success','data' => $foundUser]);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://prsp.jambopay.co.ke/api/api/org/disburseSingleSms/',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS =>'{
+                "number": "+254708746046",
+                "sms": "My message",
+                "callBack": "https://....",
+                "senderName": "Election Monitor"
+            }',
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ3NDMxMTc3fQ.r9YC2oU0OdFPN6k0XxtRYdzlin-ldI4KkGKOGdrJaFs',
+                'Content-Type: application/json',
+                // 'DeveloperKey: 084049D0-AB72-4EE2-9EDE-0C25C1D1268C',
+                // 'Password: '.hash('sha256', 'Pass@1234')
+              ),
+            ));
+            
+            $response = curl_exec($curl);
+            
+            curl_close($curl);
+
+            $foundUser = DB::table('users')->where('phone',$phone)->first();
+            // return $foundUser;
+            return response()->json(['message' => $response,'data' => $foundUser]);
         } else {
             return response()->json(['message' => 'Error']);
         }
@@ -104,11 +124,11 @@ class AuthController extends APIController
             $phone = $validated['phone'];
             // $phone = substr($validated['phone'], 1);
             // $phone = '+254'.$phone;
-            // $phone = str_replace(' ', '', $phone);
+            $phone = str_replace(' ', '', $phone);
     
             $user = DB::table('users')->where('phone', $phone)->first();
 
-            // return $user->id;
+            // return $phone;
         
             $exists = UserCode::where('user_id', $user->id)
                     ->where('code', $validated['otp'])
@@ -131,10 +151,20 @@ class AuthController extends APIController
          *
          * @return response()
          */
-        public function resend()
+        public function resendOTP($number)
         {
-            auth()->user()->generateCode();
-    
+            $user = DB::table('users')->where('phone', $number)->first();
+
+
+            $code = rand(100000, 999999);
+  
+            UserCode::updateOrCreate([
+                'user_id' => $user->id,
+                'code' => $code
+            ]);
+
+            return response()->json(['message' => 'We have resent OTP on your mobile number.']);
+
             return back()
                 ->with('success', 'We have resent OTP on your mobile number.');
         }

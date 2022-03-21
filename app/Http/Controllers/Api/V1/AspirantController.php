@@ -185,8 +185,10 @@ class AspirantController extends APIController
 
             $user = JWTAuth::parseToken()->authenticate();
             $agent_id = $user->id;
+            $agent_name = $user->first_name.' '.$user->last_name;
+            $agent_polling = $user->allocated_area;
 
-            $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'votes' => $results);
+            $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'agent_name' => $agent_name,  'polling'=> $allocated_area, 'votes' => $results);
             DB::table('results')->insert($values);
 
 

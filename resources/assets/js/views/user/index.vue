@@ -12,14 +12,15 @@
         </div>
 
         <div class="row">
-            
+            <div class="py-4">              
+                <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" to="/user/add">New user</md-button>  
+            </div>
             <div class="col-lg-12">
                 <div class="mb-4 card">
                     <div class="card-body">
                         <!-- <h4 class="card-title">Filter User</h4> -->
                         <!-- <button class="btn btn-danger btn-sm" to="/" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button> -->
-                        <md-button class="md-primary md-raised btn btn-secondary btn-sm" to="/user/add">Create</md-button>
-                        <br><br><br>
+                       
                         <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
                             <md-table-toolbar>
                                 <md-field md-clearable class="md-toolbar-section-end">
@@ -46,14 +47,7 @@
                                 <!-- <md-table-cell md-label="I" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
                                 <md-table-cell md-label="Name" md-sort-by="first_name">
                                     <div class="d-flex px-3 py-2">
-                                    <!-- <div>
-                                        <v-avatar color="indigo" v-if="item.avatar === null">
-                                            <v-icon dark>
-                                                mdi-account-circle
-                                            </v-icon>
-                                            </v-avatar>
-                                        <vsud-avatar :img="item.avatar" size="sm" border-radius="lg" class="me-3" alt="user3" v-else/>
-                                    </div> -->
+                                  
                                     <div class="d-flex flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm">{{item.first_name}} {{item.last_name}}</h6>
                                         <p class="text-xs text-secondary mb-0">{{ item.phone}}</p>
@@ -65,7 +59,7 @@
                                 <md-table-cell md-label="Role" md-sort-by="role"><vsud-badge color="success" variant="gradient" size="sm" v-if="item.role === 'agent'" >{{item.role}}</vsud-badge> <vsud-badge color="secondary" variant="gradient" size="sm" v-if="item.role === 'admin'">{{item.role}}</vsud-badge></md-table-cell>
                                 <md-table-cell md-label="Allocated polling" md-sort-by="allocated_area">{{ item.allocated_area }}</md-table-cell>
                                 <md-table-cell md-label="Actions" class="align-middle">
-                                    <button class="btn btn-secondary btn-sm" @click.prevent="editUser(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
+                                    <button class="btn btn-primary btn-sm" @click.prevent="editUser(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
                                     <button class="btn btn-danger btn-sm" @click.prevent="deleteUser(item)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button>
                                      
                                
@@ -114,8 +108,7 @@
         return items.filter(
 
             item => toLower(item.first_name).includes(toLower(term)) || toLower(item.last_name).includes(toLower(term)) ||  toLower(item.email).includes(toLower(term))
-            || toLower(item.phone).includes(toLower(term)) 
-            || toLower(item.role).includes(toLower(term)) || toLower(item.allocated_area).includes(toLower(term))
+            || toLower(item.phone).includes(toLower(term)) || toLower(item.role).includes(toLower(term)) || toLower(item.allocated_area).includes(toLower(term))
             )
         }
 

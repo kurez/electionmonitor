@@ -100,7 +100,7 @@
             </div>
         </div>
         <hr>
-        <button type="submit" class="btn btn-secondary waves-effect waves-light m-t-10">
+        <button type="submit" class="btn btn-primary waves-effect waves-light m-t-10">
             <span v-if="id">Update</span>
             <span v-else>Save</span>
         </button>

@@ -1,20 +1,20 @@
 <template>
 <div>
-  <div class="container-fluid mt-5 mb-3" style="padding-top: 125px">
+  <div class="container mt-5 mb-3" style="padding-top: 125px; color: #fff">
     <div class="row">
         <div class="col-md-6">
-            <div class="card p-3 mb-2">
+            <div class="card p-3 mb-2" style=" background-color: #040539">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon"> <v-icon>mdi-tie</v-icon>  </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0">National</h6> <span>The president</span>
+                            <h6 class="mb-0" style="color:#fff">National</h6> <span>The president</span>
                         </div>
                     </div>
                     <div class="badge">
                         <v-btn
                             class="ma-1"
-                            color="#00C853"
+                            color="#fff"
                             plain
                             @click="enterResult('national')"
                         >
@@ -23,29 +23,24 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <h3 class="heading">Republic <br>of Kenya</h3>
-                    <div class="mt-5">
-                        <div class="progress">
-                            <!-- <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> -->
-                        </div>
-                        <div class="mt-3"> <span class="text1">32 Applied <span class="text2">of 50 capacity</span></span> </div>
-                    </div>
+                    <h4 class="heading">Republic of Kenya</h4>
+                    
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card p-3 mb-2">
+            <div class="card p-3 mb-2" style=" background-color: #040539">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon"> <v-icon>mdi-tie</v-icon> </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0">County Government</h6> <span>County Governor, Senator, Women Representative of The National Assembly</span>
+                            <h6 class="mb-0" style="color:#fff">County</h6> <span>County Governor, Senator, Women Rep.</span>
                         </div>
                     </div>
                     <div class="badge">
                         <v-btn
                             class="ma-1"
-                            color="#00C853"
+                            color="#fff"
                             plain
                             @click="enterResult(pollingDetails.county_name)"
                         >
@@ -54,29 +49,24 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <h3 class="heading" style="text-transform: capitalize;">{{ pollingDetails.county_name }}<br>County</h3>
-                    <div class="mt-5">
-                        <div class="progress">
-                            <!-- <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> -->
-                        </div>
-                        <div class="mt-3"> <span class="text1">42 Applied <span class="text2">of 70 capacity</span></span> </div>
-                    </div>
+                    <h4 class="heading" style="text-transform: capitalize;">{{ pollingDetails.county_name }} County</h4>
+                   
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card p-3 mb-2">
+            <div class="card p-3 mb-2" style=" background-color: #040539">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon"> <v-icon>mdi-tie</v-icon> </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0">Constituency</h6> <span style="color: ">Member of National Assembly</span>
+                            <h6 class="mb-0" style="color:#fff">Constituency</h6> <span>Member of National Assembly</span>
                         </div>
                     </div>
                     <div class="badge">
                         <v-btn
                             class="ma-1"
-                            color="#00C853"
+                            color="#fff"
                             plain
                             @click="enterResult(pollingDetails.constituency_name)"
                         >
@@ -85,29 +75,24 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <h3 class="heading" style="text-transform: capitalize;">{{ pollingDetails.constituency_name }} <br>Constituency</h3>
-                    <div class="mt-5">
-                        <div class="progress">
-                            <!-- <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> -->
-                        </div>
-                        <div class="mt-3"> <span class="text1">52 Applied <span class="text2">of 100 capacity</span></span> </div>
-                    </div>
+                    <h4 class="heading" style="text-transform: capitalize;">{{ pollingDetails.constituency_name }} Constituency</h4>
+                    
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card p-3 mb-2">
+            <div class="card p-3 mb-2" style=" background-color: #040539">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon"> <v-icon>mdi-tie</v-icon> </div>
                         <div class="ms-2 c-details">
-                            <h6 class="mb-0">Ward</h6> <span>Member of County Assembly</span>
+                            <h6 class="mb-0" style="color:#fff">Ward</h6> <span>Member of County Assembly</span>
                         </div>
                     </div>
                     <div class="badge">
                         <v-btn
                             class="ma-1"
-                            color="#00C853"
+                            color="#fff"
                             plain
                             @click="enterResult(pollingDetails.ward_name)"
                         >
@@ -116,13 +101,8 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <h3 class="heading" style="text-transform: capitalize;">{{ pollingDetails.ward_name }} <br>Ward</h3>
-                    <div class="mt-5">
-                        <div class="progress">
-                            <!-- <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> -->
-                        </div>
-                        <div class="mt-3"> <span class="text1">52 Applied <span class="text2">of 100 capacity</span></span> </div>
-                    </div>
+                    <h4 class="heading" style="text-transform: capitalize;">{{ pollingDetails.ward_name }} Ward</h4>
+                   
                 </div>
             </div>
         </div>
@@ -311,5 +291,9 @@ export default {
 
 .text2 {
     color: #a5aec0
+}
+.heading {
+    color: #fff;
+    font-size: 20px
 }
 </style>
