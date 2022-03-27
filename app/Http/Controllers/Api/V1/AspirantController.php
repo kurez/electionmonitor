@@ -188,7 +188,7 @@ class AspirantController extends APIController
             $agent_name = $user->first_name.' '.$user->last_name;
             $agent_polling = $user->allocated_area;
 
-            $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'agent_name' => $agent_name,  'polling'=> $allocated_area, 'votes' => $results);
+            $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'agent_name' => $agent_name,  'polling'=> $agent_polling, 'votes' => $results);
             DB::table('results')->insert($values);
 
 

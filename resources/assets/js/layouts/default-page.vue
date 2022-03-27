@@ -3,25 +3,25 @@
 
         
         <v-app>             
-          <v-navigation-drawer width="300px" color="bg-gray-800" app  v-if="$route.name !== 'agentHome'">
+          <v-navigation-drawer width="300px" color="#040539" app  v-if="$route.name !== 'agentHome'">
             <!-- <nav  style="width: 350px" class="sidebar d-lg-block text-white collapse" data-simplebar v-if="$route.name !== 'agentHome'"> -->
-            <div class="sidebar-inner px-4 pt-3" style="width: 100%">
+            <div class="sidebar-inner px-4 pt-3" style="width: 100%; color: #fff">
               <ul class="nav flex-column pt-3 pt-md-0">
-                <li class="nav-item">
-                  <a href="/dashboard" class="nav-link d-flex align-items-center">
+                <li class="nav-item"  style="">
+                  <!-- < href="/dashboard" class="nav-link d-flex align-items-center"> -->
                     <span class="sidebar-icon">
                       <svg width="54" height="17" viewBox="0 0 64 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="white"/>
                       </svg>
                     </span>
-                    <span class="mt-1 ms-1 sidebar-text">Election Monitor</span>
-                  </a>
+                    <span class="mt-1 ms-1 ">Election Monitor</span>
+                  <!-- </> -->
                 </li>
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
                 <li class="nav-item">
                   <router-link to="/dashboard" class="nav-link">
                     <span class="sidebar-icon">
-                      <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+                      <svg class="icon icon-xs me-2"  style="color: #fff" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                     </span> 
                     <span class="sidebar-text">Dashboard</span>
                   </router-link>
@@ -30,7 +30,7 @@
                   <router-link to="/user" class="nav-link d-flex justify-content-between">
                     <span>
                       <span class="sidebar-icon">
-                        <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        <svg class="icon icon-xs me-2"  style="color: #fff" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                       </span>
                       <span class="sidebar-text">Users</span>
                     </span>
@@ -39,7 +39,7 @@
                 <li class="nav-item" >
                   <router-link to="/aspirant" class="nav-link">
                     <span class="sidebar-icon">
-                      <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>
+                      <svg class="icon icon-xs me-2"  style="color: #fff" fill="#fff" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>
                     </span>
                     <span class="sidebar-text">Aspirants</span>
                   </router-link>
@@ -47,7 +47,7 @@
                 <li class="nav-item ">
                   <router-link to="/county" class="nav-link">
                     <span class="sidebar-icon">
-                      <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+                      <svg class="icon icon-xs me-2"  style="color: #fff" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
                     </span>
                     <span class="sidebar-text">Counties</span>
                   </router-link>
@@ -55,7 +55,7 @@
                 <li class="nav-item ">
                   <router-link to="/constituency" class="nav-link">
                     <span class="sidebar-icon">
-                      <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+                      <svg class="icon icon-xs me-2"  style="color: #fff" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
                     </span>
                     <span class="sidebar-text">Constituencies</span>
                   </router-link>
@@ -63,7 +63,7 @@
                 <li class="nav-item ">
                   <router-link to="/ward" class="nav-link">
                     <span class="sidebar-icon">
-                      <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+                      <svg class="icon icon-xs me-2"  style="color: #fff" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
                     </span>
                     <span class="sidebar-text">Wards</span>
                   </router-link>
@@ -72,49 +72,16 @@
             </div>
           <!-- </nav> -->
           </v-navigation-drawer>
-           <!-- <v-app-bar app> -->
-            <nav class="navbar navbar-expand-lg" style="padding: 2px;  background-color: #040539">
-              <a href="#" class="navbar-brand">
-                <!-- Logo Image -->
-                <!-- <img src="https://bootstrapious.com/i/snippets/sn-nav-logo/logo.png" width="45" alt="" class="d-inline-block align-middle mr-2"> -->
-                 <svg width="54" height="17" viewBox="0 0 64 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="white"/>
-                </svg>
-                <!-- Logo Text -->
-                <span class="text-uppercase font-weight-bold">Election Monitor</span>
-              </a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <!-- <router-link></router-link> -->
-                    <a class="nav-link" @click="logout()">Logout</a>
-                  </li>
-                  <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li> -->
-                  <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                  </li> -->
-                </ul>
-              </div>
-            </nav>
-                     
-          <!-- </v-app-bar> -->
+          <v-app-bar app dense style="background-color: #040539">
+           <svg width="54" height="17" viewBox="0 0 64 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="$route.name === 'agentHome'">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="white"/>
+                                    </svg>
+            <v-toolbar-title v-if="$route.name === 'agentHome'" style="color: #fff; padding-left: 5px">Election Monitor</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn @click="logout()" color="red" plain dense>Logout</v-btn>
+              </v-toolbar-items>
+          </v-app-bar>
          
           <!-- Sizes your content based upon application components -->
           <v-main>

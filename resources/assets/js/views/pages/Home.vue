@@ -1,6 +1,30 @@
 <template>
 <div>
-  <div class="container mt-5 mb-3" style="padding-top: 125px; color: #fff">
+  <div class="container mt-5 mb-3" style="padding-top: 115px; color: #fff">
+    <div class="row">
+        <section class="profile">
+            <header class="header">
+                <div class="details">
+                <!-- <img src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=b38c22a46932485790a3f52c61fcbe5a" alt="John Doe" class="profile-pic"> -->
+                <h1 class="heading" style="color: #000">{{ userDetails.first_name }} {{ userDetails.last_name }}</h1>
+                <div class="location" style="color: #000">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12 ,2Z"></path>
+                    </svg>
+                    <p style="text-transform: capitalize">{{ userDetails.allocated_area }} Polling Station</p>
+                </div>
+                <div class="location" style="color: #000">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12 ,2Z"></path>
+                    </svg>
+                    <p style="text-transform: capitalize">{{ pollingDetails.ward_name }} ward, {{ pollingDetails.constituency_name }} constituency, {{ pollingDetails.county_name }} county</p>
+                </div>
+                </div>
+            </header>
+            </section>
+             <hr style="border: 0;height: 1px;background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+    </div>
+   
     <div class="row">
         <div class="col-md-6">
             <div class="card p-3 mb-2" style=" background-color: #040539">
@@ -16,7 +40,7 @@
                             class="ma-1"
                             color="#fff"
                             plain
-                            @click="enterResult('national')"
+                            @click="enterResult('Republic of Kenya')"
                         >
                            <v-icon>mdi-counter</v-icon> Enter Results
                         </v-btn> 
@@ -42,7 +66,7 @@
                             class="ma-1"
                             color="#fff"
                             plain
-                            @click="enterResult(pollingDetails.county_name)"
+                            @click="enterResult(pollingDetails.county_name, 'county')"
                         >
                             <v-icon>mdi-counter</v-icon> Enter Results
                         </v-btn> 
@@ -68,7 +92,7 @@
                             class="ma-1"
                             color="#fff"
                             plain
-                            @click="enterResult(pollingDetails.constituency_name)"
+                            @click="enterResult(pollingDetails.constituency_name, 'constituency')"
                         >
                             <v-icon>mdi-counter</v-icon> Enter Results
                         </v-btn> 
@@ -94,7 +118,7 @@
                             class="ma-1"
                             color="#fff"
                             plain
-                            @click="enterResult(pollingDetails.ward_name)"
+                            @click="enterResult(pollingDetails.ward_name, 'ward')"
                         >
                             <v-icon>mdi-counter</v-icon> Enter Results
                         </v-btn> 
@@ -115,7 +139,7 @@
     width="300"
     >
     <v-card
-        color="secondary"
+       style=" background-color: #040539"
         dark
     >
         <v-card-text>
@@ -201,7 +225,7 @@ export default {
             this.userDetails.phone = response.data.phone;
             this.userDetails.gender = response.data.gender;
             this.userDetails.role = response.data.role;
-            this.userDetails.allocated_area = response.data.allocated_area;
+            this.userDetails.allocated_area = response.data.allocated_area.toLowerCase();
             this.userDetails.created_at = response.data.created_at;
             console.log(response)
 
@@ -209,9 +233,9 @@ export default {
             axios.get('/api/v1/polling-fetch/'+ decodeURI(area))
               .then(response => {
                   console.log(response.data[0])
-                  this.pollingDetails.ward_name = response.data[0].ward_name
-                  this.pollingDetails.county_name = response.data[0].county_name
-                  this.pollingDetails.constituency_name = response.data[0].constituency_name
+                  this.pollingDetails.ward_name = response.data[0].ward_name.toLowerCase()
+                  this.pollingDetails.county_name = response.data[0].county_name.toLowerCase()
+                  this.pollingDetails.constituency_name = response.data[0].constituency_name.toLowerCase()
               })
               .catch(response => {
                 console.log(response)
@@ -223,10 +247,10 @@ export default {
         });
         
     },
-    enterResult (electoral_area){
+    enterResult (electoral_area, location){
         this.loading = true
         setTimeout(() => 
-        this.$router.push('/enter-results/'+electoral_area)
+        this.$router.push('/enter-results/'+electoral_area.toLowerCase()+'/'+location)
         , 2000);  
     },
     logout(){
@@ -295,5 +319,51 @@ export default {
 .heading {
     color: #fff;
     font-size: 20px
+}
+
+.header {
+  /* min-height: 60vh; */
+  /* background: #009FFF; */
+    /* background: linear-gradient(to right, #ec2F4B, #009FFF); */
+  color: #000;
+  clip-path: ellipse(100vw 60vh at 50% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details {
+  text-align: center;
+}
+
+.profile-pic {
+  height: 6rem;
+  width: 6rem;
+  object-fit: center;
+  border-radius: 50%;
+  border: 2px solid #040539;
+}
+
+.location p {
+  display: inline-block;
+}
+
+.location svg {
+  vertical-align: middle;
+}
+
+.stats {
+  display: flex;
+}
+
+.stats .col-4 {
+  width: 10rem;
+  text-align: center;
+}
+
+.heading {
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 1rem 0;
 }
 </style>

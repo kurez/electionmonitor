@@ -73,7 +73,7 @@
                             width="300"
                             >
                             <v-card
-                                color="secondary"
+                                style="background-color: #040539"
                                 dark
                             >
                                 <v-card-text>

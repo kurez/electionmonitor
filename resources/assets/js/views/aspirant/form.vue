@@ -98,13 +98,33 @@
                         ></v-select>
                 </div>
             </div>
+             <v-dialog
+                            v-model="loading"
+                            hide-overlay
+                            persistent
+                            width="300"
+                            >
+                            <v-card
+                                style="background-color: #040539"
+                                dark
+                            >
+                                <v-card-text>
+                                Please stand by
+                                <v-progress-linear
+                                    indeterminate
+                                    color="white"
+                                    class="mb-0"
+                                ></v-progress-linear>
+                                </v-card-text>
+                            </v-card>
+                        </v-dialog>
         </div>
         <hr>
         <button type="submit" class="btn btn-primary waves-effect waves-light m-t-10">
             <span v-if="id">Update</span>
             <span v-else>Save</span>
         </button>
-        <button to="/aspirant" class="btn btn-danger waves-effect waves-light m-t-10">
+        <button @click="$router.go(-1)" class="btn btn-danger waves-effect waves-light m-t-10">
             <span>Cancel</span>
             <!-- <span v-else>Save</span> -->
         </button>
@@ -122,6 +142,7 @@
     export default {
         data() {
             return {
+                loading: false,
                 aspirantForm: new Form({
                     'full_name' : '',
                     'political_party' : '',
@@ -189,31 +210,39 @@
                     this.storeAspirant();
             },
             storeAspirant(){
+                 this.loading = true
                 this.aspirantForm.post('/api/v1/aspirant')
                 .then(response => {
+                     this.loading = false
                     toastr['success'](response.message);
                     this.$emit('completed',response.aspirant)
                     this.$router.push('/aspirant');
                 })
                 .catch(response => {
+                     this.loading = false
                     toastr['error'](response.message);
                 });
             },
             getAspirants(){
+                 this.loading = true
                 axios.get('/api/v1/aspirant/'+this.id)
                 .then(response => {
+                     this.loading = false
                     this.aspirantForm.full_name = response.data.full_name;
                     this.aspirantForm.political_party = response.data.political_party;
                     this.aspirantForm.electoral_position = response.data.electoral_position;
                     this.aspirantForm.electoral_area = response.data.electoral_area;
                 })
                 .catch(response => {
+                     this.loading = false
                     toastr['error'](response.message);
                 });
             },
             updateAspirant(){
+                 this.loading = true
                 this.aspirantForm.patch('/api/v1/aspirant/'+this.id)
                 .then(response => {
+                     this.loading = false
                     if(response.type == 'error')
                         toastr['error'](response.message);
                     else {
@@ -225,34 +254,41 @@
                 });
             },
             getLocations (){
+                 this.loading = true
                  axios.get('/api/v1/county')
                 .then(response => {
+                     this.loading = false
                     // console.log(this.county=response.data)
                     for(let i=0;i<response.data.length;i++){
                         this.county.push(response.data[i].county_name)
                     }
                 })
                 .catch(response => {
+                     this.loading = false
                     toastr['error'](response.message);
                 });
 
                 axios.get('/api/v1/constituency')
                 .then(response => {
+                     this.loading = false
                     for(let i=0;i<response.data.length;i++){
                         this.constituency.push(response.data[i].constituency_name)
                     }
                 })
                 .catch(response => {
+                     this.loading = false
                     toastr['error'](response.message);
                 });
 
                 axios.get('/api/v1/ward')
                 .then(response => {
+                     this.loading = false
                     for(let i=0;i<response.data.length;i++){
                         this.ward.push(response.data[i].ward_name)
                     }
                 })
                 .catch(response => {
+                     this.loading = false
                     toastr['error'](response.message);
                 });
             }

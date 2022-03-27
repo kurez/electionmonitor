@@ -88,15 +88,15 @@
                     cols="12"
                     sm="6"
                     >
-                    <v-select
+                    <!-- <v-select
                     v-model="userForm.allocated_area"
                     :items="pollings"
                     label="Polling"
                     required
                     outlined
                     dense
-                    ></v-select>
-                  <!-- <v-autocomplete
+                    ></v-select> -->
+                  <v-autocomplete
                     v-model="userForm.allocated_area"
                     :items="pollings"
                     chips
@@ -128,7 +128,7 @@
                             <v-list-item-subtitle v-text="item.county_name"></v-list-item-subtitle>
                             </v-list-item-content>
                         </template>
-                    </v-autocomplete> -->
+                    </v-autocomplete>
                     </v-col>
                 </v-row>
                 <v-dialog
@@ -138,7 +138,7 @@
                             width="300"
                             >
                             <v-card
-                                color="secondary"
+                                style="background-color: #040539"
                                 dark
                             >
                                 <v-card-text>
@@ -158,7 +158,7 @@
             <span v-if="id">Update</span>
             <span v-else>Save</span>
         </button>
-        <button to="/user" class="btn btn-danger waves-effect waves-light m-t-10">
+        <button @click="$router.go(-1)" class="btn btn-danger waves-effect waves-light m-t-10">
             <span>Cancel</span>
             <!-- <span v-else>Save</span> -->
         </button>
@@ -181,8 +181,8 @@
                     first_name: '',
                     last_name: ''
                 }),
-                roles: ['admin','agent'],
-                genders: ['male','female'],
+                roles: ['Admin','Agent'],
+                genders: ['Male','Female'],
                 loading: false,
                 pollings: []
             }
@@ -255,7 +255,7 @@
                 .then(response => {
                     this.loading = false
                     for(let i=0;i<response.data.length;i++){
-                        this.pollings.push(response.data[i].polling_name)
+                        this.pollings.push(response.data[i])
                     }
                     console.log(this.pollings)
                 })
