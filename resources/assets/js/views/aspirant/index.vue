@@ -91,7 +91,7 @@
                                     </div> -->
                                     <div class="d-flex flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm">{{item.full_name}}</h6>
-                                        <p class="text-xs text-secondary mb-0">{{ item.electoral_position }}</p>
+                                        <p class="text-xs mb-0">{{ item.electoral_position }}</p>
                                     </div>
                                     </div>
                                 </md-table-cell>
@@ -99,7 +99,7 @@
                                 <md-table-cell md-label="Electoral area" md-sort-by="electoral_area">{{ item.electoral_area }}</md-table-cell>
                                 <md-table-cell md-label="Political party" md-sort-by="political_party">{{ item.political_party }}</md-table-cell>
                                <md-table-cell md-label="Results" md-sort-by="results">{{ item.results }}</md-table-cell>                                
-                               <md-table-cell md-label="Actions" class="align-middle">
+                               <md-table-cell md-label="Actions">
                                     <button class="btn btn-primary btn-sm" @click.prevent="editAspirant(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
                                     <button class="btn btn-danger btn-sm" @click.prevent="deleteAspirant(item)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button>
 
@@ -210,6 +210,7 @@
                          this.loading = false
                     });
             },
+            
             deleteAspirant(aspirant){
                 this.loading =true
                 axios.delete('/api/v1/aspirant/'+aspirant.id).then(response => {

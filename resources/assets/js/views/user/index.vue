@@ -55,7 +55,7 @@
                                     </div>
                                 </md-table-cell>
                                 <md-table-cell md-label="Phone" md-sort-by="phone">{{ item.phone }}</md-table-cell>
-                                <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender.toUpperCase() }}</md-table-cell>
+                                <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender}}</md-table-cell>
                                 <md-table-cell md-label="Role" md-sort-by="role"><vsud-badge color="success" variant="gradient" size="sm" v-if="item.role === 'agent' || item.role === 'Agent'" >{{item.role}}</vsud-badge> <vsud-badge color="secondary" variant="gradient" size="sm" v-if="item.role === 'admin' || item.role === 'Admin'">{{item.role}}</vsud-badge></md-table-cell>
                                 <md-table-cell md-label="Allocated polling" md-sort-by="allocated_area">{{ item.allocated_area }}</md-table-cell>
                                 <md-table-cell md-label="Actions" class="align-middle">

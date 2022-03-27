@@ -130,7 +130,9 @@
         <button @click="$router.go(-1)" class="btn btn-danger waves-effect waves-light m-t-10">
             <span>Cancel</span>
         </button>
+        <notifications></notifications>
     </form>
+    
 </template>
 
 
@@ -193,12 +195,22 @@
                 // console.log(this.userForm.allocated_area.polling_name)
                 this.userForm.allocated_area = this.userForm.allocated_area.polling_name
                 axios.post('/api/v1/auth/register', this.userForm).then(response =>  {
-                   
-                     setTimeout(function () {
-                         this.$router.push('/user');
-                    }, 3000);
+                   notify({
+                            text: 'Registration was successful',
+                            theme: 'green',
+                            position: 'top-right'
+                        });
+                     
+                          
+                        this.$router.push('/user') 
+                    
                     this.loading = false
                 }).catch(error => {
+                     notify({
+                            text: 'Error in registraion',
+                            theme: 'red',
+                            position: 'top-right'
+                        });
                     this.loading = false
                 });
             },
@@ -227,7 +239,11 @@
                 .then(response => {
                     this.loading = false
                     if(response.type == 'error')
-                        toastr['error'](response.message);
+                        notify({
+                            text: 'Error in user update',
+                            theme: 'red',
+                            position: 'top-right'
+                        });
                         
                     else {
                         this.$router.push('/user');
@@ -235,7 +251,11 @@
                     }
                 })
                 .catch(response => {
-                    toastr['error'](response.message);
+                    notify({
+                            text: 'Error in user update',
+                            theme: 'red',
+                            position: 'top-right'
+                        });
                     this.loading = false
                 });
             },
