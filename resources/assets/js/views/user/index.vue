@@ -48,20 +48,20 @@
                                 <md-table-cell md-label="Name" md-sort-by="first_name">
                                     <div class="d-flex px-3 py-2">
                                   
-                                    <div class="d-flex flex-column justify-content-center">
+                                    <div class="">
                                         <h6 class="mb-0 text-sm">{{item.first_name}} {{item.last_name}}</h6>
-                                        <p class="text-xs text-secondary mb-0">{{ item.phone}}</p>
+                                        <!-- <p class="text-xs  mb-0 text-muted">{{ item.phone}}</p> -->
                                     </div>
                                     </div>
                                 </md-table-cell>
-                                <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-                                <!-- <md-table-cell md-label="Gender" md-sort-by="gender" class="text-center">{{ item.gender }}</md-table-cell> -->
-                                <md-table-cell md-label="Role" md-sort-by="role"><vsud-badge color="success" variant="gradient" size="sm" v-if="item.role === 'agent'" >{{item.role}}</vsud-badge> <vsud-badge color="secondary" variant="gradient" size="sm" v-if="item.role === 'admin'">{{item.role}}</vsud-badge></md-table-cell>
+                                <md-table-cell md-label="Phone" md-sort-by="phone">{{ item.phone }}</md-table-cell>
+                                <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender.toUpperCase() }}</md-table-cell>
+                                <md-table-cell md-label="Role" md-sort-by="role"><vsud-badge color="success" variant="gradient" size="sm" v-if="item.role === 'agent' || item.role === 'Agent'" >{{item.role}}</vsud-badge> <vsud-badge color="secondary" variant="gradient" size="sm" v-if="item.role === 'admin' || item.role === 'Admin'">{{item.role}}</vsud-badge></md-table-cell>
                                 <md-table-cell md-label="Allocated polling" md-sort-by="allocated_area">{{ item.allocated_area }}</md-table-cell>
                                 <md-table-cell md-label="Actions" class="align-middle">
                                     <button class="btn btn-primary btn-sm" @click.prevent="editUser(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
                                     <button class="btn btn-danger btn-sm" @click.prevent="deleteUser(item)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button>
-                                     
+                                      
                                
                                 </md-table-cell>
                             </md-table-row>
@@ -86,7 +86,41 @@
                                 </v-card-text>
                             </v-card>
                         </v-dialog>
-                           
+                        <v-row justify="center">
+                                        <v-dialog
+                                        v-model="deleteDialog"
+                                        persistent
+                                        max-width="500"
+                                        >
+                                        
+                                        <v-card  style="background-color: #040539; color: #fff">
+                                            <v-card-title class="text-h5">
+                                            Are you sure you want to delete this user?
+                                            </v-card-title>
+                                            <v-card-text style="color: #fff">Once this action is performed, it can not be reversed.</v-card-text>
+                                            <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn
+                                                color="white"
+                                                text
+                                                @click="deleteDialog = false"
+                                            >
+                                                Cancel
+                                            </v-btn>
+                                            <v-btn
+                                                color="red lighten-1"
+                                                text
+                                                @click="performDelete()"
+                                            >
+                                                Delete
+                                            </v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                        </v-dialog>
+                                    </v-row>
+                                    
+
+                       
                     </div>
                 </div>
             </div>
@@ -120,6 +154,8 @@
         components : { UserForm, VsudAvatar,VsudBadge },
         data() {
             return {
+                deleteDialog: false,
+                deleteUserID: null,
                 users: [],
                 search: null,
                 searched: [],
@@ -169,19 +205,23 @@
                         this.loading = false
                     });
             },
-            deleteUser(user){
+            deleteUser(user) {
+                this.deleteDialog = true
+                this.deleteUserID = user.id
+            }, 
+            performDelete(){
                 this.loading =true
-                axios.delete('/api/v1/user/' + user.id).then(response => {
+                axios.delete('/api/v1/user/' + this.deleteUserID).then(response => {
                     // toastr['success'](response.data.message);
                     this.loading = false
+                    this.deleteDialog = true
                     console.log(response)
-                    this.getUsers();
+                    this.$router.go()
                     this.searched = this.users
                     // this.deleteDialog = false
                 }).catch(error => {
-                    // this.deleteDialog = false
+                    this.deleteDialog = false
                     this.loading = false
-                    toastr['error'](error.response.data.message);
                 });
             },
             searchOnTable () {

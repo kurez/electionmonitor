@@ -12,6 +12,7 @@
                         label="First Name"
                         outlined
                         dense
+                        required
                     ></v-text-field>
                     </v-col>
 
@@ -24,6 +25,7 @@
                         label="Last Name"
                         outlined
                         dense
+                        required
                     ></v-text-field>
                     </v-col>
                 </v-row>
@@ -33,24 +35,21 @@
                     cols="12"
                     sm="6"
                     >
-                    <v-text-field
+                    <!-- <v-text-field
                         v-model="userForm.phone"
                         label="Phone number"
                         outlined
                         dense
-                    ></v-text-field>
-                    </v-col>
-
-                    <v-col
-                    cols="12"
-                    sm="6"
-                    >
-                   <v-text-field
-                        v-model="userForm.email"
-                        label="Email"
-                        outlined
-                        dense
-                    ></v-text-field>
+                    ></v-text-field> -->
+                     <vue-tel-input 
+                                            v-model="userForm.phone" 
+                                            class="form-control" 
+                                            defaultCountry="KE"
+                                            invalidMsg="Invalid phone number!"
+                                            autofocus
+                                            mode="international"
+                                            required
+                                         ></vue-tel-input>
                     </v-col>
                 </v-row>
 
@@ -80,55 +79,25 @@
                     required
                     outlined
                     dense
+                    
                     ></v-select>
                     </v-col>
                 </v-row>
-                <v-row>
+                <v-row v-if="userForm.role !== 'Admin' && userForm.role !== '' ">
                     <v-col
                     cols="12"
                     sm="6"
                     >
-                    <!-- <v-select
-                    v-model="userForm.allocated_area"
-                    :items="pollings"
-                    label="Polling"
-                    required
-                    outlined
-                    dense
-                    ></v-select> -->
-                  <v-autocomplete
-                    v-model="userForm.allocated_area"
-                    :items="pollings"
-                    chips
-                    clearable
-                    hide-selected
-                    item-text="name"
-                    item-value="symbol"
-                    label="Search for a polling..."
-                    outlined
-                    dense
-                    value = "userForm.allocated_area"
-                    
-                    >
-                       <template v-slot:no-data>
-                            <v-list-item>
-                            <v-list-item-title>
-                                Search for your allocated
-                                <strong>Polling</strong>
-                            </v-list-item-title>
-                            </v-list-item>
-                        </template>
-                        <template v-slot:selection="{ item }">
-                           <v-list-item-subtitle v-text="item.polling_name"></v-list-item-subtitle>
-                        </template>
-                        <template v-slot:item="{ item }">
-                           
-                            <v-list-item-content>
-                            <v-list-item-title v-text="item.polling_name"></v-list-item-title>
-                            <v-list-item-subtitle v-text="item.county_name"></v-list-item-subtitle>
-                            </v-list-item-content>
-                        </template>
-                    </v-autocomplete>
+                      <v-autocomplete
+                        v-model="userForm.allocated_area"
+                        clearable
+                        :items="pollings"
+                        :search-input.sync="search"
+                        flat
+                        label="What is your polling station?"
+                        outlined
+                        dense
+                        ></v-autocomplete>
                     </v-col>
                 </v-row>
                 <v-dialog
@@ -160,7 +129,6 @@
         </button>
         <button @click="$router.go(-1)" class="btn btn-danger waves-effect waves-light m-t-10">
             <span>Cancel</span>
-            <!-- <span v-else>Save</span> -->
         </button>
     </form>
 </template>
@@ -173,7 +141,7 @@
                 userForm: new Form({
                     password: 'password',
                     password_confirmation: 'password',
-                    email: '',
+                    // email: '',
                     phone: '',
                     role:'',
                     gender: '',
@@ -184,7 +152,11 @@
                 roles: ['Admin','Agent'],
                 genders: ['Male','Female'],
                 loading: false,
-                pollings: []
+                pollings: [],
+                items: [],
+                search: null,
+                select: null,
+                loading_search: false,
             }
         },
         props: ['id'],
@@ -193,7 +165,23 @@
                 this.getUsers();
                 this.getPollings();
         },
+        watch: {
+            search (val) {
+                val && val !== this.userForm.allocated_area && this.querySelections(val)
+            },
+            },
         methods: {
+            querySelections (v) {
+                this.loading_search = true
+                // Simulated ajax query
+                setTimeout(() => {
+                this.pollings = this.pollings.filter(e => {
+                    return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+                })
+                this.loading_search = false
+                }, 500)
+            },
+        
             proceed(){
                 if(this.id)
                     this.updateUser();
@@ -202,13 +190,16 @@
             },
             submit(e){
                 this.loading = true
+                // console.log(this.userForm.allocated_area.polling_name)
+                this.userForm.allocated_area = this.userForm.allocated_area.polling_name
                 axios.post('/api/v1/auth/register', this.userForm).then(response =>  {
-                    toastr['success'](response.data.message);
-                    this.$router.push('/user');
+                   
+                     setTimeout(function () {
+                         this.$router.push('/user');
+                    }, 3000);
                     this.loading = false
                 }).catch(error => {
                     this.loading = false
-                    toastr['error'](error.response.data.message);
                 });
             },
             getUsers(){
@@ -220,14 +211,13 @@
                     this.userForm.last_name = response.data.last_name;
                     this.userForm.email = response.data.email;
                     this.userForm.phone = response.data.phone;
-                    this.userForm.gender = response.data.gender;
-                    this.userForm.role = response.data.role;
+                    this.userForm.gender = response.data.gender.charAt(0).toUpperCase() + response.data.gender.slice(1);
+                    this.userForm.role = response.data.role.charAt(0).toUpperCase() + response.data.role.slice(1);
                     this.userForm.allocated_area = response.data.allocated_area;
                     console.log(response)
                 })
                 .catch(response => {
                     this.loading = false
-                    toastr['error'](response.message);
                 });
             },
             updateUser(){
@@ -254,8 +244,8 @@
                 axios.get('/api/v1/polling')
                 .then(response => {
                     this.loading = false
-                    for(let i=0;i<response.data.length;i++){
-                        this.pollings.push(response.data[i])
+                    for(let i=10;i<response.data.length;i++){
+                        this.pollings.push(response.data[i].polling_name+','+response.data[i].county_name)
                     }
                     console.log(this.pollings)
                 })

@@ -218,14 +218,13 @@ class AuthController extends APIController
 
     public function register(Request $request, Faker $faker)
     {
+        str_replace(' ', '', request('phone'));
         $validation = Validator::make($request->all(), [
             'first_name'            => 'required',
             'last_name'             => 'required',
-            'phone'                 => 'required',
+            'phone'                 => 'required|unique:users',
             'gender'                => 'required',
-            'allocated_area'        => 'required',
-            // 'role  '                => 'required',
-            'email'                 => 'required|email|unique:users',
+            // 'allocated_area'        => 'required',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required|same:password',
         ]);
@@ -236,25 +235,19 @@ class AuthController extends APIController
         }
 
         $user = User::create([
-            'email'    => request('email'),
+            'email'    => $faker->unique()->safeEmail,
             'status'   => 'activated',
             'password' => bcrypt(request('password')),
         ]);
 
         $user->activation_token = Str::uuid()->toString();
-        $user->phone = request('phone');
+        $user->phone = str_replace(' ', '', request('phone'));
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
         $user->role = request('role');
         $user->gender = request('gender');
         $user->allocated_area = request('allocated_area');
         $user->save();
-        // $profile = new Profile();
-        // $profile->first_name = request('first_name');
-        // $profile->last_name = request('last_name');
-        // $user->profile()->save($profile);
-
-        // $user->notify(new Activation($user));
 
         return response()->json(['message' => 'You have registered a user successfully!']);
     }
