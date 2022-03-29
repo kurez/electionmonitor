@@ -192,10 +192,6 @@ class AspirantController extends APIController
             DB::table('results')->insert($values);
 
 
-            // return $results;
-            // return gettype($aspirant_uuid);
-            // return ;
-            // return $aspirants = DB::select("select * from aspirants where electoral_area='".$electoral_area."'");
             return response()->json(['message' => 'Result entered successfully!']);
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
