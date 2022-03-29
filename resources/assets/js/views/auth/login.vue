@@ -70,14 +70,7 @@
                                 </v-overlay>
                                 <br>
                                 <p class="text-center">Din't receive code yet?  
-                                    <!-- <v-btn
-                                    class="ma-1"
-                                    color="#F8BD7A"
-                                    plain
-                                    @click="resendOTP(otpForm.phone)"
-                                >
-                                    Request again
-                                </v-btn> -->
+                         
                                 <br>
                                 <button type="submit" class="btn btn-gray-800" @click="resendOTP(otpForm.phone)">Request again</button>
                                 </p>
@@ -191,13 +184,14 @@ export default {
                 // console.log(this.alertMessage = response.message)
                 this.signinForm.email = response.data[0].email
                 // this.otpForm.phone = response.data.phone
-                console.log(this.verify_phone = this.otpForm.phone = response.data[0].phone)
+                this.verify_phone = this.otpForm.phone = response.data[0].phone
+                
                 // this.signinForm.phone = response.data[0].phone
                 setTimeout(() => {
                     this.loading = false
                     this.alert = false
                     this.showOTP = true
-                    this.alertMessage = ''
+                    console.log(response.otp)
                 }, 3500)
             })
             .catch(error => {
@@ -209,7 +203,7 @@ export default {
                         theme: 'red',
                         position: 'top-right'
                     });
-                console.log(this.alertMessage = error)
+                // console.log(this.alertMessage = error)
                 }, 1500)
         });
       },
@@ -219,7 +213,7 @@ export default {
             this.otpForm.phone = this.verify_phone
             this.otpForm.post('/api/v1/auth/two-factor-auth')
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 if (response.message === 'Success') {
                 setTimeout(() => {
                     this.signin()
@@ -251,7 +245,7 @@ export default {
                      this.otpForm.phone = this.verify_phone
                      }, 1500)
                
-                console.log(response)
+                // console.log(response)
             });
       },
       resendOTP (number){
@@ -278,13 +272,13 @@ export default {
                         theme: 'red',
                         position: 'top-right'
                     });
-                    console.log(response)
+                    // console.log(response)
             });
       },
       signin() {
           this.signinForm.post('/api/v1/auth/login')
             .then(response => {
-                console.log(response.data[0].role)
+                // console.log(response.data[0].role)
                 this.loading = true
                 if (response.message === 'Success' && response.data[0].role === 'Admin') {
                     setTimeout(() => {
@@ -311,7 +305,7 @@ export default {
                     this.loadingOverlay = false
                     this.showOTP = false
                 }, 3500)
-                console.log(response)
+                // console.log(response)
             });
 
       }

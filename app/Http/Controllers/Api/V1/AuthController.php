@@ -78,7 +78,7 @@ class AuthController extends APIController
 
             // $foundUser = DB::table('users')->where('phone',$phone)->get();
             // return $foundUser;
-            return response()->json(['data' => $user]);
+            return response()->json(['data' => $user, 'otp' => $code]);
         } catch (JWTException $e) {
             // ..
             return response()->json(['message' => 'Error']);

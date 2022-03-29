@@ -34,13 +34,14 @@
                         <div class="ms-2 c-details">
                             <h6 class="mb-0" style="color:#fff">National</h6> <span>The president</span>
                         </div>
+                     
                     </div>
                     <div class="badge">
                         <v-btn
                             class="ma-1"
                             color="#fff"
                             plain
-                            @click="enterResult('Republic of Kenya')"
+                            @click="enterResult('Republic of Kenya', 'national')"
                         >
                            <v-icon>mdi-counter</v-icon> Enter Results
                         </v-btn> 
@@ -48,7 +49,19 @@
                 </div>
                 <div class="mt-5">
                     <h4 class="heading">Republic of Kenya</h4>
-                    
+                     <div class="mt-5">
+                        <v-progress-linear
+                                height="12"
+                                :value=userDetails.national_prog
+                                striped rounded
+                                color="lime"
+                                >
+                                 <template v-slot:default="{ value }">
+                                        <strong style="color: #fff">{{ Math.ceil(value) }}% Complete</strong>
+                                    </template>
+                                </v-progress-linear>
+                        <!-- <div class="mt-3"> <span class="text1">{{ userDetails.national_prog }} Applied <span class="text2">of 70 capacity</span></span> </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,7 +87,19 @@
                 </div>
                 <div class="mt-5">
                     <h4 class="heading" style="text-transform: capitalize;">{{ pollingDetails.county_name }} County</h4>
-                   
+                   <div class="mt-5">
+                        <v-progress-linear
+                                height="12"
+                                :value=userDetails.county_prog
+                                striped rounded
+                                color="lime"
+                                >
+                                 <template v-slot:default="{ value }">
+                                        <strong style="color: #fff">{{ Math.ceil(value) }}% Complete</strong>
+                                    </template>
+                                </v-progress-linear>
+                        <!-- <div class="mt-3"> <span class="text1">{{ userDetails.county_prog }} Applied <span class="text2">of 70 capacity</span></span> </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,7 +125,19 @@
                 </div>
                 <div class="mt-5">
                     <h4 class="heading" style="text-transform: capitalize;">{{ pollingDetails.constituency_name }} Constituency</h4>
-                    
+                    <div class="mt-5">
+                        <v-progress-linear
+                                height="12"
+                                :value=userDetails.const_prog
+                                striped rounded
+                                color="lime"
+                                >
+                                 <template v-slot:default="{ value }">
+                                        <strong style="color: #fff">{{ Math.ceil(value) }}% Complete</strong>
+                                    </template>
+                                </v-progress-linear>
+                        <!-- <div class="mt-3"> <span class="text1"> {{userDetails.const_prog }} Applied <span class="text2">of 70 capacity</span></span> </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,7 +163,22 @@
                 </div>
                 <div class="mt-5">
                     <h4 class="heading" style="text-transform: capitalize;">{{ pollingDetails.ward_name }} Ward</h4>
-                   
+                   <div class="mt-5">
+                        
+                            <!-- <div class="progress-bar" role="progressbar" style="width: var(--width)"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> -->
+                             <v-progress-linear
+                                height="12"
+                                :value=userDetails.ward_prog
+                                striped rounded
+                                color="lime"
+                                >
+                                  <template v-slot:default="{ value }">
+                                        <strong style="color: #fff">{{ Math.ceil(value) }}% Complete</strong>
+                                    </template>
+                                </v-progress-linear>
+                       
+                        <!-- <div class="mt-3"> <span class="text1">{{ userDetails.ward_prog }} Applied <span class="text2">of 70 capacity</span></span> </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -213,6 +265,16 @@ export default {
   beforeUnmount() {
     this.$store.state.isAbsolute = false;
   },
+  computed: {
+    progressStyles() {
+   
+        return {
+        '--width': this.userDetails.county_prog + 'px',
+        // '--height': this.height + 'px'
+      
+      };
+    }
+  },
   methods: {
     getUserDetails () {
     this.loading = true
@@ -225,26 +287,30 @@ export default {
             this.userDetails.phone = response.data.phone;
             this.userDetails.gender = response.data.gender;
             this.userDetails.role = response.data.role;
+            this.userDetails.county_prog = response.data.county_prog;
+            this.userDetails.const_prog = response.data.const_prog;
+            this.userDetails.ward_prog = response.data.ward_prog;
+            this.userDetails.national_prog = response.data.national_prog;
             this.userDetails.allocated_area = response.data.allocated_area.toLowerCase();
             this.userDetails.created_at = response.data.created_at;
-            console.log(response)
+            // console.log(response)
 
             const area = this.userDetails.allocated_area.split(/\s*,\s*/);
           
             axios.get('/api/v1/polling-fetch/'+ decodeURI(area[0]))
               .then(response => {
-                  console.log(response.data[0])
+                //   console.log(response.data[0])
                   this.pollingDetails.ward_name = response.data[0].ward_name.toLowerCase()
                   this.pollingDetails.county_name = response.data[0].county_name.toLowerCase()
                   this.pollingDetails.constituency_name = response.data[0].constituency_name.toLowerCase()
               })
               .catch(response => {
-                console.log(response)
+                // console.log(response)
               });
         })
         .catch(response => {
             this.loading = false
-            console.log(response)
+            // console.log(response)
         });
         
     },
@@ -306,7 +372,9 @@ export default {
 }
 
 .progress div {
-    background-color: red
+    background-color: red;
+    
+
 }
 
 .text1 {

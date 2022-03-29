@@ -330,4 +330,77 @@ class UserController extends APIController
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
     }
+     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function CountyProgress(Request $request)
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            $county_progress = User::find($user->id);
+            $progress = $request->only('prog');
+            $county_progress->county_prog = $progress['prog'];
+            $county_progress->save();
+            return response()->json(['message' => 'County progress updated!']);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ConstituencyProgress(Request $request)
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            $constituency_progress = User::find($user->id);
+            $progress = $request->only('prog');
+            $constituency_progress->const_prog = $progress['prog'];
+            $constituency_progress->save();
+            return response()->json(['message' => 'Constituency progress updated!']);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function NationalProgress(Request $request)
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            $national_progress = User::find($user->id);
+            $progress = $request->only('prog');
+            $national_progress->national_prog = $progress['prog'];
+            $national_progress->save();
+            return response()->json(['message' => 'National progress updated!']);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function WardProgress(Request $request)
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            $ward_progress = User::find($user->id);
+            $progress = $request->only('prog');
+            $ward_progress->ward_prog = $progress['prog'];
+            $ward_progress->save();
+            return response()->json(['message' => 'Ward progress updated!']);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+            return response()->json(['message' => 'Sorry, something went wrong!'], 422);
+        }
+    }
+
+
 }

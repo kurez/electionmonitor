@@ -60,6 +60,11 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::get('/ward', 'LocationsController@fetchWard');
         Route::get('/polling', 'LocationsController@fetchPolling');
         Route::get('/polling-fetch/{name}', 'LocationsController@fetchPollingByName');
+
+        Route::post('/county_progress', 'UserController@CountyProgress');
+        Route::post('/national_progress', 'UserController@NationalProgress');
+        Route::post('/constituency_progress', 'UserController@ConstituencyProgress');
+        Route::post('/ward_progress', 'UserController@WardProgress');
     
         // Route::get('two-factor-auth', [TwoFactorAuthController::class, 'index'])->name('2fa.index');
         // Route::post('/two-factor-auth', [TwoFactorAuthController::class, 'store'])->name('2fa.store');
