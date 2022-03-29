@@ -165,6 +165,7 @@ export default {
                 'email' : '',
                 'password' : 'password',
             }),
+            verify_phone: ''
         }
   },
   beforeMount() {
@@ -188,9 +189,9 @@ export default {
             .then(response => {
                 this.alert = true
                 // console.log(this.alertMessage = response.message)
-                this.signinForm.email = response.data.email
-                this.otpForm.phone = response.data.phone
-                console.log(response)
+                this.signinForm.email = response.data[0].email
+                // this.otpForm.phone = response.data.phone
+                console.log(this.verify_phone = this.otpForm.phone = response.data[0].phone)
                 // this.signinForm.phone = response.data[0].phone
                 setTimeout(() => {
                     this.loading = false
@@ -200,20 +201,22 @@ export default {
                 }, 3500)
             })
             .catch(error => {
-                this.loading = false
-                this.alert = true
-                console.log(this.alertMessage = error)
+               
                 setTimeout(() => {
-                    // this.loading = false
-                    this.alertMessage = ''
-                    this.alert = false
-                    // this.showOTP = true
-                }, 3500)
+                     this.loading = false
+                 notify({
+                        text: 'User does not exist!',
+                        theme: 'red',
+                        position: 'top-right'
+                    });
+                console.log(this.alertMessage = error)
+                }, 1500)
         });
       },
       verifyOtp () {
             this.loadingOverlay = true
             // this.otpForm.phone = this.signinForm.phone
+            this.otpForm.phone = this.verify_phone
             this.otpForm.post('/api/v1/auth/two-factor-auth')
             .then(response => {
                 console.log(response)
@@ -223,14 +226,30 @@ export default {
                     this.loadingOverlay = false
                 }, 3500)
                 } else {
+                    setTimeout(() => {
+                     notify({
+                        text: 'Error encountered!',
+                        theme: 'red',
+                        position: 'top-right'
+                    });
                      this.loadingOverlay = false
-                    //  this.otpForm.otp = ''
+                     this.otpForm.otp = ''
+                     this.otpForm.phone = this.verify_phone
+                     }, 1500)
                 }
+                
             })
             .catch(response => {
-               
-                    this.loadingOverlay = false
-                    this.otpForm.otp = ''
+                  setTimeout(() => {
+                     notify({
+                        text: 'Error encountered!',
+                        theme: 'red',
+                        position: 'top-right'
+                    });
+                     this.loadingOverlay = false
+                     this.otpForm.otp = ''
+                     this.otpForm.phone = this.verify_phone
+                     }, 1500)
                
                 console.log(response)
             });
@@ -267,7 +286,7 @@ export default {
             .then(response => {
                 console.log(response.data[0].role)
                 this.loading = true
-                if (response.message === 'Success' && response.data[0].role === 'admin') {
+                if (response.message === 'Success' && response.data[0].role === 'Admin') {
                     setTimeout(() => {
                     localStorage.setItem('auth_token',response.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
@@ -276,7 +295,7 @@ export default {
                     this.showOTP = false
                     this.loading = false
                 }, 3500)
-                } else if(response.message === 'Success' && response.data[0].role === 'agent')  {
+                } else if(response.message === 'Success' && response.data[0].role === 'Agent')  {
                     setTimeout(() => {
                     localStorage.setItem('auth_token',response.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');

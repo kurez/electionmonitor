@@ -29,16 +29,17 @@ class AuthController extends APIController
         
         // $phone = substr($phone['phone'], 1);
         // $phone = '+254'.$phone;
-        $phone = str_replace(' ', '', $phone);
+        // $phone = str_replace(' ', '', $phone);
 
-        $user = DB::table('users')->where('phone',$phone)->first();
+        $user = DB::table('users')->where('phone',$phone)->get();
         
-        try {
         if ($user) {
+        try {
+        
             $code = rand(100000, 999999);
   
             UserCode::updateOrCreate([
-                'user_id' => $user->id,
+                'user_id' => $user[0]->id,
                 'code' => $code
             ]);
       
@@ -58,13 +59,13 @@ class AuthController extends APIController
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => 'POST',
               CURLOPT_POSTFIELDS =>'{
-                "number": "+254708746046",
+                "number": "0708746046",
                 "sms": "My message",
                 "callBack": "https://....",
                 "senderName": "Election Monitor"
             }',
               CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ3NDMxMTc3fQ.r9YC2oU0OdFPN6k0XxtRYdzlin-ldI4KkGKOGdrJaFs',
+                'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ4NDY0MzE3fQ.D-2igZfKwTygsCzY2mQQSqLO-TY0OOF5u0LAPMZqVWM',
                 'Content-Type: application/json',
                 // 'DeveloperKey: 084049D0-AB72-4EE2-9EDE-0C25C1D1268C',
                 // 'Password: '.hash('sha256', 'Pass@1234')
@@ -75,21 +76,25 @@ class AuthController extends APIController
             
             curl_close($curl);
 
-            $foundUser = DB::table('users')->where('phone',$phone)->first();
+            // $foundUser = DB::table('users')->where('phone',$phone)->get();
             // return $foundUser;
-            return response()->json(['message' => $response,'data' => $foundUser]);
+            return response()->json(['data' => $user]);
+        } catch (JWTException $e) {
+            // ..
+            return response()->json(['message' => 'Error']);
+        }
+           
         } else {
             return response()->json(['message' => 'Error']);
         }
-    } catch (JWTException $e) {
-        // ..
-    }
+    
     
     }
   
     public function authenticate(Request $request)
     {
         // $credentials = $request->only('email', 'password');
+        // return 'kenya';
         $credentials = request(['email', 'password']);
 
         try {
@@ -115,23 +120,23 @@ class AuthController extends APIController
      */
     public function storeOTP(Request $request)
         {
-            // return $request->only('otp');
-            $validated = $request->validate([
-                'otp' => 'required',
-                'phone' => 'required'
-            ]);
+            // return $request->only('o');
+            // $validated = $request->validate([
+            //     // 'otp' => 'required',
+            //     'phone' => 'required'
+            // ]);
 
-            $phone = $validated['phone'];
+            $phone = $request->only('phone');
             // $phone = substr($validated['phone'], 1);
             // $phone = '+254'.$phone;
-            $phone = str_replace(' ', '', $phone);
+            // $phone = str_replace(' ', '', $phone);
     
-            $user = DB::table('users')->where('phone', $phone)->first();
+            $user = DB::table('users')->where('phone', $phone)->get();
 
-            // return $phone;
+            // return $user;
         
-            $exists = UserCode::where('user_id', $user->id)
-                    ->where('code', $validated['otp'])
+            $exists = UserCode::where('user_id', $user[0]->id)
+                    ->where('code', $request->only('otp'))
                     ->where('updated_at', '>=', now()->subMinutes(5))
                     ->latest('updated_at')
                     ->exists();

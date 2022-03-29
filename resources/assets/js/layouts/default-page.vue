@@ -14,7 +14,8 @@
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="white"/>
                       </svg>
                     </span>
-                    <span class="mt-1 ms-1 ">Election Monitor</span>
+                    <span class="mt-1 ms-1 ">Election Monitor </span>
+                   
                   <!-- </> -->
                 </li>
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
@@ -74,12 +75,13 @@
           </v-navigation-drawer>
           <v-app-bar app dense style="background-color: #040539">
            <svg width="54" height="17" viewBox="0 0 64 27" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="$route.name === 'agentHome'">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="white"/>
-                                    </svg>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3856 13.2744L13.3856 0H26.7468H26.7712V0.0243294L37.2288 10.4139V0H50.5899H50.6144V0.0243238L63.9755 13.2987H64V26.5974H50.6144V26.5731L40.1569 16.1835V26.5974H26.7712V26.5731L13.4101 13.2987H13.3856L13.3856 13.2744ZM13.3856 13.2987L13.3856 26.5974H0V13.2987L13.3856 13.2987Z" fill="white"/>
+            </svg>
             <v-toolbar-title v-if="$route.name === 'agentHome'" style="color: #fff; padding-left: 5px">Election Monitor</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn @click="logout()" color="red" plain dense>Logout</v-btn>
+                
+                <v-btn @click="logout()" color="red lighten-1" plain dense> <v-icon>mdi-logout</v-icon>Logout</v-btn>
               </v-toolbar-items>
           </v-app-bar>
          
@@ -155,6 +157,7 @@
     }
 </script>
 <style scoped>
+
 .nav {
     white-space: nowrap;
 }

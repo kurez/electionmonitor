@@ -41,7 +41,7 @@
         <div class="col-xl-3 col-lg-6">
             <div class="card l-bg-cherry">
                 <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="card-icon card-icon-large"><i class="ni ni-circle-08" style="font-size: 100px"></i></div>
                     <div class="mb-4">
                         <h5 class="card-title mb-0" style="color: #fff">Users</h5>
                     </div>
@@ -51,9 +51,9 @@
                                 {{stats.users.value.toLocaleString()}}
                             </h2>
                         </div>
-                        <div class="col-4 text-right">
-                            <span><i class="fa fa-arrow-up"></i></span>
-                        </div>
+                        <!-- <div class="col-4 text-right">
+                            <span><i class="ni ni-circle-08" style="font-size: 35px"></i></span>
+                        </div> -->
                     </div>
                     <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
                         <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
@@ -64,7 +64,7 @@
         <div class="col-xl-3 col-lg-6">
             <div class="card l-bg-blue-dark">
                 <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
+                    <div class="card-icon card-icon-large"><i class="ni ni-paper-diploma" style="font-size: 100px"></i></div>
                     <div class="mb-4">
                         <h5 class="card-title mb-0" style="color: #fff">Aspirants</h5>
                     </div>
@@ -74,9 +74,9 @@
                                {{stats.aspirants.value.toLocaleString()}}
                             </h2>
                         </div>
-                        <div class="col-4 text-right">
-                            <span><i class="fa fa-arrow-up"></i></span>
-                        </div>
+                        <!-- <div class="col-4 text-right">
+                            <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
+                        </div> -->
                     </div>
                     <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
                         <div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
@@ -87,7 +87,7 @@
         <div class="col-xl-3 col-lg-6">
             <div class="card l-bg-green-dark">
                 <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
+                    <div class="card-icon card-icon-large"><i class="ni ni-square-pin" style="font-size: 100px"></i></div>
                     <div class="mb-4">
                         <h5 class="card-title mb-0" style="color: #fff">Pollings</h5>
                     </div>
@@ -97,9 +97,9 @@
                                 {{stats.pollings.value.toLocaleString()}}
                             </h2>
                         </div>
-                        <div class="col-4 text-right">
-                            <span><i class="fa fa-arrow-up"></i></span>
-                        </div>
+                        <!-- <div class="col-4 text-right">
+                            <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
+                        </div> -->
                     </div>
                     <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
                         <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
@@ -110,7 +110,7 @@
         <div class="col-xl-3 col-lg-6">
             <div class="card l-bg-orange-dark">
                 <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="card-icon card-icon-large"><i class="ni ni-badge" style="font-size: 100px"></i></div>
                     <div class="mb-4">
                         <h5 class="card-title mb-0" style="color: #fff">Visits Today</h5>
                     </div>
@@ -120,9 +120,9 @@
                                 1,000
                             </h2>
                         </div>
-                        <div class="col-4 text-right">
-                            <span><v-icon class="mdi-filter-variant"></v-icon></span>
-                        </div>
+                        <!-- <div class="col-4 text-right">
+                            <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
+                        </div> -->
                     </div>
                     <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
                         <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>

@@ -9,6 +9,9 @@
     <div class="card-header pb-0">
       <h6 style="text-transform: capitalize">{{$route.params.electoral_area}} {{$route.params.location}}</h6>
       <!-- <p class="text-xs text-secondary mb-0">County</p><br> -->
+      <v-subheader style="color: red" v-if="prograssCalc() <= 45"> {{ prograssCalc () }}% Complete </v-subheader>
+      <!-- <v-subheader style="color: yellow" v-else-if="prograssCalc() = 65 "> {{ prograssCalc () }}% Complete </v-subheader> -->
+      <v-subheader style="color: green" v-else> {{ prograssCalc () }}% Complete </v-subheader>
     </div>
     <div class="card-body px-3 pt-3 pb-2">
 
@@ -77,7 +80,7 @@
                  </form>
                  <template v-else>
                       <p v-for="vote in voted" :key="vote.aspirant_uuid">
-                         <span v-if="item.uuid === vote.aspirant_uuid"><code>{{vote.votes}}</code></span> 
+                         <span v-if="item.uuid === vote.aspirant_uuid"><code>{{ Number (vote.votes).toLocaleString() }}</code></span> 
                       </p>
                  </template>
                                     
@@ -136,6 +139,22 @@ import VsudBadge from "../../components/VsudBadge.vue";
         }
         },
         methods : {
+            prograssCalc () {
+              var _ = require('underscore');
+              var aspirant_uuids = []
+               for(var i=0;i<this.aspirants.length;i++) {
+                 
+                      aspirant_uuids.push(this.aspirants[i].uuid) 
+                }
+                // console.log());
+                var intersected = []
+                intersected = _.intersection(aspirant_uuids, this.uuids)
+                var count_aspirants = this.aspirants.length
+                var count_aspirants_voted = intersected.length
+                var progress = (count_aspirants_voted / count_aspirants) * 100
+
+                return Math.round(progress, 1) 
+            },
             feedResult (uuid,index,id) {
                 this.resultsDetails.uuid = uuid
                 this.resultsDetails.index = index
@@ -145,7 +164,11 @@ import VsudBadge from "../../components/VsudBadge.vue";
                 // var self = this
                 this.resultsDetails.post('/api/v1/enter-results')
                 .then(response => {
-                    console.log(response)
+                     notify({
+                        text: response,
+                        theme: 'red',
+                        position: 'top-right'
+                    });
                     setTimeout(() => 
                         this.loading =false,
                         this.resultsDetails.results = {},
@@ -196,15 +219,10 @@ import VsudBadge from "../../components/VsudBadge.vue";
 
         },
         computed: {
-          filteredAspirants() {
-            let search = this.aspirants
-            this.position = 'Senator'
-            
-            search = search.filter((item) => {
-              return (item.electoral_position === this.position)
-            })
-            
-            return search;
+          formattedQty () {
+            //Add the commas back to the string
+            let qty = this.form.qty + ""
+            return qty.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           }
         },
         destroyed(){

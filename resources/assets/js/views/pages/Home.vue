@@ -229,8 +229,9 @@ export default {
             this.userDetails.created_at = response.data.created_at;
             console.log(response)
 
-            const area = this.userDetails.allocated_area
-            axios.get('/api/v1/polling-fetch/'+ decodeURI(area))
+            const area = this.userDetails.allocated_area.split(/\s*,\s*/);
+          
+            axios.get('/api/v1/polling-fetch/'+ decodeURI(area[0]))
               .then(response => {
                   console.log(response.data[0])
                   this.pollingDetails.ward_name = response.data[0].ward_name.toLowerCase()
