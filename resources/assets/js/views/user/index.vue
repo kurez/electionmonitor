@@ -15,7 +15,7 @@
             <div class="py-4">              
                 <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" to="/user/add">New user</md-button>  
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-12 container">
                 <div class="mb-4 card">
                     <div class="card-body">
                         <!-- <h4 class="card-title">Filter User</h4> -->

@@ -127,7 +127,7 @@
 
         created() {
             this.loading =true
-            axios.get('/api/v1/polling')
+            axios.get('http://172.104.245.14/electionmonitor/api/v1/polling')
                     .then(response => {
                         this.loading =false
                         for(let i = 0;i < response.data.length;i++) {
@@ -145,7 +145,7 @@
                     page = 1;
                 }
                 // let url = helper.getFilterURL(this.filterAspirantForm);
-                axios.get('/api/v1/polling')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/polling')
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {

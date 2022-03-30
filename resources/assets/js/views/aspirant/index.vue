@@ -176,7 +176,7 @@
 
         created() {
             this.loading =true
-            axios.get('/api/v1/aspirant')
+            axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant')
                     .then(response => {
                         this.loading =false
                         for(let i = 0;i < response.data.length;i++) {
@@ -199,7 +199,7 @@
                     page = 1;
                 }
                 // let url = helper.getFilterURL(this.filterAspirantForm);
-                axios.get('/api/v1/aspirant')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant')
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
@@ -213,14 +213,14 @@
             
             deleteAspirant(aspirant){
                 this.loading =true
-                axios.delete('/api/v1/aspirant/'+aspirant.id).then(response => {
+                axios.delete('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+aspirant.id).then(response => {
                      // toastr['success'](response.data.message);
                     this.loading = false
                     console.log(response)
                     this.getAspirants();
                     this.searched = this.users
                 }).catch(error => {
-                    toastr['error'](error.response.data.message);
+                    // toastr['error'](error.response.data.message);
                     this.loading = false
                 });
             },
