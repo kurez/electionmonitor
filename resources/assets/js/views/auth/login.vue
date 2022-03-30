@@ -285,7 +285,7 @@ export default {
                     localStorage.setItem('auth_token',response.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
 
-                    this.$router.push('/dashboard')
+                    this.$router.push('/electionmonitor/dashboard')
                     this.showOTP = false
                     this.loading = false
                 }, 3500)
@@ -294,7 +294,7 @@ export default {
                     localStorage.setItem('auth_token',response.token);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
 
-                    this.$router.push('/home/'+response.data[0].id+'/agent')
+                    this.$router.push('/electionmonitor/home/'+response.data[0].id+'/agent')
                     this.showOTP = false
                     this.loading = false
                 }, 3500)

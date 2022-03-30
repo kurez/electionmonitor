@@ -3,7 +3,7 @@ import helper from './services/helper'
 
 let routes = [
     {
-        path: '/',
+        path: '/electionmonitor/',
         component: require('./layouts/default-page.vue').default,
         meta: { requiresAuth: true },
         children: [
@@ -52,17 +52,17 @@ let routes = [
                 component: require('./views/user/add.vue').default
             },
             {
-                path: '/user/:id/edit',
+                path: '/electionmonitor/user/:id/edit',
                 component: require('./views/user/edit.vue').default
             },
 
             {
-                path: '/home/:id/agent',
+                path: '/electionmonitor/home/:id/agent',
                 name: 'agentHome',
                 component: require('./views/pages/Home.vue').default
             },
             {
-                path: '/enter-results/:electoral_area/:location',
+                path: '/electionmonitor/enter-results/:electoral_area/:location',
                 name: 'agentHome',
                 component: require('./views/pages/EnterResults.vue').default
             },
@@ -77,12 +77,12 @@ let routes = [
     //     ]
     // },
     {
-        path: '/',
+        path: '/electionmonitor/',
         component: require('./layouts/guest-page.vue').default,
         meta: { requiresGuest: true },
         children: [
             {
-                path: '/login',
+                path: '/electionmonitor/login',
                 name: 'login',
                 component: require('./views/auth/login.vue').default
             },
@@ -131,7 +131,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(m => m.meta.requiresAuth)){
         return helper.check().then(response => {
             if(!response){
-                return next({ path : '/login'})
+                return next({ path : '/electionmonitor/login'})
             }
 
             return next()
