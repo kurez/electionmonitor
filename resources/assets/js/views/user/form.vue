@@ -202,7 +202,7 @@
                         });
                      
                           
-                        this.$router.push('/user') 
+                        this.$router.push('/electionmonitor/user') 
                     
                     this.loading = false
                 }).catch(error => {
@@ -226,7 +226,7 @@
                     this.userForm.gender = response.data.gender.charAt(0).toUpperCase() + response.data.gender.slice(1);
                     this.userForm.role = response.data.role.charAt(0).toUpperCase() + response.data.role.slice(1);
                     this.userForm.allocated_area = response.data.allocated_area;
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch(response => {
                     this.loading = false
@@ -246,7 +246,7 @@
                         });
                         
                     else {
-                        this.$router.push('/user');
+                        this.$router.push('/electionmonitor/user');
                         this.loading = false
                     }
                 })
@@ -267,7 +267,7 @@
                     for(let i=10;i<response.data.length;i++){
                         this.pollings.push(response.data[i].polling_name+','+response.data[i].county_name)
                     }
-                    console.log(this.pollings)
+                    // console.log(this.pollings)
                 })
                 .catch(response => {
                     // toastr['error'](response.message);
