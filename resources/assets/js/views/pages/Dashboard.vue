@@ -139,8 +139,8 @@
 </template>
 <script>
 // import Card from "../../examples/Cards/Card.vue";
-import ActiveUsersChart from "../../examples/Charts/ActiveUsersChart.vue";
-import GradientLineChart from "../../examples/Charts/GradientLineChart.vue";
+import ActiveUsersChart from "../../components/Charts/ActiveUsersChart.vue";
+import GradientLineChart from "../../components/Charts/GradientLineChart.vue";
 // import OrdersCard from "../components/OrdersCard.vue";
 // import ProjectsCard from "../components/ProjectsCard.vue";
 // import US from "../../assets/img/icons/flags/US.png";
