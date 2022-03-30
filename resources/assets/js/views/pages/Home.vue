@@ -275,10 +275,10 @@ export default {
   methods: {
     getUserDetails () {
     this.loading = true
-    console.log(this.$route.params.id)
+    // console.log(this.$route.params.id)
     axios.get('http://172.104.245.14/electionmonitor/api/v1/user/'+this.$route.params.id)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             this.loading = false
             this.userDetails.first_name = response.data.first_name;
             this.userDetails.last_name = response.data.last_name;

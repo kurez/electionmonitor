@@ -118,10 +118,10 @@
                     .then(response => {
                         this.loading =false
                         for(let i = 0;i < response.data.length;i++) {
-                            console.log(this.counties.push(response.data[i]))
+                            this.counties.push(response.data[i])
                         }
                         this.searched = this.counties
-                        console.log(this.searched)
+                        // console.log(this.searched)
                     });
         },
 
@@ -139,7 +139,7 @@
                             console.log(this.counties.push(response.data[i]))
                         }
                         this.searched = this.counties
-                        console.log(this.searched)
+                        // console.log(this.searched)
                          this.loading = false
                     });
             },

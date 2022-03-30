@@ -120,10 +120,10 @@
                     .then(response => {
                         this.loading =false
                         for(let i = 0;i < response.data.length;i++) {
-                            console.log(this.wards.push(response.data[i]))
+                            this.wards.push(response.data[i])
                         }
                         this.searched = this.wards
-                        console.log(this.searched)
+                        // console.log(this.searched)
                     });
         },
 
@@ -138,10 +138,10 @@
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
-                            console.log(this.wards.push(response.data[i]))
+                            this.wards.push(response.data[i])
                         }
                         this.searched = this.wards
-                        console.log(this.searched)
+                        // console.log(this.searched)
                          this.loading = false
                     });
             },

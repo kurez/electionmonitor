@@ -134,7 +134,7 @@
                             console.log(this.pollings.push(response.data[i]))
                         }
                         this.searched = this.pollings
-                        console.log(this.searched)
+                        // console.log(this.searched)
                     });
         },
 
@@ -149,10 +149,10 @@
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
-                            console.log(this.pollings.push(response.data[i]))
+                            this.pollings.push(response.data[i])
                         }
                         this.searched = this.pollings
-                        console.log(this.searched)
+                        // console.log(this.searched)
                          this.loading = false
                     });
             },

@@ -122,7 +122,7 @@ http://172.104.245.14/electionmonitor <template>
                             console.log(this.constituencies.push(response.data[i]))
                         }
                         this.searched = this.constituencies
-                        console.log(this.searched)
+                        // console.log(this.searched)
                     });
         },
 
@@ -140,7 +140,7 @@ http://172.104.245.14/electionmonitor <template>
                             console.log(this.constituencies.push(response.data[i]))
                         }
                         this.searched = this.constituencies
-                        console.log(this.searched)
+                        // console.log(this.searched)
                          this.loading = false
                     });
             },

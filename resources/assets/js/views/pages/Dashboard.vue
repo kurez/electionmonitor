@@ -193,7 +193,7 @@ export default {
      
        axios.get('http://172.104.245.14/electionmonitor/api/v1/user-dashboard')
                     .then(response => {
-                        console.log(response)
+                        // console.log(response)
                          this.stats.users.value = response.data.users_count;
                          this.stats.aspirants.value = response.data.aspirants_count;
                          this.stats.results = response.data.total_results;

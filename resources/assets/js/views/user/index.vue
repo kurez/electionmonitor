@@ -180,7 +180,7 @@
                             console.log(this.users.push(response.data[i]))
                         }
                         this.searched = this.users
-                        console.log(this.searched)
+                        // console.log(this.searched)
                     });
             
         },
@@ -215,7 +215,7 @@
                     // toastr['success'](response.data.message);
                     this.loading = false
                     this.deleteDialog = true
-                    console.log(response)
+                    // console.log(response)
                     this.$router.go()
                     this.searched = this.users
                     // this.deleteDialog = false

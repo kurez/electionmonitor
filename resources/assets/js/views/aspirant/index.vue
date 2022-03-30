@@ -130,7 +130,7 @@
                                         <v-dialog
                                         v-model="deleteDialog"
                                         persistent
-                                        max-width="500"
+                                        max-width="550"
                                         >
                                         
                                         <v-card  style="background-color: #040539; color: #fff">
@@ -217,13 +217,13 @@
                             console.log(this.aspirants.push(response.data[i]))
                         }
                         this.searched = this.aspirants
-                        console.log(this.searched)
+                        // console.log(this.searched)
                     });
         },
 
         methods: {
             tabs (position) {
-                console.log(position)
+                // console.log(position)
                 this.search = position
                 this.searched = searchByFilter(this.aspirants, this.search)
             },
@@ -240,7 +240,7 @@
                             console.log(this.aspirants.push(response.data[i]))
                         }
                         this.searched = this.aspirants
-                        console.log(this.searched)
+                        // console.log(this.searched)
                          this.loading = false
                     });
             },
@@ -255,8 +255,9 @@
                 axios.delete('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+this.deleteAspirantID).then(response => {
                      // toastr['success'](response.data.message);
                     this.loading = false
-                    console.log(response)
-                    this.getAspirants();
+                    this.deleteDialog = true
+                    // console.log(response)
+                    this.$router.go()
                     this.searched = this.aspirants
                 }).catch(error => {
                     // toastr['error'](error.response.data.message);
