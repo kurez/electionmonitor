@@ -280,6 +280,7 @@ export default {
     this.loading = true
     axios.get('api/v1/user/'+this.$route.params.id)
         .then(response => {
+            console.log(response.data)
             this.loading = false
             this.userDetails.first_name = response.data.first_name;
             this.userDetails.last_name = response.data.last_name;
