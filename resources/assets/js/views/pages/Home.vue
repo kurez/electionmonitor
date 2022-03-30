@@ -278,7 +278,7 @@ export default {
   methods: {
     getUserDetails () {
     this.loading = true
-    console.log(this.$route.param_id)
+    console.log(this.$route.params.id)
     axios.get('api/v1/user/'+this.$route.params.id)
         .then(response => {
             console.log(response.data)
