@@ -28,10 +28,6 @@ let routes = [
                 component: require('./views/pages/wards.vue').default
             },
             {
-                path: '/configuration',
-                component: require('./views/configuration/configuration.vue').default
-            },
-            {
                 path: '/electionmonitor/aspirant',
                 component: require('./views/aspirant/index.vue').default
             },
