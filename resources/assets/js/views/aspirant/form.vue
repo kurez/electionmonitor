@@ -211,21 +211,21 @@
             },
             storeAspirant(){
                  this.loading = true
-                this.aspirantForm.post('api/v1/aspirant')
+                this.aspirantForm.post('http://172.104.245.14/electionmonitor/api/v1/aspirant')
                 .then(response => {
                      this.loading = false
-                    toastr['success'](response.message);
+                    // toastr['success'](response.message);
                     this.$emit('completed',response.aspirant)
                     this.$router.push('/electionmonitor/aspirant');
                 })
                 .catch(response => {
                      this.loading = false
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                 });
             },
             getAspirants(){
                  this.loading = true
-                axios.get('api/v1/aspirant/'+this.id)
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+this.id)
                 .then(response => {
                      this.loading = false
                     this.aspirantForm.full_name = response.data.full_name;
@@ -235,27 +235,27 @@
                 })
                 .catch(response => {
                      this.loading = false
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                 });
             },
             updateAspirant(){
                  this.loading = true
-                this.aspirantForm.patch('api/v1/aspirant/'+this.id)
+                this.aspirantForm.patch('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+this.id)
                 .then(response => {
                      this.loading = false
-                    if(response.type == 'error')
-                        toastr['error'](response.message);
-                    else {
+                    if(response.type == 'error') {
+                        // toastr['error'](response.message);
+                    }else {
                         this.$router.push('/electionmonitor/aspirant');
                     }
                 })
                 .catch(response => {
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                 });
             },
             getLocations (){
                  this.loading = true
-                 axios.get('api/v1/county')
+                 axios.get('http://172.104.245.14/electionmonitor/api/v1/county')
                 .then(response => {
                      this.loading = false
                     // console.log(this.county=response.data)
@@ -265,10 +265,10 @@
                 })
                 .catch(response => {
                      this.loading = false
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                 });
 
-                axios.get('api/v1/constituency')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/constituency')
                 .then(response => {
                      this.loading = false
                     for(let i=0;i<response.data.length;i++){
@@ -277,10 +277,10 @@
                 })
                 .catch(response => {
                      this.loading = false
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                 });
 
-                axios.get('api/v1/ward')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/ward')
                 .then(response => {
                      this.loading = false
                     for(let i=0;i<response.data.length;i++){
@@ -289,7 +289,7 @@
                 })
                 .catch(response => {
                      this.loading = false
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                 });
             }
         }
