@@ -61,7 +61,7 @@ svg {
   margin-top: 40px;
 }
 .buttons-con .action-link-wrap a {
-  background: #68c950;
+  background: #040539;
   padding: 8px 25px;
   border-radius: 4px;
   color: #FFF;
@@ -74,7 +74,7 @@ svg {
 }
 .buttons-con .action-link-wrap a:hover {
   background: #5A5C6C;
-  color: #fff;
+  color: #000;
 }
 
 #Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
