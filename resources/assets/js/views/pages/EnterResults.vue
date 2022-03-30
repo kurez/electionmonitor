@@ -141,7 +141,7 @@ import VsudBadge from "../../components/VsudBadge.vue";
         },
         methods : {
           filterAspirants (electoral_position) {
-                 axios.get('api/v1/enter-results/'+this.$route.params.electoral_area)
+                 axios.get('http://172.104.245.14/electionmonitor/api/v1/enter-results/'+this.$route.params.electoral_area)
               .then(response => {
                   this.aspirants = response.data
                   this.aspirants = this.aspirants.filter(function (el)
@@ -183,14 +183,14 @@ import VsudBadge from "../../components/VsudBadge.vue";
                 this.loading = true
                 
                 // var self = this
-                this.resultsDetails.post('api/v1/enter-results')
+                this.resultsDetails.post('http://172.104.245.14/electionmonitor/api/v1/enter-results')
                 .then(response => {
                     setTimeout(() => 
                         this.loading =false,
                         this.resultsDetails.results = {},
                         this.resultsDetails.uuid = ''
                     , 2000);
-                    axios.get('api/v1/vote-status')
+                    axios.get('http://172.104.245.14/electionmonitor/api/v1/vote-status')
                     .then(response => {
                         // this.voted = response.data
                         for(var i=0;i<response.data.length;i++) {
@@ -215,25 +215,25 @@ import VsudBadge from "../../components/VsudBadge.vue";
                     // console.log(this.progress)
 
                     if (this.$route.params.location === "county") {
-                      axios.post('api/v1/county_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('http://172.104.245.14/electionmonitor/api/v1/county_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
               
                       })
                     } else if (this.$route.params.location === "national"){
-                      axios.post('api/v1/national_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('http://172.104.245.14/electionmonitor/api/v1/national_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
               
                       })
                     } else if (this.$route.params.location === "constituency"){
-                      axios.post('api/v1/constituency_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('http://172.104.245.14/electionmonitor/api/v1/constituency_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
               
                       })
                     } else if (this.$route.params.location === "ward"){
-                      axios.post('api/v1/ward_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('http://172.104.245.14/electionmonitor/api/v1/ward_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
                       })
@@ -255,7 +255,7 @@ import VsudBadge from "../../components/VsudBadge.vue";
         },
         mounted() {
             // console.log(this.$route.params.electoral_area)
-            axios.get('api/v1/enter-results/'+this.$route.params.electoral_area)
+            axios.get('http://172.104.245.14/electionmonitor/api/v1/enter-results/'+this.$route.params.electoral_area)
               .then(response => {
                   this.aspirants = response.data
               })
@@ -263,7 +263,7 @@ import VsudBadge from "../../components/VsudBadge.vue";
                 // console.log(response)
               });
 
-            axios.get('api/v1/vote-status')
+            axios.get('http://172.104.245.14/electionmonitor/api/v1/vote-status')
               .then(response => {
                 //   console.log(this.uuids = response.data[0].aspirant_uuid)
                  this.voted = response.data
