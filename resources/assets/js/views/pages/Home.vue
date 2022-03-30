@@ -278,7 +278,7 @@ export default {
   methods: {
     getUserDetails () {
     this.loading = true
-    axios.get('/api/v1/user/'+this.$route.params.id)
+    axios.get('api/v1/user/'+this.$route.params.id)
         .then(response => {
             this.loading = false
             this.userDetails.first_name = response.data.first_name;
@@ -297,7 +297,7 @@ export default {
 
             const area = this.userDetails.allocated_area.split(/\s*,\s*/);
           
-            axios.get('/api/v1/polling-fetch/'+ decodeURI(area[0]))
+            axios.get('api/v1/polling-fetch/'+ decodeURI(area[0]))
               .then(response => {
                 //   console.log(response.data[0])
                   this.pollingDetails.ward_name = response.data[0].ward_name.toLowerCase()
@@ -317,13 +317,13 @@ export default {
     enterResult (electoral_area, location){
         this.loading = true
         setTimeout(() => 
-        this.$router.push('/enter-results/'+electoral_area.toLowerCase()+'/'+location)
+        this.$router.push('/electionmonitor/enter-results/'+electoral_area.toLowerCase()+'/'+location)
         , 2000);  
     },
     logout(){
         helper.logout().then(() => {
         this.$store.dispatch('resetAuthUserDetail');
-        this.$router.replace('/login');
+        this.$router.replace('/electionmonitor/login');
         })
     },
   }

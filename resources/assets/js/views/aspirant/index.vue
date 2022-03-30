@@ -228,7 +228,7 @@
                 this.searched = searchByFilter(this.aspirants, this.search)
             },
             editAspirant(aspirant){
-                this.$router.push('/aspirant/'+aspirant.uuid+'/edit');
+                this.$router.push('/electionmonitor/aspirant/'+aspirant.uuid+'/edit');
             },
        
         },

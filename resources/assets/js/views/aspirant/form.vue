@@ -211,12 +211,12 @@
             },
             storeAspirant(){
                  this.loading = true
-                this.aspirantForm.post('/api/v1/aspirant')
+                this.aspirantForm.post('api/v1/aspirant')
                 .then(response => {
                      this.loading = false
                     toastr['success'](response.message);
                     this.$emit('completed',response.aspirant)
-                    this.$router.push('/aspirant');
+                    this.$router.push('/electionmonitor/aspirant');
                 })
                 .catch(response => {
                      this.loading = false
@@ -225,7 +225,7 @@
             },
             getAspirants(){
                  this.loading = true
-                axios.get('/api/v1/aspirant/'+this.id)
+                axios.get('api/v1/aspirant/'+this.id)
                 .then(response => {
                      this.loading = false
                     this.aspirantForm.full_name = response.data.full_name;
@@ -240,13 +240,13 @@
             },
             updateAspirant(){
                  this.loading = true
-                this.aspirantForm.patch('/api/v1/aspirant/'+this.id)
+                this.aspirantForm.patch('api/v1/aspirant/'+this.id)
                 .then(response => {
                      this.loading = false
                     if(response.type == 'error')
                         toastr['error'](response.message);
                     else {
-                        this.$router.push('/aspirant');
+                        this.$router.push('/electionmonitor/aspirant');
                     }
                 })
                 .catch(response => {
@@ -255,7 +255,7 @@
             },
             getLocations (){
                  this.loading = true
-                 axios.get('/api/v1/county')
+                 axios.get('api/v1/county')
                 .then(response => {
                      this.loading = false
                     // console.log(this.county=response.data)
@@ -268,7 +268,7 @@
                     toastr['error'](response.message);
                 });
 
-                axios.get('/api/v1/constituency')
+                axios.get('api/v1/constituency')
                 .then(response => {
                      this.loading = false
                     for(let i=0;i<response.data.length;i++){
@@ -280,7 +280,7 @@
                     toastr['error'](response.message);
                 });
 
-                axios.get('/api/v1/ward')
+                axios.get('api/v1/ward')
                 .then(response => {
                      this.loading = false
                     for(let i=0;i<response.data.length;i++){

@@ -11,7 +11,7 @@
         </svg>
         <div class="message-box">
         <h1>404</h1>
-        <p>Page not found</p>
+        <p style="color: #000">Page not found</p>
         <div class="buttons-con">
             <div class="action-link-wrap">
             <v-btn to="/" class="link-button link-back-button">Go Back</v-btn>
