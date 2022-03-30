@@ -8,23 +8,23 @@ let routes = [
         meta: { requiresAuth: true },
         children: [
             {
-                path: '/dashboard',
+                path: '/electionmonitor/dashboard',
                 component: require('./views/pages/Dashboard.vue').default
             },
             {
-                path: '/polling',
+                path: '/electionmonitor/polling',
                 component: require('./views/pages/pollings.vue').default
             },
             {
-                path: '/county',
+                path: '/electionmonitor/county',
                 component: require('./views/pages/counties.vue').default
             },
             {
-                path: '/constituency',
+                path: '/electionmonitor/constituency',
                 component: require('./views/pages/constituencies.vue').default
             },
             {
-                path: '/ward',
+                path: '/electionmonitor/ward',
                 component: require('./views/pages/wards.vue').default
             },
             {
@@ -32,23 +32,23 @@ let routes = [
                 component: require('./views/configuration/configuration.vue').default
             },
             {
-                path: '/aspirant',
+                path: '/electionmonitor/aspirant',
                 component: require('./views/aspirant/index.vue').default
             },
             {
-                path: '/aspirant/add',
+                path: '/electionmonitor/aspirant/add',
                 component: require('./views/aspirant/add.vue').default
             },
             {
-                path: '/aspirant/:id/edit',
+                path: '/electionmonitor/aspirant/:id/edit',
                 component: require('./views/aspirant/edit.vue').default
             },
             {
-                path: '/user',
+                path: '/electionmonitor/user',
                 component: require('./views/user/index.vue').default
             },
             {
-                path: '/user/add',
+                path: '/electionmonitor/user/add',
                 component: require('./views/user/add.vue').default
             },
             {

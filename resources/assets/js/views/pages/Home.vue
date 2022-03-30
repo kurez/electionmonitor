@@ -254,9 +254,6 @@ export default {
 
   mounted() {
     this.getUserDetails()
-    // this.getPollingByName()
-    // console.log(this.route_params = this.$route.params)
-    // this.userDetails.first_name = this.$store.getters.getAuthUserFullName
     this.$store.state.isAbsolute = true;
     this.$store.state.isNavFixed = false;
     setNavPills();
