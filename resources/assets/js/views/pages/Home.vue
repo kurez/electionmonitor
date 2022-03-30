@@ -209,11 +209,11 @@
 
 <script>
 import VsudSwitch from "../../components/VsudSwitch.vue";
-import ProfileCard from "../components/ProfileCard.vue";
+// import ProfileCard from "../components/ProfileCard.vue";
 import VsudAvatar from "../../components/VsudAvatar.vue";
 
 
-import ProjectsCard from "../components/ProjectOverviewCard.vue";
+// import ProjectsCard from "../components/ProjectOverviewCard.vue";
 import qs from 'qs';
 import setNavPills from "../../assets/js/nav-pills.js";
 import setTooltip from "../../assets/js/tooltip.js";
@@ -245,9 +245,9 @@ export default {
   },
   components: {
     VsudSwitch,
-    ProfileCard,
+    // ProfileCard,
     VsudAvatar,
-    ProjectsCard,
+    // ProjectsCard,
   },
 
   // props: ['id'],
