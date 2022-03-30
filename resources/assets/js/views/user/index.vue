@@ -173,7 +173,7 @@
             } 
         },
         created () {
-         axios.get('/api/v1/user')
+         axios.get('http://172.104.245.14/electionmonitor/api/v1/user')
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
