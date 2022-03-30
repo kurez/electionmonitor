@@ -13,19 +13,19 @@ let routes = [
             },
             {
                 path: '/electionmonitor/polling',
-                component: require('./views/pages/pollings.vue').default
+                component: require('./views/pages/Pollings.vue').default
             },
             {
                 path: '/electionmonitor/county',
-                component: require('./views/pages/counties.vue').default
+                component: require('./views/pages/Counties.vue').default
             },
             {
                 path: '/electionmonitor/constituency',
-                component: require('./views/pages/constituencies.vue').default
+                component: require('./views/pages/Constituencies.vue').default
             },
             {
                 path: '/electionmonitor/ward',
-                component: require('./views/pages/wards.vue').default
+                component: require('./views/pages/Wards.vue').default
             },
             {
                 path: '/electionmonitor/aspirant',
