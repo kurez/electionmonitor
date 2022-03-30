@@ -13,19 +13,19 @@ let mix = require('laravel-mix');
 
 var plugin =  'resources/assets/plugins/';
 
-mix.js('resources/assets/js/app.js', 'public/js/app.js').vue()
-  .combine([
-    plugin + 'jquery/jquery.min.js',
-    plugin + 'popper/popper.min.js',
-    plugin + 'bootstrap/bootstrap.min.js',
-    plugin + 'moment/moment.min.js',
-    plugin + 'toastr/toastr.min.js',
-    plugin + 'slimscroll/jquery.slimscroll.js',
-    plugin + 'waves/waves.js',
-    plugin + 'sidebarmenu.js',
-    plugin + 'sticky-kit/sticky-kit.min.js',
-    'resources/assets/js/custom.js',
-    'public/js/app.js',
-  ],'public/js/bundle.min.js')
+mix.js('resources/assets/js/app.js','public/js/bundle.min.js').vue()
+  // .combine([
+  //   plugin + 'jquery/jquery.min.js',
+  //   plugin + 'popper/popper.min.js',
+  //   plugin + 'bootstrap/bootstrap.min.js',
+  //   plugin + 'moment/moment.min.js',
+  //   plugin + 'toastr/toastr.min.js',
+  //   plugin + 'slimscroll/jquery.slimscroll.js',
+  //   plugin + 'waves/waves.js',
+  //   plugin + 'sidebarmenu.js',
+  //   plugin + 'sticky-kit/sticky-kit.min.js',
+  //   'resources/assets/js/custom.js',
+  //   'public/js/app.js',
+  // ],'public/js/bundle.min.js')
     .sass('resources/assets/sass/style.scss', 'public/css')
     .browserSync('laravue');
