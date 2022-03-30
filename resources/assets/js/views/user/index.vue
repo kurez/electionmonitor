@@ -194,7 +194,7 @@
                     page = 1;
                 }
                 // let url = helper.getFilterURL(this.filterUserForm);
-                axios.get('/api/v1/user')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/user')
                     .then(response => {
                         // console.log(response.data)
                         for(let i = 0;i < response.data.length;i++) {
@@ -211,7 +211,7 @@
             }, 
             performDelete(){
                 this.loading =true
-                axios.delete('/api/v1/user/' + this.deleteUserID).then(response => {
+                axios.delete('http://172.104.245.14/electionmonitor/api/v1/user/' + this.deleteUserID).then(response => {
                     // toastr['success'](response.data.message);
                     this.loading = false
                     this.deleteDialog = true
@@ -228,7 +228,7 @@
                 this.searched = searchByFilter(this.users, this.search)
             },
             editUser(item){
-                this.$router.push('/user/'+item.id+'/edit');
+                this.$router.push('/electionmonitor/user/'+item.id+'/edit');
             },
         },
         filters: {
