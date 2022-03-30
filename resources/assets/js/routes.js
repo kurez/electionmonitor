@@ -11,6 +11,7 @@ let routes = [
                 path: '/electionmonitor/dashboard',
                 component: require('./views/pages/Dashboard.vue').default
             },
+            
             {
                 path: '/electionmonitor/polling',
                 component: require('./views/pages/Pollings.vue').default
