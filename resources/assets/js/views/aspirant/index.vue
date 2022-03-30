@@ -135,7 +135,7 @@
                                         
                                         <v-card  style="background-color: #040539; color: #fff">
                                             <v-card-title class="text-h5">
-                                            Are you sure you want to delete this user?
+                                            Are you sure you want to delete this aspirant?
                                             </v-card-title>
                                             <v-card-text style="color: #fff">Once this action is performed, it can not be reversed.</v-card-text>
                                             <v-card-actions>
@@ -250,7 +250,7 @@
                 this.deleteAspirantID = aspirant.id
             }, 
           
-            deleteAspirant(){
+            performDelete (){
                 this.loading =true
                 axios.delete('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+this.deleteAspirantID).then(response => {
                      // toastr['success'](response.data.message);
