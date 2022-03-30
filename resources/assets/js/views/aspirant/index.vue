@@ -5,7 +5,7 @@
             <div class="col-md-12 col-8 align-self-center">
                 <!-- <h3 class="text-themecolor m-b-0 m-t-0">User</h3> -->
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><router-link to="/dashboard">Dashboard</router-link></li>
+                    <li class="breadcrumb-item"><router-link to="/electionmonitor/dashboard">Dashboard</router-link></li>
                     <li class="breadcrumb-item active">Aspirants</li>
                 </ol>
             </div>
@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="py-4">              
-                <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" to="/aspirant/add">New aspirant</md-button>  
+                <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" to="/electionmonitor/aspirant/add">New aspirant</md-button>  
             </div>
             <div class="col-lg-12">
                 <div class="mb-4 card">

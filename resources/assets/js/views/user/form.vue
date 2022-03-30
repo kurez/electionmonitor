@@ -194,7 +194,7 @@
                 this.loading = true
                 // console.log(this.userForm.allocated_area.polling_name)
                 this.userForm.allocated_area = this.userForm.allocated_area.polling_name
-                axios.post('/api/v1/auth/register', this.userForm).then(response =>  {
+                axios.post('http://172.104.245.14/electionmonitor/api/v1/auth/register', this.userForm).then(response =>  {
                    notify({
                             text: 'Registration was successful',
                             theme: 'green',
@@ -216,7 +216,7 @@
             },
             getUsers(){
                 this.loading = true
-                axios.get('/api/v1/user/'+this.id)
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/user/'+this.id)
                 .then(response => {
                     this.loading = false
                     this.userForm.first_name = response.data.first_name;
@@ -235,7 +235,7 @@
             updateUser(){
                 this.loading = true
                 this.userForm.allocated_area = this.userForm.allocated_area
-                this.userForm.put('/api/v1/user/'+this.id)
+                this.userForm.put('http://172.104.245.14/electionmonitor/api/v1/user/'+this.id)
                 .then(response => {
                     this.loading = false
                     if(response.type == 'error')
@@ -261,7 +261,7 @@
             },
             getPollings (){
                 this.loading = true
-                axios.get('/api/v1/polling')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/polling')
                 .then(response => {
                     this.loading = false
                     for(let i=10;i<response.data.length;i++){
@@ -270,7 +270,7 @@
                     console.log(this.pollings)
                 })
                 .catch(response => {
-                    toastr['error'](response.message);
+                    // toastr['error'](response.message);
                     this.loading = false
                 });
             }
