@@ -46,6 +46,8 @@ class AspirantController extends APIController
                 return response()->json(['message' => $validation->messages()->first()], 422);
             }
 
+        
+
             $user = JWTAuth::parseToken()->authenticate();
             $aspirant = new Aspirant();
             $aspirant->fill(request()->all());

@@ -57,6 +57,16 @@
                         dense
                         ></v-select>
                 </div>
+                <div class="form-group"  v-if="aspirantForm.electoral_position === 'The President'">
+                    <v-select
+                        v-model="aspirantForm.electoral_area"
+                        :items="nation"
+                        label="National Government"
+                        required
+                        outlined
+                        dense
+                        ></v-select>
+                </div>
                 <div class="form-group"  v-if="aspirantForm.electoral_position === 'Senator'">
                     <v-select
                         v-model="aspirantForm.electoral_area"
@@ -191,6 +201,7 @@
                     ],
                 electoral_position: ['The President', 'County Governor', 'Senator', 'Member of National Assembly', 'Member of County Assembly', 'County Woman Member of National Assembly'],
                 county: [],
+                nation: ['Republic of Kenya'],
                 constituency: [],
                 ward: []
             };
