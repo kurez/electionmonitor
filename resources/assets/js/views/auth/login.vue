@@ -84,7 +84,7 @@
                 persistent
                 width="300"
                 >
-                <!-- <v-card
+                <v-card
                     style="background-color: #040539"
                     dark
                 >
@@ -96,8 +96,7 @@
                         class="mb-0"
                     ></v-progress-linear>
                     </v-card-text>
-                </v-card> -->
-                <div class="lds-ripple"><div></div><div></div></div>
+                </v-card>
                 </v-dialog>
             </div>
         </section>
