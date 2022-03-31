@@ -35,12 +35,7 @@
                     cols="12"
                     sm="6"
                     >
-                    <!-- <v-text-field
-                        v-model="userForm.phone"
-                        label="Phone number"
-                        outlined
-                        dense
-                    ></v-text-field> -->
+                
                      <vue-tel-input 
                                             v-model="userForm.phone" 
                                             class="form-control" 
@@ -51,9 +46,6 @@
                                             required
                                          ></vue-tel-input>
                     </v-col>
-                </v-row>
-
-                <v-row>
                     <v-col
                     cols="12"
                     sm="6"
@@ -67,6 +59,10 @@
                     dense
                     ></v-select>
                     </v-col>
+                </v-row>
+
+                <v-row>
+                    
 
                     <v-col
                     cols="12"
@@ -82,13 +78,11 @@
                     
                     ></v-select>
                     </v-col>
-                </v-row>
-                <v-row v-if="userForm.role !== 'Admin' && userForm.role !== '' ">
-                    <v-col
+                       <v-col
                     cols="12"
                     sm="6"
                     >
-                      <v-autocomplete
+                      <v-autocomplete v-if="userForm.role !== 'Admin' && userForm.role !== '' "
                         v-model="userForm.allocated_area"
                         clearable
                         :items="pollings"
@@ -99,6 +93,9 @@
                         dense
                         ></v-autocomplete>
                     </v-col>
+                </v-row>
+                <v-row >
+                 
                 </v-row>
                 <v-dialog
                             v-model="loading"
