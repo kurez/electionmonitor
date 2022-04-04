@@ -37,101 +37,107 @@
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-md-12 ">
-    <div class="row ">
-        <div class="col-xl-3 col-lg-6">
-            <div class="card l-bg-cherry">
-                <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="ni ni-circle-08" style="font-size: 100px"></i></div>
-                    <div class="mb-4">
-                        <h5 class="card-title mb-0" style="color: #fff">Users</h5>
-                    </div>
-                    <div class="row align-items-center mb-2 d-flex">
-                        <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0" style="color: #fff">
-                                {{stats.users.value.toLocaleString()}}
-                            </h2>
+            <div class="row ">
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card l-bg-cherry">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large"><i class="ni ni-circle-08" style="font-size: 100px"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0" style="color: #fff">Users</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 class="d-flex align-items-center mb-0" style="color: #fff">
+                                        {{stats.users.value.toLocaleString()}}
+                                    </h2>
+                                </div>
+                                <!-- <div class="col-4 text-right">
+                                    <span><i class="ni ni-circle-08" style="font-size: 35px"></i></span>
+                                </div> -->
+                            </div>
+                            <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                            </div> -->
                         </div>
-                        <!-- <div class="col-4 text-right">
-                            <span><i class="ni ni-circle-08" style="font-size: 35px"></i></span>
-                        </div> -->
                     </div>
-                    <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                        <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                    </div> -->
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card l-bg-blue-dark">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large"><i class="ni ni-paper-diploma" style="font-size: 100px"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0" style="color: #fff">Aspirants</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 class="d-flex align-items-center mb-0" style="color: #fff">
+                                    {{stats.aspirants.value.toLocaleString()}}
+                                    </h2>
+                                </div>
+                                <!-- <div class="col-4 text-right">
+                                    <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
+                                </div> -->
+                            </div>
+                            <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                <div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card l-bg-green-dark">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large"><i class="ni ni-square-pin" style="font-size: 100px"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0" style="color: #fff">Pollings</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 class="d-flex align-items-center mb-0" style="color: #fff">
+                                        {{stats.pollings.value.toLocaleString()}}
+                                    </h2>
+                                </div>
+                                <!-- <div class="col-4 text-right">
+                                    <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
+                                </div> -->
+                            </div>
+                            <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card l-bg-orange-dark">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large"><i class="ni ni-badge" style="font-size: 100px"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0" style="color: #fff">Total votes</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 class="d-flex align-items-center mb-0" style="color: #fff">
+                                        {{stats.results.toLocaleString()}}
+                                    </h2>
+                                </div>
+                                <!-- <div class="col-4 text-right">
+                                    <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
+                                </div> -->
+                            </div>
+                            <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                            </div> -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
-            <div class="card l-bg-blue-dark">
-                <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="ni ni-paper-diploma" style="font-size: 100px"></i></div>
-                    <div class="mb-4">
-                        <h5 class="card-title mb-0" style="color: #fff">Aspirants</h5>
-                    </div>
-                    <div class="row align-items-center mb-2 d-flex">
-                        <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0" style="color: #fff">
-                               {{stats.aspirants.value.toLocaleString()}}
-                            </h2>
-                        </div>
-                        <!-- <div class="col-4 text-right">
-                            <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
-                        </div> -->
-                    </div>
-                    <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                        <div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                    </div> -->
-                </div>
+
+        <div class="row">
+            <div class="col-12">
+
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
-            <div class="card l-bg-green-dark">
-                <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="ni ni-square-pin" style="font-size: 100px"></i></div>
-                    <div class="mb-4">
-                        <h5 class="card-title mb-0" style="color: #fff">Pollings</h5>
-                    </div>
-                    <div class="row align-items-center mb-2 d-flex">
-                        <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0" style="color: #fff">
-                                {{stats.pollings.value.toLocaleString()}}
-                            </h2>
-                        </div>
-                        <!-- <div class="col-4 text-right">
-                            <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
-                        </div> -->
-                    </div>
-                    <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                        <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-            <div class="card l-bg-orange-dark">
-                <div class="card-statistic-3 p-4">
-                    <div class="card-icon card-icon-large"><i class="ni ni-badge" style="font-size: 100px"></i></div>
-                    <div class="mb-4">
-                        <h5 class="card-title mb-0" style="color: #fff">Visits Today</h5>
-                    </div>
-                    <div class="row align-items-center mb-2 d-flex">
-                        <div class="col-8">
-                            <h2 class="d-flex align-items-center mb-0" style="color: #fff">
-                                1,000
-                            </h2>
-                        </div>
-                        <!-- <div class="col-4 text-right">
-                            <span><i class="ni ni-cart" style="font-size: 35px"></i></span>
-                        </div> -->
-                    </div>
-                    <!-- <div class="progress mt-1 " data-height="8" style="height: 8px;">
-                        <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
     </div>
   </div>
@@ -152,6 +158,7 @@ export default {
   name: "dashboard-default",
   data() {
     return {
+    
       stats: {
         results: '',
         iconBackground: "bg-gradient-success",
@@ -191,7 +198,7 @@ export default {
  
   mounted() {
      
-       axios.get('http://172.104.245.14/electionmonitor/api/v1/user-dashboard')
+       axios.get('api/v1/user-dashboard')
                     .then(response => {
                         // console.log(response)
                          this.stats.users.value = response.data.users_count;

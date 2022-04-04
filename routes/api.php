@@ -27,7 +27,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('/two-factor-auth', 'AuthController@storeOTP');
         Route::post('/two-factor-auth/resend/{number}', 'AuthController@resendOTP');
 
-        Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+        
     });
 
     Route::group(['middleware' => ['jwt.auth']], function () {
@@ -72,6 +72,6 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         // Route::post('/two-factor-auth', [TwoFactorAuthController::class, 'store'])->name('2fa.store');
         // Route::get('/two-factor-auth/resent', [TwoFactorAuthController::class, 'resend'])->name('2fa.resend');
         
-
+        Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
     });
 });

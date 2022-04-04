@@ -67,25 +67,25 @@ class AuthController extends APIController
               CURLOPT_HTTPHEADER => array(
                 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ4NDY0MzE3fQ.D-2igZfKwTygsCzY2mQQSqLO-TY0OOF5u0LAPMZqVWM',
                 'Content-Type: application/json',
-                // 'DeveloperKey: 084049D0-AB72-4EE2-9EDE-0C25C1D1268C',
-                // 'Password: '.hash('sha256', 'Pass@1234')
               ),
             ));
             
             $response = curl_exec($curl);
-            
             curl_close($curl);
 
             // $foundUser = DB::table('users')->where('phone',$phone)->get();
             // return $foundUser;
+
+            Log::info('OTP code has been sent to', ['Phone' => $phone, 'Code' => $code]);
             return response()->json(['data' => $user, 'otp' => $code]);
         } catch (JWTException $e) {
-            Log::error($ex->getMessage());
-            return response()->json(['message' => 'Error']);
+            Log::error('Error occured while trying to send OTP code to', ['Phone' => $phone]);
+            return response()->json(['message' => 'Error occured while trying to send OTP code to'.$receiverNumber]);
         }
            
         } else {
-            return response()->json(['message' => 'Error']);
+            Log::warning('An unregistered user tried to login!');
+            return response()->json(['message' => 'User is not registered!']);
         }
     
     
@@ -99,11 +99,12 @@ class AuthController extends APIController
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
+                Log::warning('Invalid Credentials! Please try again!');
                 return response()->json(['message' => 'Invalid Credentials! Please try again.'], 422);
              
             }
         } catch (JWTException $e) {
-            Log::error($ex->getMessage());
+            Log::error('Something went wrong while authenticating.');
             return response()->json(['message' => 'This is something wrong. Please try again!'], 500);
         }
 
@@ -112,7 +113,9 @@ class AuthController extends APIController
                 ->where('id', auth()->user()->id)
                 ->update(['status' => 'online']);
 
-        return response()->json(['message' => 'Success','data' => $user,'token' => $token]);
+                
+            Log::info('User has successfully loggedin!', ['data' => $user,'token' => $token] );
+            return response()->json(['message' => 'Success','data' => $user,'token' => $token]);
     }
         /**
      * validate sms
@@ -146,10 +149,10 @@ class AuthController extends APIController
                 // DB::table('users')
                 // ->where('id', $user->id)
                 // ->update(['status' => 'activated']);
-                
+                Log::info('Valid OTP entered by', ['Phone' => $phone]);
                 return response()->json(['message' => 'Success' ,'data' => 1]);
             }
-            
+            Log::error('Invalid OTP entered by', ['Phone' => $phone]);
             return response()->json(['message' => 'Error' ,'data' => 0]);
 
         }
@@ -170,6 +173,7 @@ class AuthController extends APIController
                 'code' => $code
             ]);
 
+            Log::info('OTP has been sent to phone number!', ['Phone' => $phone]);
             return response()->json(['message' => 'We have resent OTP on your mobile number.']);
 
         }
@@ -180,14 +184,14 @@ class AuthController extends APIController
         try {
             JWTAuth::parseToken()->authenticate();
         } catch (JWTException $e) {
-            Log::error($ex->getMessage());
+            Log::warning('User not authenticated');
             return response()->json(['authenticated' => false], 422);
         }
 
         $user = JWTAuth::parseToken()->authenticate();
         $profile = $user->Profile;
         $social_auth = ($user->password) ? 0 : 1;
-
+        // Log::info('Authenticated user details found');
         return response()->json(compact('user', 'profile', 'social_auth'));
     }
 
@@ -196,10 +200,10 @@ class AuthController extends APIController
         try {
             JWTAuth::parseToken()->authenticate();
         } catch (JWTException $e) {
-            Log::error($ex->getMessage());
+            // Log::warning('User not authenticated');
             return response(['authenticated' => false]);
         }
-
+        // Log::info('User is authenticated');
         return response(['authenticated' => true]);
     }
 
@@ -209,10 +213,11 @@ class AuthController extends APIController
             $token = JWTAuth::getToken();
 
             if ($token) {
+                
                 JWTAuth::invalidate($token);
             }
         } catch (JWTException $e) {
-            Log::error($ex->getMessage());
+            Log::error($e->getMessage());
             return response()->json($e->getMessage(), 500);
         }
 
@@ -221,11 +226,15 @@ class AuthController extends APIController
                ->update(['status' => 'offline']);
 
         // return view('auth/game');
+        Log::info(['User' => auth()->user()->id], 'Has successfully logged out');
         return response()->json(['message' => 'You are successfully logged out!']);
     }
 
     public function register(Request $request, Faker $faker)
     {
+        try {
+
+        
         str_replace(' ', '', request('phone'));
         $validation = Validator::make($request->all(), [
             'first_name'            => 'required',
@@ -239,7 +248,7 @@ class AuthController extends APIController
 
         if ($validation->fails()) {
             return response()->json(['message' => $validation->messages()->first()], 422);
-            Log::error($ex->getMessage());
+            // Log::error($e->getMessage());
         }
 
         $user = User::create([
@@ -257,6 +266,10 @@ class AuthController extends APIController
         $user->allocated_area = request('allocated_area');
         $user->save();
 
+        Log::info('A user has been registered successfully!');
         return response()->json(['message' => 'You have registered a user successfully!']);
+    } catch (JWTException $e){
+        
+    }
     }
 }

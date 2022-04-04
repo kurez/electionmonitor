@@ -178,7 +178,7 @@ export default {
   methods: {
       submit (e) {
         this.loading = true
-        this.otpForm.post('http://172.104.245.14/electionmonitor/api/v1/auth/check/if/user/exists')
+        this.otpForm.post('api/v1/auth/check/if/user/exists')
             .then(response => {
                 this.alert = true
                 // console.log(this.alertMessage = response.message)
@@ -211,7 +211,7 @@ export default {
             this.loadingOverlay = true
             // this.otpForm.phone = this.signinForm.phone
             this.otpForm.phone = this.verify_phone
-            this.otpForm.post('http://172.104.245.14/electionmonitor/api/v1/auth/two-factor-auth')
+            this.otpForm.post('api/v1/auth/two-factor-auth')
             .then(response => {
                 // console.log(response)
                 if (response.message === 'Success') {
@@ -250,7 +250,7 @@ export default {
       },
       resendOTP (number){
           this.loadingOverlay = true
-          axios.post('http://172.104.245.14/electionmonitor/api/v1/auth/two-factor-auth/resend/' + number)
+          axios.post('api/v1/auth/two-factor-auth/resend/' + number)
             .then(response => {
                 
                 setTimeout(() => {
@@ -276,7 +276,7 @@ export default {
             });
       },
       signin() {
-          this.signinForm.post('http://172.104.245.14/electionmonitor/api/v1/auth/login')
+          this.signinForm.post('api/v1/auth/login')
             .then(response => {
                 // console.log(response.data[0].role)
                 this.loading = true
