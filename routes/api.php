@@ -26,6 +26,8 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1', 'as' => 'v1.'], functio
         Route::post('/social/token', 'SocialAuthController@getToken');
         Route::post('/two-factor-auth', 'AuthController@storeOTP');
         Route::post('/two-factor-auth/resend/{number}', 'AuthController@resendOTP');
+
+        Route::get('/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
     });
 
     Route::group(['middleware' => ['jwt.auth']], function () {

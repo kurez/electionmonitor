@@ -19,10 +19,11 @@ class AspirantController extends APIController
     public function index(Request $request)
     {
         try {
+
             return $aspirants = DB::select('select * from aspirants');
 
         } catch (\Exception $ex) {
-  
+            Log::error($ex->getMessage());
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
     }
@@ -54,10 +55,10 @@ class AspirantController extends APIController
             $aspirant->uuid = Str::uuid()->toString();
             // $aspirant->user_id = $user->id;
             $aspirant->save();
-
+            Log::info('Aspirant added successfully!', ['aspirant' => $aspirant]);
             return response()->json(['message' => 'Aspirant added!', 'data' => $aspirant]);
         } catch (\Exception $ex) {
-            // Log::error($ex->getMessage());
+            Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
@@ -79,10 +80,10 @@ class AspirantController extends APIController
             }
 
             $aspirant->delete();
-
+            Log::info('Aspirant deleted!', ['id' => $id]);
             return response()->json(['message' => 'Aspirant deleted!']);
         } catch (\Exception $ex) {
-            // Log::error($ex->getMessage());
+            Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
@@ -102,9 +103,10 @@ class AspirantController extends APIController
                 return response()->json(['message' => 'Could not find aspirant!'], 422);
             }
 
+            Log::info('Aspirant displayed!', ['aspirant' => $aspirant]);
             return $aspirant;
         } catch (\Exception $ex) {
-            // Log::error($ex->getMessage());
+            Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
@@ -142,9 +144,11 @@ class AspirantController extends APIController
             $aspirant->electoral_area = request('electoral_area');
             $aspirant->save();
 
+            Log::info('Aspirant was updated successfully!', ['data' => $aspirant]);
+
             return response()->json(['message' => 'Aspirant updated!', 'data' => $aspirant]);
         } catch (\Exception $ex) {
-            // Log::error($ex->getMessage());
+            Log::error($ex->getMessage());
 
             return response()->json(['message' => 'Sorry, something went wrong!'], 422);
         }
@@ -159,7 +163,7 @@ class AspirantController extends APIController
     {
         try {
             
-            return $aspirants = DB::select("select * from aspirants where electoral_area='".$electoral_area."'");
+            $aspirants = DB::select("select * from aspirants where electoral_area='".$electoral_area."'");
             return response()->json(['message' => 'Result entered successfully!', 'data' => $aspirants]);
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
@@ -193,7 +197,7 @@ class AspirantController extends APIController
             $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'agent_name' => $agent_name,  'polling'=> $agent_polling, 'votes' => $results);
             DB::table('results')->insert($values);
 
-
+            Log::info('Aspirant results entered successfully!', ['values' => $values]);
             return response()->json(['message' => 'Result entered successfully!']);
         } catch (\Exception $ex) {
             Log::error($ex->getMessage());
@@ -214,7 +218,9 @@ class AspirantController extends APIController
             $agent_id = $user->id;
 
             // return $agent_id;
+            // Log::info('Vote status!', ['votes' => $votes]);
             return $votes = DB::select("select aspirant_uuid, votes from results where agent_id='".$agent_id."'");
+            
             
             // return response()->json(['message' => 'Result entered successfully!', 'data' => $votes]);
         } catch (\Exception $ex) {

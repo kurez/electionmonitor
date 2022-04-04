@@ -44,7 +44,7 @@
                                             autofocus
                                             mode="international"
                                             required
-                                            style="margin-top: -5.5px"
+                                            style="margin-top: -5.5px;padding: 6.5px"
                                          ></vue-tel-input>
                     </v-col>
                     <v-col
