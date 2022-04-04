@@ -83,6 +83,8 @@
 </template>
 
 <script>
+    import 'vue-material/dist/vue-material.min.css'
+    import 'vue-material/dist/theme/default.css'
     // import AspirantForm from './form'
     import helper from '../../services/helper'
     import VsudAvatar from "../../components/VsudAvatar.vue";
