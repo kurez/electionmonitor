@@ -118,7 +118,7 @@
 
         created() {
             this.loading =true
-            axios.get('http://172.104.245.14/electionmonitor/api/v1/log')
+            axios.get('api/v1/log')
                     .then(response => {
                         this.loading =false
                         // for(let i = 0;i < response.data.logs.length;i++) {
