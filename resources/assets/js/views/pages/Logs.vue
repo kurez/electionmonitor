@@ -121,11 +121,11 @@
             axios.get('http://172.104.245.14/electionmonitor/api/v1/log')
                     .then(response => {
                         this.loading =false
-                        for(let i = 0;i < response.data.logs.length;i++) {
-                            this.logs.push(response.data.logs[i])
-                        }
-                        this.searched = this.logs
-                        // console.log(this.searched)
+                        // for(let i = 0;i < response.data.logs.length;i++) {
+                        //     this.logs.push(response.data.logs[i])
+                        // }
+                        // this.searched = this.logs
+                        console.log(response.data)
                     });
         },
 
