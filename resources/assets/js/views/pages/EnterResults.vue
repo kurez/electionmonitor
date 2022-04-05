@@ -258,6 +258,7 @@ import VsudBadge from "../../components/VsudBadge.vue";
             axios.get('http://172.104.245.14/electionmonitor/api/v1/enter-results/'+this.$route.params.electoral_area)
               .then(response => {
                   this.aspirants = response.data
+                  console.log(this.aspirants)
               })
               .catch(response => {
                 // console.log(response)

@@ -114,7 +114,7 @@ class AuthController extends APIController
                 ->update(['status' => 'online']);
 
                 
-            Log::info('User has successfully loggedin!');
+            Log::info('User has successfully loggedin!', ['token' => $token] );
             return response()->json(['message' => 'Success','data' => $user,'token' => $token]);
     }
         /**
