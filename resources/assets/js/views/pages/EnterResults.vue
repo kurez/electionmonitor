@@ -39,7 +39,13 @@
                             </ul>
                         </div>
                         <!-- End of Tab Nav -->
-         <md-table v-model="aspirants" md-sort="full_name" md-sort-order="asc" md-card md-fixed-header>
+                        <v-data-table
+                          :headers="headers"
+                          :items="aspirants"
+                          :items-per-page="5"
+                          class="elevation-1"
+                        ></v-data-table>
+         <!-- <md-table v-model="aspirants" md-sort="full_name" md-sort-order="asc" md-card md-fixed-header>
 
           <md-table-row slot="md-table-row" v-for="(item, index) in aspirants" :key="index">
 
@@ -74,7 +80,7 @@
                      </div>
                      <div class="col-6">
                        <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" type="submit">Enter</md-button>
-                        <!-- <button type="submit" class="btn btn-gray-800">Enter</button> -->
+                         <button type="submit" class="btn btn-gray-800">Enter</button> --
                      </div>
                    </div>
                  </form>
@@ -88,10 +94,10 @@
              <md-table-cell md-label="" md-sort-by="">
 
               </md-table-cell>
-             <!-- <md-table-cell md-label="Latitude" md-sort-by="longitude">{{ item.latitude }}</md-table-cell>    -->
+           
 
           </md-table-row>
-          </md-table>
+          </md-table> -->
           <v-dialog
               v-model="loading"
               hide-overlay
@@ -135,6 +141,17 @@ import VsudBadge from "../../components/VsudBadge.vue";
         //   id: '',
           results: {},
       }),
+       headers: [
+        {
+          text: 'Aspirant name',
+          align: 'left',
+          sortable: false,
+          value: 'full_name',
+        },
+        { text: 'Political party', value: 'political_party' },
+        { text: 'Electoral position', value: 'electoral_position' },
+        { text: 'Electoral area', value: 'electoral_area' },
+      ],
             aspirants: [],
             progress: null
         }
@@ -258,7 +275,7 @@ import VsudBadge from "../../components/VsudBadge.vue";
             axios.get('http://172.104.245.14/electionmonitor/api/v1/enter-results/'+this.$route.params.electoral_area)
               .then(response => {
                   this.aspirants = response.data
-                  console.log(this.aspirants)
+                  console.log(response)
               })
               .catch(response => {
                 // console.log(response)

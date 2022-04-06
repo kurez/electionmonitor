@@ -17,15 +17,15 @@ import Notifications from '@voerro/vue-notifications'
 
 Vue.component('notifications', Notifications);
 
-import "./assets/css/nucleo-icons.css";
-import "./assets/css/nucleo-svg.css";
+// import "./assets/css/nucleo-icons.css";
+// import "./assets/css/nucleo-svg.css";
 // import SoftUIDashboard from "./soft-ui-dashboard";
 import softUiDashboard from './soft-ui-dashboard';
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-import '@mdi/font/css/materialdesignicons.css'
+// import '@mdi/font/css/materialdesignicons.css'
 
 
 // Object.assign( global, { JP_SMS: require('jambopay-sms')});

@@ -211,7 +211,7 @@ export default {
             this.loadingOverlay = true
             // this.otpForm.phone = this.signinForm.phone
             this.otpForm.phone = this.verify_phone
-            this.otpForm.post('api/v1/auth/two-factor-auth')
+            this.otpForm.post('http://172.104.245.14/electionmonitor/api/v1/auth/two-factor-auth')
             .then(response => {
                 // console.log(response)
                 if (response.message === 'Success') {
@@ -250,7 +250,7 @@ export default {
       },
       resendOTP (number){
           this.loadingOverlay = true
-          axios.post('api/v1/auth/two-factor-auth/resend/' + number)
+          axios.post('http://172.104.245.14/electionmonitor/api/v1/auth/two-factor-auth/resend/' + number)
             .then(response => {
                 
                 setTimeout(() => {
@@ -276,7 +276,7 @@ export default {
             });
       },
       signin() {
-          this.signinForm.post('api/v1/auth/login')
+          this.signinForm.post('http://172.104.245.14/electionmonitor/api/v1/auth/login')
             .then(response => {
                 // console.log(response.data[0].role)
                 this.loading = true
