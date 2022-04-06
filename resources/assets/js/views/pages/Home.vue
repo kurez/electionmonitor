@@ -276,7 +276,7 @@ export default {
     getUserDetails () {
     this.loading = true
     // console.log(this.$route.params.id)
-    axios.get('http://172.104.245.14/electionmonitor/api/v1/user/'+this.$route.params.id)
+    axios.get('/api/v1/user/'+this.$route.params.id)
         .then(response => {
             // console.log(response.data)
             this.loading = false
@@ -296,7 +296,7 @@ export default {
 
             const area = this.userDetails.allocated_area.split(/\s*,\s*/);
           
-            axios.get('http://172.104.245.14/electionmonitor/api/v1/polling-fetch/'+ decodeURI(area[0]))
+            axios.get('/api/v1/polling-fetch/'+ decodeURI(area[0]))
               .then(response => {
                 //   console.log(response.data[0])
                   this.pollingDetails.ward_name = response.data[0].ward_name.toLowerCase()

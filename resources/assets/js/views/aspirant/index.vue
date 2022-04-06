@@ -54,10 +54,8 @@
                             </ul>
                         </div>
                         <!-- End of Tab Nav -->
-                      
-                        <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-                            <md-table-toolbar>
-                                <md-field md-clearable class="md-toolbar-section-end">
+
+                        <md-field md-clearable class="md-toolbar-section-end">
                                  <v-text-field
                                  dense
                                 outlined
@@ -68,44 +66,29 @@
                                 prepend-icon="mdi-filter-variant"
                             ></v-text-field>
                                 </md-field>
-                              
-                            </md-table-toolbar>
-
-                            <md-table-empty-state
-                                md-label="No aspirants found"
-                                :md-description="`No aspirant found for this '${search}' query. Try a different search term or create a new aspirant.`">
-                                <!-- <md-button class="md-primary md-raised">Create New User</md-button> -->
-                            </md-table-empty-state>
-
-                            <md-table-row slot="md-table-row" slot-scope="{ item }">
-                                <!-- <md-table-cell md-label="I" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
-                                <md-table-cell md-label="Name" md-sort-by="full_name">
-                                    <div class="d-flex px-3 py-2">
-                                    <!-- <div>
-                                        <v-avatar color="indigo" v-if="item.avatar === null">
-                                            <v-icon dark>
-                                                mdi-account-circle
-                                            </v-icon>
-                                            </v-avatar>
-                                        <vsud-avatar :img="item.avatar" size="sm" border-radius="lg" class="me-3" alt="user3" v-else/>
-                                    </div> -->
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">{{item.full_name}}</h6>
-                                        <p class="text-xs mb-0">{{ item.electoral_position }}</p>
-                                    </div>
-                                    </div>
-                                </md-table-cell>
-                                <!-- <md-table-cell md-label="Electoral position" md-sort-by="electoral_position">{{ item.electoral_position }}</md-table-cell> -->
-                                <md-table-cell md-label="Electoral area" md-sort-by="electoral_area">{{ item.electoral_area }}</md-table-cell>
-                                <md-table-cell md-label="Political party" md-sort-by="political_party">{{ item.political_party }}</md-table-cell>
-                               <md-table-cell md-label="Results" md-sort-by="results">{{ item.results }}</md-table-cell>                                
-                               <md-table-cell md-label="Actions">
-                                    <button class="btn btn-primary btn-sm" @click.prevent="editAspirant(item)" data-toggle="tooltip" title="Edit User"><i class="fa fa-pencil"></i>Edit</button>
-                                    <button class="btn btn-danger btn-sm" @click.prevent="deleteAspirant(item)" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button>
-
-                                </md-table-cell>
-                            </md-table-row>
-                            </md-table>
+                        <v-data-table
+                        :headers="headers"
+                        :items="searched"
+                        
+                        >
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon
+                                small
+                                class="mr-2"
+                                @click="editAspirant(item)"
+                            >
+                                mdi-pencil
+                            </v-icon>
+                            <v-icon
+                                small
+                                @click="deleteAspirant(item)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                            </template>
+                        </v-data-table>
+                      
+        
                         <v-dialog
                             v-model="loading"
                             hide-overlay
@@ -192,6 +175,19 @@
         components : { AspirantForm, VsudAvatar, VsudBadge},
         data() {
             return {
+                headers: [
+                    {
+                        text: 'Full Name',
+                        align: 'start',
+                        filterable: false,
+                        value: 'full_name',
+                    },
+                    { text: 'Political party', value: 'political_party' },
+                    { text: 'Electoral_position', value: 'electoral_position' },
+                    { text: 'Electoral area', value: 'electoral_area' },
+                    { text: 'Results', value: 'results' },
+                    { text: 'Actions', value: 'actions' },
+                    ],
                 deleteDialog: false,
                 deleteAspirantID: null,
                 aspirants: [],
@@ -210,7 +206,7 @@
 
         created() {
             this.loading =true
-            axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant')
+            axios.get('/api/v1/aspirant')
                     .then(response => {
                         this.loading =false
                         for(let i = 0;i < response.data.length;i++) {
@@ -233,11 +229,11 @@
                     page = 1;
                 }
                 // let url = helper.getFilterURL(this.filterAspirantForm);
-                axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant')
+                axios.get('/api/v1/aspirant')
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
-                            console.log(this.aspirants.push(response.data[i]))
+                            this.aspirants.push(response.data[i])
                         }
                         this.searched = this.aspirants
                         // console.log(this.searched)
@@ -252,7 +248,7 @@
           
             performDelete (){
                 this.loading =true
-                axios.delete('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+this.deleteAspirantID).then(response => {
+                axios.delete('/api/v1/aspirant/'+this.deleteAspirantID).then(response => {
                      // toastr['success'](response.data.message);
                     this.loading = false
                     this.deleteDialog = true

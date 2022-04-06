@@ -19,6 +19,12 @@
                         <div class="nav-wrapper position-relative mb-2" v-if="$route.params.location === 'county'">
                             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 d-flex align-items-center justify-content-center" id="tabs-icons-text-2-tab" @click="filterAspirants('All')"  aria-controls="tabs-icons-text-2" aria-selected="false" style="background-color: #040539; color: #fff">
+                                        <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg> -->
+                                        County Governor
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link mb-sm-3 mb-md-0 d-flex align-items-center justify-content-center" id="tabs-icons-text-2-tab" @click="filterAspirants('County Governor')"  aria-controls="tabs-icons-text-2" aria-selected="false" style="background-color: #040539; color: #fff">
                                         <!-- <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg> -->
                                         County Governor
@@ -38,66 +44,46 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- End of Tab Nav -->
-                        <v-data-table
-                          :headers="headers"
-                          :items="aspirants"
-                          :items-per-page="5"
-                          class="elevation-1"
-                        ></v-data-table>
-         <!-- <md-table v-model="aspirants" md-sort="full_name" md-sort-order="asc" md-card md-fixed-header>
+                       
+                         <v-data-table
+                            :headers="headers"
+                            :items="aspirants"
+                            class="elevation-1"
+                            itemsPerPage = 5
+                          >
+                            <template v-slot:item.actions="{ item }" >
+                              <form @submit.prevent = "feedResult(item.uuid, item.id)" :id="item.uuid"  v-if="!uuids.includes(item.uuid)">
+                              <div class="row">
+                                <div class="col-6">
+                                        <v-input
+                                          class="form-control"
+                                          type="number"
+                                          step="1"
+                                          min="1"
+                                          :key="item.id"
+                                          :id="item.id"
+                                          :name="item.id"
+                                          required
+                                          v-model="resultsDetails.results[item.id]"
+                                        />
+                                </div>
+                                <div class="col-6">
 
-          <md-table-row slot="md-table-row" v-for="(item, index) in aspirants" :key="index">
-
-              <md-table-cell md-label="Full name" md-sort-by="full_name">
-                  <div class="d-flex px-3 py-2">
+                                  <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" type="submit"> <v-icon color="#fff"> mdi-database-plus</v-icon> Enter</md-button>
                                    
-                  <div class="d-flex flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">{{item.full_name}}</h6>
-                      <p class="text-xs sub-header text-primary  mb-0" style="color: #">{{ item.political_party }}</p>
-                  </div>
-                  </div>
-              </md-table-cell>
-              <md-table-cell md-label="Electoral position" md-sort-by="electoral_position">
-                {{item.electoral_position}}
-              </md-table-cell>
-              <md-table-cell md-label="Electoral area" md-sort-by="electoral_area">{{ item.electoral_area }}</md-table-cell>
-              <md-table-cell md-label="Results" md-sort-by="results">
-                 <form @submit.prevent = "feedResult(item.uuid, index)" :id="item.uuid" v-if="!uuids.includes(item.uuid)">
-                   <div class="row">
-                     <div class="col-6">
-                            <input
-                              class="form-control"
-                              type="number"
-                              step="1"
-                              min="1"
-                              :key="index"
-                              :id="index"
-                              :name="index"
-                              required
-                              v-model="resultsDetails.results[index]"
-                            />
-                     </div>
-                     <div class="col-6">
-                       <md-button class="btn bg-gray-800" style="color: #FFF;border-radius: 4px" type="submit">Enter</md-button>
-                         <button type="submit" class="btn btn-gray-800">Enter</button> --
-                     </div>
-                   </div>
-                 </form>
-                 <template v-else>
-                      <p v-for="vote in voted" :key="vote.aspirant_uuid">
-                         <span v-if="item.uuid === vote.aspirant_uuid"><code>{{ Number (vote.votes).toLocaleString() }}</code></span> 
-                      </p>
-                 </template>
-                                    
-              </md-table-cell>
-             <md-table-cell md-label="" md-sort-by="">
+                                </div>
+                              </div>
+                            </form>
 
-              </md-table-cell>
-           
-
-          </md-table-row>
-          </md-table> -->
+                            <template v-else>
+                                  <p v-for="vote in voted" :key="vote.aspirant_uuid">
+                                    <span v-if="item.uuid === vote.aspirant_uuid"><code>{{ Number (vote.votes).toLocaleString() }}</code></span> 
+                                  </p>
+                            </template>
+                            </template>
+  
+                          </v-data-table>
+         
           <v-dialog
               v-model="loading"
               hide-overlay
@@ -151,6 +137,7 @@ import VsudBadge from "../../components/VsudBadge.vue";
         { text: 'Political party', value: 'political_party' },
         { text: 'Electoral position', value: 'electoral_position' },
         { text: 'Electoral area', value: 'electoral_area' },
+        { text: 'Actions', value: 'actions' },
       ],
             aspirants: [],
             progress: null
@@ -158,9 +145,9 @@ import VsudBadge from "../../components/VsudBadge.vue";
         },
         methods : {
           filterAspirants (electoral_position) {
-                 axios.get('http://172.104.245.14/electionmonitor/api/v1/enter-results/'+this.$route.params.electoral_area)
+                 axios.get('/api/v1/enter-results/'+this.$route.params.electoral_area)
               .then(response => {
-                  this.aspirants = response.data
+                  this.aspirants = response.data.data
                   this.aspirants = this.aspirants.filter(function (el)
                   {
                     return el.electoral_position === electoral_position                        
@@ -200,16 +187,16 @@ import VsudBadge from "../../components/VsudBadge.vue";
                 this.loading = true
                 
                 // var self = this
-                this.resultsDetails.post('http://172.104.245.14/electionmonitor/api/v1/enter-results')
+                this.resultsDetails.post('/api/v1/enter-results')
                 .then(response => {
                     setTimeout(() => 
                         this.loading =false,
                         this.resultsDetails.results = {},
                         this.resultsDetails.uuid = ''
                     , 2000);
-                    axios.get('http://172.104.245.14/electionmonitor/api/v1/vote-status')
+                    axios.get('/api/v1/vote-status')
                     .then(response => {
-                        // this.voted = response.data
+                        this.voted = response.data
                         for(var i=0;i<response.data.length;i++) {
                             this.uuids.push(response.data[i].aspirant_uuid)
                             // this.voted.push(response.data[i])
@@ -232,25 +219,25 @@ import VsudBadge from "../../components/VsudBadge.vue";
                     // console.log(this.progress)
 
                     if (this.$route.params.location === "county") {
-                      axios.post('http://172.104.245.14/electionmonitor/api/v1/county_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('/api/v1/county_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
               
                       })
                     } else if (this.$route.params.location === "national"){
-                      axios.post('http://172.104.245.14/electionmonitor/api/v1/national_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('/api/v1/national_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
               
                       })
                     } else if (this.$route.params.location === "constituency"){
-                      axios.post('http://172.104.245.14/electionmonitor/api/v1/constituency_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('/api/v1/constituency_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
               
                       })
                     } else if (this.$route.params.location === "ward"){
-                      axios.post('http://172.104.245.14/electionmonitor/api/v1/ward_progress', {prog: Math.round(this.progress, 1) })
+                      axios.post('/api/v1/ward_progress', {prog: Math.round(this.progress, 1) })
                       .then(response => {
                           // console.log(response)
                       })
@@ -272,16 +259,16 @@ import VsudBadge from "../../components/VsudBadge.vue";
         },
         mounted() {
             // console.log(this.$route.params.electoral_area)
-            axios.get('http://172.104.245.14/electionmonitor/api/v1/enter-results/'+this.$route.params.electoral_area)
+            axios.get('/api/v1/enter-results/'+this.$route.params.electoral_area)
               .then(response => {
-                  this.aspirants = response.data
+                  this.aspirants = response.data.data
                   console.log(response)
               })
               .catch(response => {
                 // console.log(response)
               });
 
-            axios.get('http://172.104.245.14/electionmonitor/api/v1/vote-status')
+            axios.get('/api/v1/vote-status')
               .then(response => {
                 //   console.log(this.uuids = response.data[0].aspirant_uuid)
                  this.voted = response.data

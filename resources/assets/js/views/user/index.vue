@@ -18,12 +18,8 @@
             <div class="col-lg-12 container">
                 <div class="mb-4 card">
                     <div class="card-body">
-                        <!-- <h4 class="card-title">Filter User</h4> -->
-                        <!-- <button class="btn btn-danger btn-sm" to="/" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button> -->
                        
-                        <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-                            <md-table-toolbar>
-                                <md-field md-clearable class="md-toolbar-section-end">
+                       <md-field md-clearable class="md-toolbar-section-end">
                                  <v-text-field
                                  dense
                                 outlined
@@ -34,6 +30,33 @@
                                 prepend-icon="mdi-filter-variant"
                             ></v-text-field>
                                 </md-field>
+                        <v-data-table
+                        :headers="headers"
+                        :items="searched"
+                        
+                        >
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon
+                                small
+                                class="mr-2"
+                                @click="editUser(item)"
+                            >
+                                mdi-pencil
+                            </v-icon>
+                            <v-icon
+                                small
+                                @click="deleteUser(item)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                            </template>
+                        </v-data-table>
+                        <!-- <h4 class="card-title">Filter User</h4> -->
+                        <!-- <button class="btn btn-danger btn-sm" to="/" data-toggle="tooltip" title="Delete User"><i class="fa fa-trash"></i>Delete</button> -->
+                       
+                        <!-- <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                            <md-table-toolbar>
+                                
                               
                             </md-table-toolbar>
 
@@ -44,13 +67,13 @@
                             </md-table-empty-state>
 
                             <md-table-row slot="md-table-row" slot-scope="{ item }">
-                                <!-- <md-table-cell md-label="I" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
+                                <!-- <md-table-cell md-label="I" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> --
                                 <md-table-cell md-label="Name" md-sort-by="first_name">
                                     <div class="d-flex px-3 py-2">
                                   
                                     <div class="">
                                         <h6 class="mb-0 text-sm">{{item.first_name}} {{item.last_name}}</h6>
-                                        <!-- <p class="text-xs  mb-0 text-muted">{{ item.phone}}</p> -->
+                                        <!-- <p class="text-xs  mb-0 text-muted">{{ item.phone}}</p> --
                                     </div>
                                     </div>
                                 </md-table-cell>
@@ -65,7 +88,7 @@
                                
                                 </md-table-cell>
                             </md-table-row>
-                            </md-table>
+                            </md-table> -->
                         <v-dialog
                             v-model="loading"
                             hide-overlay
@@ -154,6 +177,25 @@
         components : { UserForm, VsudAvatar,VsudBadge },
         data() {
             return {
+                headers: [
+                    {
+                        text: 'First Name',
+                        align: 'start',
+                        filterable: false,
+                        value: 'first_name',
+                    },
+                    {
+                        text: 'Last Name',
+                        align: 'start',
+                        filterable: false,
+                        value: 'last_name',
+                    },
+                    { text: 'Phone', value: 'phone' },
+                    { text: 'Role', value: 'role' },
+                    { text: 'Gender', value: 'gender' },
+                    { text: 'Allocated polling', value: 'allocated_area' },
+                    { text: 'Actions', value: 'actions' },
+                    ],
                 deleteDialog: false,
                 deleteUserID: null,
                 users: [],
@@ -173,11 +215,11 @@
             } 
         },
         created () {
-         axios.get('http://172.104.245.14/electionmonitor/api/v1/user')
+         axios.get('/api/v1/user')
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
-                            console.log(this.users.push(response.data[i]))
+                            this.users.push(response.data[i])
                         }
                         this.searched = this.users
                         // console.log(this.searched)
@@ -194,7 +236,7 @@
                     page = 1;
                 }
                 // let url = helper.getFilterURL(this.filterUserForm);
-                axios.get('http://172.104.245.14/electionmonitor/api/v1/user')
+                axios.get('/api/v1/user')
                     .then(response => {
                         // console.log(response.data)
                         for(let i = 0;i < response.data.length;i++) {
@@ -211,7 +253,7 @@
             }, 
             performDelete(){
                 this.loading =true
-                axios.delete('http://172.104.245.14/electionmonitor/api/v1/user/' + this.deleteUserID).then(response => {
+                axios.delete('/api/v1/user/' + this.deleteUserID).then(response => {
                     // toastr['success'](response.data.message);
                     this.loading = false
                     this.deleteDialog = true

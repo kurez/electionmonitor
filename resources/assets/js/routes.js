@@ -3,78 +3,78 @@ import helper from './services/helper'
 
 let routes = [
     {
-        path: '/electionmonitor/',
+        path: '/',
         component: require('./layouts/default-page.vue').default,
         meta: { requiresAuth: true },
         children: [
             {
-                path: '/electionmonitor/dashboard',
+                path: '/dashboard',
                 component: require('./views/pages/Dashboard.vue').default
             },
             
             {
-                path: '/electionmonitor/polling',
+                path: '/polling',
                 component: require('./views/pages/Pollings.vue').default
             },
             {
-                path: '/electionmonitor/county',
+                path: '/county',
                 component: require('./views/pages/Counties.vue').default
             },
             {
-                path: '/electionmonitor/constituency',
+                path: '/constituency',
                 component: require('./views/pages/Constituencies.vue').default
             },
             {
-                path: '/electionmonitor/ward',
+                path: '/ward',
                 component: require('./views/pages/Wards.vue').default
             },
             {
-                path: '/electionmonitor/aspirant',
+                path: '/aspirant',
                 component: require('./views/aspirant/index.vue').default
             },
             {
-                path: '/electionmonitor/aspirant/add',
+                path: '/aspirant/add',
                 component: require('./views/aspirant/add.vue').default
             },
             {
-                path: '/electionmonitor/aspirant/:id/edit',
+                path: '/aspirant/:id/edit',
                 component: require('./views/aspirant/edit.vue').default
             },
             {
-                path: '/electionmonitor/user',
+                path: '/user',
                 component: require('./views/user/index.vue').default
             },
             {
-                path: '/electionmonitor/user/add',
+                path: '/user/add',
                 component: require('./views/user/add.vue').default
             },
             {
-                path: '/electionmonitor/user/:id/edit',
+                path: '/user/:id/edit',
                 component: require('./views/user/edit.vue').default
             },
             {
-                path: '/electionmonitor/logs',
+                path: '/logs',
                 component: require('./views/pages/Logs.vue').default
             },
             {
-                path: '/electionmonitor/home/:id/agent',
+                path: '/home/:id/agent',
                 name: 'agentHome',
                 component: require('./views/pages/Home.vue').default
             },
             {
-                path: '/electionmonitor/enter-results/:electoral_area/:location',
+                path: '/enter-results/:electoral_area/:location',
                 name: 'agentHome',
                 component: require('./views/pages/EnterResults.vue').default
             },
         ]
     },
     {
-        path: '/electionmonitor/login',
+        path: '/login',
         component: require('./layouts/guest-page.vue').default,
         meta: { requiresGuest: true },
         children: [
             {
-                path: '/electionmonitor/login',
+                path: '/login',
                 name: 'login',
                 component: require('./views/auth/login.vue').default
             },

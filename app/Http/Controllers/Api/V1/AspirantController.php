@@ -197,6 +197,8 @@ class AspirantController extends APIController
             $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'agent_name' => $agent_name,  'polling'=> $agent_polling, 'votes' => $results);
             DB::table('results')->insert($values);
 
+            
+
             Log::info('Aspirant results entered successfully!', ['values' => $values]);
             return response()->json(['message' => 'Result entered successfully!']);
         } catch (\Exception $ex) {
