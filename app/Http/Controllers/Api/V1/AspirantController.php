@@ -197,6 +197,10 @@ class AspirantController extends APIController
             $values = array('aspirant_uuid' => $aspirant_uuid,'agent_id' => $agent_id, 'agent_name' => $agent_name,  'polling'=> $agent_polling, 'votes' => $results);
             DB::table('results')->insert($values);
 
+            $cummulative_results = DB::table('results')->where('aspirant_uuid',  $aspirant_uuid)->sum('votes');
+
+            DB::update('update aspirants set results = ? where uuid = ?', [ $cummulative_results,  $aspirant_uuid]);
+
             
 
             Log::info('Aspirant results entered successfully!', ['values' => $values]);
