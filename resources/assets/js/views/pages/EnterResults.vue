@@ -55,7 +55,7 @@
                               <form @submit.prevent = "feedResult(item.uuid, item.id)" :id="item.uuid"  v-if="!uuids.includes(item.uuid)">
                               <div class="row">
                                 <div class="col-6">
-                                        <v-input
+                                        <input
                                           class="form-control"
                                           type="number"
                                           step="1"
