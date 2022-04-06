@@ -71,6 +71,9 @@
                         :items="searched"
                         
                         >
+                        <template v-slot:item.results="{ item }">
+                            <td>{{ Number(item.results).toLocaleString() }}</td>
+                            </template>
                         <template v-slot:item.actions="{ item }">
                             <v-icon
                                 small

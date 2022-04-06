@@ -34,8 +34,6 @@
             text: 'Date',
             value: 'date',
           },
-          { text: 'Context', value: 'context' },
-          { text: 'Level', value: 'level' },
           { text: 'Text', value: 'text' },
         ],
         desserts: [ ],
