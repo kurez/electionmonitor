@@ -206,7 +206,7 @@
 
         created() {
             this.loading =true
-            axios.get('/api/v1/aspirant')
+            axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant')
                     .then(response => {
                         this.loading =false
                         for(let i = 0;i < response.data.length;i++) {
@@ -229,7 +229,7 @@
                     page = 1;
                 }
                 // let url = helper.getFilterURL(this.filterAspirantForm);
-                axios.get('/api/v1/aspirant')
+                axios.get('http://172.104.245.14/electionmonitor/api/v1/aspirant')
                     .then(response => {
                         
                         for(let i = 0;i < response.data.length;i++) {
@@ -248,7 +248,7 @@
           
             performDelete (){
                 this.loading =true
-                axios.delete('/api/v1/aspirant/'+this.deleteAspirantID).then(response => {
+                axios.delete('http://172.104.245.14/electionmonitor/api/v1/aspirant/'+this.deleteAspirantID).then(response => {
                      // toastr['success'](response.data.message);
                     this.loading = false
                     this.deleteDialog = true
