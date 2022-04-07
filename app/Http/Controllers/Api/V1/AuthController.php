@@ -27,9 +27,9 @@ class AuthController extends APIController
     public function checkIfUserExists(Request $request) {
         $phone = $request->only('phone');
         
-        // $phone = substr($phone['phone'], 1);
-        // $phone = '+254'.$phone;
-        // $phone = str_replace(' ', '', $phone);
+        // $phoneOTP = substr($phone['phone'], 1);
+        // $phoneOTP = '+254'.$phone;
+        // $phoneOTP = str_replace(' ', '', $phone);
 
         $user = DB::table('users')->where('phone',$phone)->get();
         
@@ -43,10 +43,11 @@ class AuthController extends APIController
                 'code' => $code
             ]);
       
-            $receiverNumber = $phone;
-            $message = "Your Login OTP code is ". $code;
-            $sender = "Kura";
+            $phoneOTP = substr($phone['phone'], 4);
+            $phoneOTP = '0'.$phoneOTP;
+            $phoneOTP = str_replace(' ', '', $phoneOTP);
 
+          
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -59,24 +60,27 @@ class AuthController extends APIController
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => 'POST',
               CURLOPT_POSTFIELDS =>'{
-                "number": "0708746046",
-                "sms": "My message",
-                "callBack": "https://....",
-                "senderName": "Election Monitor"
-            }',
+                  "number" : "'.$phoneOTP.'",
+                  "sms" : '.$code.',
+                  "callBack" : "https://....",
+                  "senderName" : "PASANDA"
+            }
+            ',
               CURLOPT_HTTPHEADER => array(
-                'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ4NDY0MzE3fQ.D-2igZfKwTygsCzY2mQQSqLO-TY0OOF5u0LAPMZqVWM',
-                'Content-Type: application/json',
+                'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozNywibmFtZSI6IkRldmVpbnQgTHRkIiwiZW1haWwiOiJpbmZvQGRldmVpbnQuY29tIiwibG9jYXRpb24iOiIyMyBPbGVuZ3VydW9uZSBBdmVudWUsIExhdmluZ3RvbiIsInBob25lIjoiMjU0NzQ4NDI0NzU3IiwiY291bnRyeSI6IktlbnlhIiwiY2l0eSI6Ik5haXJvYmkiLCJhZGRyZXNzIjoiMjMgT2xlbmd1cnVvbmUgQXZlbnVlIiwiaXNfdmVyaWZpZWQiOmZhbHNlLCJpc19hY3RpdmUiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTExLTIzVDEyOjQ5OjU2LjAwMFoifSwiaWF0IjoxNjQ5MzEwNzcxfQ.4y5XYFbC5la28h0HfU6FYFP5a_6s0KFIf3nhr3CFT2I',
+                'Content-Type: application/json'
               ),
             ));
             
             $response = curl_exec($curl);
+            
             curl_close($curl);
+            // echo $response;         
 
             // $foundUser = DB::table('users')->where('phone',$phone)->get();
             // return $foundUser;
 
-            Log::info('OTP code has been sent to', ['Phone' => $phone, 'Code' => $code]);
+            Log::info('OTP code has been sent to', ['Phone' => $phoneOTP, 'Code' => $code]);
             return response()->json(['data' => $user, 'otp' => $code]);
         } catch (JWTException $e) {
             Log::error('Error occured while trying to send OTP code to', ['Phone' => $phone]);
